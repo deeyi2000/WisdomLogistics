@@ -1,0 +1,448 @@
+﻿@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+
+<form id="form1">
+    <div>
+        <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#">运单信息</a></li>
+            </ul>
+            <div style="padding-top: 20px; margin-right: 30px;">
+                <table class="form">
+                    <tr>
+                        <th class="formTitle">到站</th>
+                        <td class="formValue">
+                            <input id="F_Station" name="F_Station" type="text" class="form-control required" placeholder="到站" />
+                        </td>
+                        <th class="formTitle">收货人</th>
+                        <td class="formValue">
+                            <input id="F_Consignee" name="F_Consignee" type="text" class="form-control required" placeholder="收货人" />
+                        </td>
+                        <th class="formTitle">收货人电话</th>
+                        <td class="formValue">
+                            <input id="F_ConsigneePhone" name="F_ConsigneePhone" type="text" class="form-control required" placeholder="收货人电话" />
+                        </td>
+                        <th class="formTitle" rowspan="2">货号</th>
+                        <td class="formValue" rowspan=" 2">
+                            <label>
+                                <input id="ArtNo01" name="ArtNo01" type="text" class="form-control required" style="float:left;width:20px" value="00" placeholder="0" />
+                                <span style="float:left;width:10px;height:32px; margin-left:5px; line-height:32px">-</span>
+                                <input id="ArtNo02" name="ArtNo02" type="text" class="form-control required" style="float:left;width:40px" value="0000" placeholder="0" />
+                                <span style="float:left;width:10px;height:32px; margin-left:5px; line-height:32px">-</span>
+                                <input id="ArtNo03" name="ArtNo03" type="text" class="form-control required" style="float:left;width:20px" value="00" placeholder="0" />
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">地区</th>
+                        <td class="formValue">
+                            <input id="F_Area" name="F_Area" type="text" class="form-control required" placeholder="地区" />
+                        </td>
+                        <th class="formTitle">发货人</th>
+                        <td class="formValue">
+                            <input id="F_Consignor" name="F_Consignor" type="text" class="form-control required" placeholder="发货人" />
+                        </td>
+                        <th class="formTitle">发货人电话</th>
+                        <td class="formValue">
+                            <input id="F_ConsignorPhone" name="F_ConsignorPhone" type="text" class="form-control required" placeholder="发货人电话" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="vueYunFei" style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#">运费说明（单位:元）</a></li>
+            </ul>
+
+            <div style="padding-top: 20px; margin-right: 30px;">
+                <table class="form">
+                    <tr style="text-align:center;background-color:#efefef">
+                        <td class="formTitle" style="text-align:center">货物名称</td>
+                        <td class="formTitle" style="text-align:center">件数</td>
+                        <td class="formTitle" style="text-align:center">重量</td>
+                        <td class="formTitle" style="text-align:center">体积</td>
+                        <td class="formTitle" style="text-align:center">单价</td>
+                        <td class="formTitle" style="text-align:center">运费</td>
+                        <td class="formTitle" style="text-align:center">送货费</td>
+                        <td class="formTitle" style="text-align:center">提货费</td>
+                        <td class="formTitle" style="text-align:center">保价额</td>
+                        <td class="formTitle" style="text-align:center">保价费</td>
+                    </tr>
+                    <tr id="F_list" name="G-list" v-for="(v, k) in list">
+                        <td class="formValue">
+                            <input v-model="v.F_Name" id="F_Name" name="F_Name" type="text" class="form-control required" placeholder="货物名称" />
+                        </td>
+                        <td class="formValue">
+                            <input v-model="v.F_Number" id="F_Number" name="F_Number" type="text" class="form-control required" placeholder="件数" />
+                        </td>
+                        <td class="formValue">
+                            <input v-model="v.F_Weight" id="F_Weight" name="F_Weight" type="text" class="form-control required" placeholder="重量" />
+                        </td>
+                        <td class="formValue">
+                            <input v-model="v.F_Volume" id="F_Volume" name="F_Volume" type="text" class="form-control required" placeholder="体积" />
+                        </td>
+                        <td class="formValue">
+                            <input v-model="v.F_UnitPricee" id="F_UnitPricee" name="F_UnitPricee" type="text" class="form-control required" placeholder="单价" />
+                        </td>
+                        <td class="formValue">
+                            <input v-model="v.F_Freight" id="F_Freight" name="F_Freight" type="text" class="form-control required" placeholder="运费" />
+                        </td>
+                        <td class="formValue">
+                            <input v-model="v.F_DeliveryFee" id="F_DeliveryFee" name="F_DeliveryFee" type="text" class="form-control required" placeholder="送货费" />
+                        </td>
+                        <td class="formValue">
+                            <input v-model="v.F_PickDeliveryFee" id="F_PickDeliveryFee" name="F_PickDeliveryFee" type="text" class="form-control required" placeholder="提货费" />
+                        </td>
+                        <td class="formValue">
+                            <input v-model="v.F_InsuredForehead" id="F_InsuredForehead" name="F_InsuredForehead" type="text" class="form-control required" placeholder="保价额" />
+                        </td>
+                        <td class="formValue">
+                            <input v-model="v.F_InsuredFee" id="F_InsuredFee" name="F_InsuredFee" type="text" class="form-control required" placeholder="保价费" />
+                        </td>
+                        <td v-if="k == 0" class="formValue">
+                            <i class="ace-icon fa fa-plus" @@click="add_onClick(k)"></i>
+                        </td>
+                        <td v-else class="formValue">
+                            <i class="fa fa-minus" @@click="del_onClick(k)"></i>
+                        </td>
+                    </tr>
+                    <tr style="text-align:center;background-color:#efefef;margin-top:5px;height:46px;border-bottom:2px dotted #CFE1F9">
+                        <td class="formTitle" style="text-align:center"><span style="font-weight:bold">合计</span></td>
+                        <td class="formTitle" style="text-align:center"><span style="font-weight:bold">{{Total_F_Number}}</span></td>
+                        <td class="formTitle" style="text-align:center"><span style="font-weight:bold">{{Total_F_Weight}}</span></td>
+                        <td class="formTitle" style="text-align:center"><span style="font-weight:bold">{{Total_F_Volume}}</span></td>
+                        <td class="formTitle" style="text-align:center"><span style="font-weight:bold">{{Total_F_UnitPricee}}</span></td>
+                        <td class="formTitle" style="text-align:center"><span style="font-weight:bold">{{Total_F_Freight}}</span></td>
+                        <td class="formTitle" style="text-align:center"><span style="font-weight:bold">{{Total_F_DeliveryFee}}</span></td>
+                        <td class="formTitle" style="text-align:center"><span style="font-weight:bold">{{Total_F_PickDeliveryFee}}</span></td>
+                        <td class="formTitle" style="text-align:center"><span style="font-weight:bold">{{Total_F_InsuredForehead}}</span></td>
+                        <td class="formTitle" style="text-align:center"><span style="font-weight:bold">{{Total_F_InsuredFee}}</span></td>
+                    </tr>
+                    <tr style="text-align:center;background-color:#efefef;margin-top:5px;border-bottom:2px dotted #CFE1F9">
+                        <td class="formValue" style="text-align:center"><span style="font-weight: bold;color: #0579BD;">运费合计: {{Total_F_Freight}}</span></td>
+                        <td class="formValue" style="text-align:center">
+                            <select id="F_PayType" name="F_PayType" class="form-control required" style="padding:0"></select>
+                        </td>
+                        <td class="formValue" style="text-align:center">
+                            <input id="F_FreightCombined" name="F_FreightCombined" type="text" class="form-control required" placeholder="金额" />
+                        </td>
+                        <td class="formValue">
+                            <select class="form-control required" id="F_PaymentMethod" name="F_PaymentMethod" style="padding:0"></select>
+                        </td>
+                        <td class="formValue" style="text-align:center">
+                            <a><span style="font-weight:bold;text-decoration:underline">提付</span></a>
+                        </td>
+                        <td class="formValue" style="text-align:center">
+                            <input id="F_PutPay" name="F_PutPay" type="text" class="form-control required" placeholder="金额" />
+                        </td>
+                        <td class="formValue" style="text-align:center"><a><span style="font-weight:bold;text-decoration:underline">现付</span></a></td>
+                        <td class="formValue" style="text-align:center">
+                            <input id="F_PresentPay" name="F_PresentPay" type="text" class="form-control required" placeholder="金额" />
+                        </td>
+                        <td class="formValue" style="text-align:center"><a><span style="font-weight:bold;text-decoration:underline">回付:</span></a></td>
+                        <td class="formValue" style="text-align:center">
+                            <input id="F_BackPay" name="F_BackPay" type="text" class="form-control required" placeholder="金额" />
+                        </td>
+                    </tr>
+                    <tr style="text-align:center;background-color:#efefef;margin-top:5px">
+                        <td class="formValue" style="text-align:center"><span style="font-weight: bold;color: #0579BD;">明垫:</span></td>
+                        <td class="formValue" style="text-align:center">
+                            <input id="F_BrightPad" name="F_BrightPad" type="text" class="form-control required" placeholder="金额" />
+                        </td>
+                        <td class="formValue" style="text-align:center">
+                            <select class="form-control required" id="F_BrightPadPaymentState" name="F_BrightPadPaymentState" style="padding:0"></select>
+                        </td>
+                        <td class="formValue">
+                            <span style="font-weight: bold;color: #0579BD;">暗垫:</span>
+                        </td>
+                        <td class="formValue" style="text-align:center">
+                            <input id="F_DarkPad" name="F_DarkPad" type="text" class="form-control required" placeholder="金额" />
+                        </td>
+                        <td class="formValue" style="text-align:center">
+                            <select class="form-control required" id="F_DarkMatPaymentState" name="F_DarkMatPaymentState" style="padding:0"></select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+     
+        <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#">代收货款（单位:元）</a></li>
+            </ul>
+            <div style="padding-top: 20px; margin-right: 30px;">
+                <table class="form">
+                    <tr>
+                        <th class="formTitle">代收货款:</th>
+                        <td class="formValue">
+                            <input id="F_CollectionPayment" name="F_CollectionPayment" type="text" class="form-control required" placeholder="金额" />
+                        </td>
+                        <th class="formTitle">结算方式:</th>
+                        <td class="formValue" colspan="2">
+                            <label class="demo--label">
+                                <input class="demo--radio" type="radio" name="F_SettlementMode">
+                                <span class="demo--radioInput"></span>现金
+                            </label>
+                            <label class="demo--label">
+                                <input class="demo--radio" type="radio" name="F_SettlementMode">
+                                <span class="demo--radioInput"></span>银行卡
+                            </label>
+                            <label class="demo--label">
+                                <input class="demo--radio" type="radio" name="F_SettlementMode">
+                                <span class="demo--radioInput"></span>POS清分
+                            </label>
+                        </td>
+                        <th class="formTitle">手续费率:</th>
+                        <td class="formValue">
+                            <select class="form-control required" id="F_FormalityRate" name="F_FormalityRate" style="padding:0"></select>
+                        </td>
+                        <th class="formTitle">放款网点:</th>
+                        <td class="formValue">
+                            <input id="F_LendingOutlets" name="F_LendingOutlets" type="text" class="form-control required" placeholder="放款网点" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">开户人:</th>
+                        <td class="formValue">
+                            <input id="F_AccountOpening" name="F_AccountOpening" type="text" class="form-control required" placeholder="姓名" />
+                        </td>
+                        <th class="formTitle">开户行:</th>
+                        <td class="formValue" colspan="2">
+                            <input id="F_OpeningBank" name="F_OpeningBank" type="text" class="form-control required" placeholder="开户行名称" />
+                        </td>
+                        <th class="formTitle">银行卡号:</th>
+                        <td class="formValue" colspan="4">
+                            <input id="F_BankCardNumber" name="F_BankCardNumber" type="text" class="form-control required" placeholder="银行卡号" />
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <style>
+        </style>
+        <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#">其他服务</a></li>
+            </ul>
+            <div style="padding-top: 20px; margin-right: 30px;">
+                <table class="form">
+                    <tr style="border-bottom:2px dotted #CFE1F9">
+                        <td class="formValue" colspan="2">
+                            <label class="demo--label">
+                                <input class="demo--radio" type="checkbox" name="F_Receipt">
+                                <span class="demo--checkbox demo--radioInput"></span>需要回单
+                            </label>
+                        </td>
+                        <td class="formValue" colspan="2">
+                            <label class="demo--label">
+                                <input class="demo--radio" type="checkbox" name="F_DeliveryHome">
+                                <span class="demo--checkbox demo--radioInput"></span>上门送货
+                            </label>
+                        </td>
+                        <th class="formTitle">备注:</th>
+                        <td class="formValue" colspan="3" style="border-right:2px dotted #CFE1F9">
+                            <input id="F_Remarks" name="F_Remarks" type="text" class="form-control required" placeholder="备注" />
+                        </td>
+                        <td class="formValue" rowspan="3" style="text-align:center;width:100px;height:80px">
+                            <input id="F_Submit" name="F_Submit" type="button" value="提交" onclick="submitForm()" class="layui-layer-btn0 btn btn-primary" />
+                        </td>
+
+                    </tr>
+                    <tr style="border-bottom:2px dotted #CFE1F9">
+                        <td class="formValue" colspan="2">
+                            <label class="demo--label">
+                                <input class="demo--radio" type="checkbox" name="F_DirectThermal">
+                                <span class="demo--checkbox demo--radioInput"></span>热敏打印 数量
+                                <input id="F_DirectThermalNumber" name="F_DirectThermalNumber" type="text" class="form-control required" style="width:20px;float:right;padding:0;height: 22px;margin-left: 5px;" />
+                            </label>
+
+                        </td>
+                        <td class="formValue" colspan="2">
+                            <label class="demo--label">
+                                <input class="demo--radio" type="checkbox" name="F_NeedlePrinter">
+                                <span class="demo--checkbox demo--radioInput"></span>针式打印 数量
+                                <input id="F_NeedlePrinterNumber" name="F_NeedlePrinterNumber" type="text" class="form-control required" style="width:20px;float:right;padding:0;height: 22px;margin-left: 5px;" />
+                            </label>
+                        </td>
+                        <td class="formValue" colspan="2">
+                            <label class="demo--label">
+                                <input class="demo--radio" type="checkbox" name="F_PrintLabel">
+                                <span class="demo--checkbox demo--radioInput"></span>打印标签 数量
+                                <input id="F_PrintLabelNumber" name="F_PrintLabelNumber" type="text" class="form-control required" style="width:20px;float:right;padding:0;height: 22px;margin-left: 5px;" />
+                            </label>
+                        </td>
+                        <td class="formValue" colspan="2" style="border-right:2px dotted #CFE1F9">
+                            <label class="demo--label">
+                                <input class="demo--radio" type="checkbox" name="F_Waybill">
+                                <span class="demo--checkbox demo--radioInput"></span>运单套打   <a href="#">运单套打</a>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr style="border-bottom:2px dotted #CFE1F9">
+                        <th class="formTitle">录单人:</th>
+                        <td class="formValue">
+                            <input id="F_RecordSingle" name="F_RecordSingle" type="text" class="form-control required" placeholder="录单人" />
+                        </td>
+
+                        <th class="formTitle">业务员:</th>
+                        <td class="formValue">
+                            <select class="form-control required" id="F_Salesman" name="F_Salesman" style="padding:0">
+                                <option value="">==请选择==</option>
+                            </select>
+                        </td>
+                        <th class="formTitle">车辆备注:</th>
+                        <td class="formValue" colspan="3" style="border-right:2px dotted #CFE1F9">
+                            <input id="F_VehicleRemarks" name="F_VehicleRemarks" type="text" class="form-control required" placeholder="车辆备注" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+            $(function () {
+                initControl();
+            })
+            var keyValue = $.request("keyValue");
+            var ListData = null;
+            $(function () {
+                $.ajax({
+                    url: "/OrderManage/OrderList/GetFormJson",
+                    data: { keyValue: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        $("#form1").formSerialize(data);
+                        ListData = data['OrderProduct']
+                        $("#form1").find('.form-control,select,input').attr('readonly', 'readonly');
+                        $("#form1").find('div.ckbox label').attr('for', '');
+                        $("#F_UserPassword").val("******");
+                        var vmYF = new Vue({
+                            el: "#vueYunFei",
+                            data: {
+                                list: ListData  //[{ F_Name: "", F_Number: "", F_Weight: "", F_Volume: "", F_UnitPricee: "", F_Freight: "", F_DeliveryFee: "", F_PickDeliveryFee: "", F_InsuredForehead: "", F_InsuredFee: "" }]
+                            },
+                            computed: {
+                                //合计价格
+                                Total_F_Number: function () {
+                                    var total = 0;
+                                    for (i in this.list) {
+                                        total += parseFloat(this.list[i].F_Number) || 0
+                                    }
+                                    return total
+                                },
+                                //合计重量
+                                Total_F_Weight: function () {
+                                    var total = 0;
+                                    for (i in this.list) {
+                                        total += parseFloat(this.list[i].F_Weight) || 0
+                                    }
+                                    return total
+                                },
+                                //合计重量
+                                Total_F_Volume: function () {
+                                    var total = 0;
+                                    for (i in this.list) {
+                                        total += parseFloat(this.list[i].F_Volume) || 0
+                                    }
+                                    return total
+                                },
+
+                                //合计单价
+                                Total_F_UnitPricee: function () {
+                                    var total = 0;
+                                    for (i in this.list) {
+                                        total += parseFloat(this.list[i].F_UnitPricee) || 0
+                                    }
+                                    return total
+                                },
+                                //合计运费
+                                Total_F_Freight: function () {
+                                    var total = 0;
+                                    for (i in this.list) {
+                                        total += parseFloat(this.list[i].F_Freight) || 0
+                                    }
+                                    return total
+                                },
+                                //合计送货费
+                                Total_F_DeliveryFee: function () {
+                                    var total = 0;
+                                    for (i in this.list) {
+                                        total += parseFloat(this.list[i].F_DeliveryFee) || 0
+                                    }
+                                    return total
+                                },
+
+                                //合计提货费
+                                Total_F_PickDeliveryFee: function () {
+                                    var total = 0;
+                                    for (i in this.list) {
+                                        total += parseFloat(this.list[i].F_PickDeliveryFee) || 0
+                                    }
+                                    return total
+                                },
+
+                                //合计保价额
+                                Total_F_InsuredForehead: function () {
+                                    var total = 0;
+                                    for (i in this.list) {
+                                        total += parseFloat(this.list[i].F_InsuredForehead) || 0
+                                    }
+                                    return total
+                                },
+                                //合计保价费
+                                Total_F_InsuredFee: function () {
+                                    var total = 0;
+                                    for (i in this.list) {
+                                        total += parseFloat(this.list[i].F_InsuredFee) || 0
+                                    }
+                                    return total
+                                },
+                            },
+                            methods: {
+                                add_onClick: function (k) {
+                                    this.list.push({ F_Name: "", F_Number: "", F_Weight: "", F_Volume: "", F_UnitPricee: "", F_Freight: "", F_DeliveryFee: "", F_PickDeliveryFee: "", F_InsuredForehead: "", F_InsuredFee: "" })
+                                },
+                                del_onClick: function (k) {
+                                    if (0 < k) this.list.splice(k, 1)
+                                }
+                            }
+                        })
+                    }
+                });
+            });
+
+            function initControl() {
+                $("#F_PaymentMethod").bindSelect()
+                $("#F_PayType").bindSelect({
+                    url: "/SystemManage/ItemsData/GetSelectJson",
+                    param: { enCode: "PayType" }
+                });
+
+                $("#F_PaymentMethod").bindSelect({
+                    url: "/SystemManage/ItemsData/GetSelectJson",
+                    param: { enCode: "PaymentMethod" }
+                });
+
+                $("#F_DarkMatPaymentState").bindSelect({
+                    url: "/SystemManage/ItemsData/GetSelectJson",
+                    param: { enCode: "PaymentState" }
+                });
+
+                $("#F_BrightPadPaymentState").bindSelect({
+                    url: "/SystemManage/ItemsData/GetSelectJson",
+                    param: { enCode: "PaymentState" }
+                });
+
+                $("#F_FormalityRate").bindSelect({
+                    url: "/SystemManage/ItemsData/GetSelectJson",
+                    param: { enCode: "FormalityRate" }
+                });
+            }
+    </script>
+</form>

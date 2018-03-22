@@ -1,0 +1,176 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<script>
+    $(function () {
+        initgridList();
+    })
+
+    function initgridList() {
+        var $gridList = $("#gridList");
+        $gridList.dataGrid({
+            url: "/OrderManage/OrderList/GetGridJson",
+            height: $(window).height() - 190,
+            datatype: "json",
+            colModel: [
+                { label: '订单日期', name: 'F_CreatorTime',  frozen: true},
+                { label: '运单号', name: 'F_Id', align: 'left', frozen: true},
+                { label: '货号', name: 'ArtNo01',  align: 'left' },
+                { label: '到站', name: 'F_Station', align: 'left' },
+                { label: '地区', name: 'F_Area',  align: 'left' },
+                { label: '车辆备注', name: 'F_Latitude', align: 'left' },
+                { label: '发货人', name: 'F_Consignor', align: 'left' },
+                { label: '发货电话', name: 'F_ConsignorPhone', align: 'left' },
+                { label: '发货人身份证', name: 'F_ConsignorPhone',  align: 'left' },
+                { label: '收货人', name: 'F_Consignee',  align: 'left' },
+                { label: '收货电话', name: 'F_ConsigneePhone',  align: 'left' },
+                { label: '货物名称', name: 'F_Name',  align: 'left' },
+                { label: '件数', name: 'F_Number', align: 'left' },
+                { label: '重量', name: 'F_Weight', align: 'left' },
+                { label: '体积', name: 'F_Volume',  align: 'left' },
+                { label: '运费合计', name: 'F_FreightCombined', align: 'left',	formatter: 'number', },
+                { label: '提付', name: 'F_PutPay', align: 'left' },
+                { label: '现付', name: 'F_PresentPay',  align: 'left' },
+                { label: '回付', name: 'F_BackPay',  align: 'left' },
+                { label: '代收款', name: 'F_CollectionPayment', align: 'left' },
+                { label: '放款方式', name: 'F_SettlementMode', align: 'left' },
+                { label: '手续费率', name: 'F_FormalityRate',  align: 'left' },
+                { label: '手续费', name: 'F_FormalityRate',  align: 'left' },
+                { label: '提货方式', name: 'F_FormalityRate', align: 'left' },
+                { label: '开单类型', name: 'F_FormalityRate',  align: 'left' },
+                { label: '开单人', name: 'F_RecordSingle', align: 'left' },
+            ],
+           // direction: "rtl", 固定列会挪到左边
+            footerrow: true,
+            userDataOnFooter: true,
+            pager: "#gridPager",
+            sortname: 'F_CreatorTime desc',
+            viewrecords: true,
+        });
+        $("#gridList").jqGrid("setFrozenColumns");
+        $("#btn_search").click(function () {
+            $gridList.jqGrid('setGridParam', {
+                postData: { keyword: $("#txt_keyword").val() },
+            }).trigger('reloadGrid');
+        });
+    }
+
+    function btn_add() {
+        $.modalOpen({
+            id: "Form",
+            title: "新增订单",
+            url: "/OrderManage/OrderList/Form",
+            width: "700px",
+            height: "510px",
+            callBack: function (iframeId) {
+                top.frames[iframeId].submitForm();
+            }
+        });
+    }
+    function btn_edit() {
+        var keyValue = $("#gridList").jqGridRowValue().F_Id;
+        $.modalOpen({
+            id: "Form",
+            title: "修改订单",
+            url: "/OrderManage/Order/Form?keyValue=" + keyValue,
+            width: "700px",
+            height: "510px",
+            callBack: function (iframeId) {
+                top.frames[iframeId].submitForm();
+            }
+        });
+    }
+    function btn_delete() {
+        $.deleteForm({
+            url: "/OrderManage/OrderList/DeleteForm",
+            param: { keyValue: $("#gridList").jqGridRowValue().F_Id },
+            success: function () {
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        })
+    }
+    function btn_details() {
+        var keyValue = $("#gridList").jqGridRowValue().F_Id;
+        $.modalOpen({
+            id: "Details",
+            title: "查看订单",
+            url: "/OrderManage/Order/Details?keyValue=" + keyValue,
+            width: "700px",
+            height: "550px",
+            btn: null,
+        });
+    }
+    function btn_disabled() {
+        var keyValue = $("#gridList").jqGridRowValue().F_Id;
+        $.modalConfirm("注：您确定要【禁用】该订单吗？", function (r) {
+            if (r) {
+                $.submitForm({
+                    url: "/OrderManage/OrderList /DisabledAccount",
+                    param: { keyValue: keyValue },
+                    success: function () {
+                        $.currentWindow().$("#gridList").trigger("reloadGrid");
+                    }
+                })
+            }
+        });
+    }
+    function btn_enabled() {
+        var keyValue = $("#gridList").jqGridRowValue().F_Id;
+        $.modalConfirm("注：您确定要【启用】该订单吗？", function (r) {
+            if (r) {
+                $.submitForm({
+                    url: "/OrderManage/OrderList /EnabledAccount",
+                    param: { keyValue: keyValue },
+                    success: function () {
+                        $.currentWindow().$("#gridList").trigger("reloadGrid");
+                    }
+                })
+            }
+        });
+    }
+
+</script>
+    <div class="topPanel">
+        <div class="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+            </div>
+            <div class="btn-group">
+                <a id="NF-add" authorize="yes" class="btn btn-primary dropdown-text" onclick="btn_add()"><i class="fa fa-plus"></i>新建订单</a>
+            </div>
+            <div class="operate">
+                <ul class="nav nav-pills">
+                    <li class="first">已选中<span>1</span>项</li>
+                    <li><a id="NF-edit" authorize="yes" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>修改订单</a></li>
+                    <li><a id="NF-delete" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除订单</a></li>
+                    <li><a id="NF-Details" authorize="yes" onclick="btn_details()"><i class="fa fa-search-plus"></i>查看订单</a></li>
+                    <li class="split"></li>
+                    <li class="split"></li>
+                    <li><a id="NF-disabled" authorize="yes" onclick="btn_disabled()"><i class="fa fa-stop-circle"></i>禁用</a></li>
+                    <li><a id="NF-enabled" authorize="yes" onclick="btn_enabled()"><i class="fa fa-play-circle"></i>启用</a></li>
+                </ul>
+                <a href="javascript:;" class="close"></a>
+            </div>
+            <script>$('.toolbar').authorizeButton()</script>
+    </div>
+    <div class="search">
+        <table>
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <input id="txt_keyword" type="text" class="form-control" placeholder="账户/姓名/手机" style="width: 200px;">
+                        <span class="input-group-btn">
+                            <button id="btn_search" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="gridPanel" style="width:100%;float:left">
+    <table id="gridList"></table>
+    <div id="gridPager"></div>
+</div>

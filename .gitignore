@@ -1,0 +1,6 @@
+packages
+
+WisdomLogistics.WxClient
+WisdomLogistics.WxOperations
+**/bin
+**/obj
