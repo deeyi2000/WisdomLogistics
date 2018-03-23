@@ -71,7 +71,7 @@
   * @param lat
   * @returns {*[]}
   */
-  root.gcj02towgs84 = function(lng, lat) { 
+  root.gcj02towgs84 = function(lng, lat, ) { 
     if (out_of_china(lng, lat)) {
       return [lng, lat]
     }
@@ -89,29 +89,30 @@
       return [lng * 2 - mglng, lat * 2 - mglat]
     }
   }
-    function transformlat(lng, lat) { 
-    var ret = -100.0 + 2.0 * lng + 3.0 * lat + 0.2 * lat * lat + 0.1 * lng * lat + 0.2 * Math.sqrt(Math.abs(lng));
-    ret += (20.0 * Math.sin(6.0 * lng * PI) + 20.0 * Math.sin(2.0 * lng * PI)) * 2.0 / 3.0;
-    ret += (20.0 * Math.sin(lat * PI) + 40.0 * Math.sin(lat / 3.0 * PI)) * 2.0 / 3.0;
-    ret += (160.0 * Math.sin(lat / 12.0 * PI) + 320 * Math.sin(lat * PI / 30.0)) * 2.0 / 3.0;
-    return ret
-    }
-    function transformlng(lng, lat) { 
-    var ret = 300.0 + lng + 2.0 * lat + 0.1 * lng * lng + 0.1 * lng * lat + 0.1 * Math.sqrt(Math.abs(lng));
-    ret += (20.0 * Math.sin(6.0 * lng * PI) + 20.0 * Math.sin(2.0 * lng * PI)) * 2.0 / 3.0;
-    ret += (20.0 * Math.sin(lng * PI) + 40.0 * Math.sin(lng / 3.0 * PI)) * 2.0 / 3.0;
-    ret += (150.0 * Math.sin(lng / 12.0 * PI) + 300.0 * Math.sin(lng / 30.0 * PI)) * 2.0 / 3.0;
-    return ret
-    }
-    /**
-    * 判断是否在国内，不在国内则不做偏移
-    * @param lng
-    * @param lat
-    * @returns {boolean}
-    */
-    function out_of_china(lng, lat) { 
-    return (lng < 72.004 || lng > 137.8347) || ((lat < 0.8293 || lat > 55.8271) || false);
-    }
+
+  function transformlat(lng, lat) { 
+  var ret = -100.0 + 2.0 * lng + 3.0 * lat + 0.2 * lat * lat + 0.1 * lng * lat + 0.2 * Math.sqrt(Math.abs(lng));
+  ret += (20.0 * Math.sin(6.0 * lng * PI) + 20.0 * Math.sin(2.0 * lng * PI)) * 2.0 / 3.0;
+  ret += (20.0 * Math.sin(lat * PI) + 40.0 * Math.sin(lat / 3.0 * PI)) * 2.0 / 3.0;
+  ret += (160.0 * Math.sin(lat / 12.0 * PI) + 320 * Math.sin(lat * PI / 30.0)) * 2.0 / 3.0;
+  return ret
+  }
+  function transformlng(lng, lat) { 
+  var ret = 300.0 + lng + 2.0 * lat + 0.1 * lng * lng + 0.1 * lng * lat + 0.1 * Math.sqrt(Math.abs(lng));
+  ret += (20.0 * Math.sin(6.0 * lng * PI) + 20.0 * Math.sin(2.0 * lng * PI)) * 2.0 / 3.0;
+  ret += (20.0 * Math.sin(lng * PI) + 40.0 * Math.sin(lng / 3.0 * PI)) * 2.0 / 3.0;
+  ret += (150.0 * Math.sin(lng / 12.0 * PI) + 300.0 * Math.sin(lng / 30.0 * PI)) * 2.0 / 3.0;
+  return ret
+  }
+  /**
+  * 判断是否在国内，不在国内则不做偏移
+  * @param lng
+  * @param lat
+  * @returns {boolean}
+  */
+  function out_of_china(lng, lat) { 
+  return (lng < 72.004 || lng > 137.8347) || ((lat < 0.8293 || lat > 55.8271) || false);
+  }
 
   /* 对Date的扩展，将 Date 转化为指定格式的String * 月(M)、日(d)、12小时(h)、24小时(H)、分(m)、秒(s)、周(E)、季度(q)
   * 可以用 1-2 个占位符 * 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字) * eg: * (new
@@ -154,27 +155,6 @@
     }
     return fmt;
   }
-/*
-  Date.prototype.format = function(fmt) { 
-    var o = { 
-       "M+" : this.getMonth()+1,                 //月份 
-       "d+" : this.getDate(),                    //日 
-       "h+" : this.getHours(),                   //小时 
-       "m+" : this.getMinutes(),                 //分 
-       "s+" : this.getSeconds(),                 //秒 
-       "q+" : Math.floor((this.getMonth()+3)/3), //季度 
-       "S"  : this.getMilliseconds()             //毫秒 
-   }; 
-   if(/(y+)/.test(fmt)) {
-           fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
-   }
-    for(var k in o) {
-       if(new RegExp("("+ k +")").test(fmt)){
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
-        }
-    }
-   return fmt; 
-  }*/
 
   // If obj.hasOwnProperty has been overridden, then calling
   // obj.hasOwnProperty(prop) will break.
@@ -192,13 +172,13 @@
     }
   }
   root.querystring = {    
-    encode: function(obj, sep, eq, name) {
+    encode: function(obj, name, sep, eq) {
       sep = sep || '&'
       eq = eq || '='
       obj = obj || undefined
 
       if ((typeof obj === 'object') || Array.isArray(obj)) {
-        obj = Object.keys(obj).map(k => querystring.encode(obj[k], sep, eq, !!name ? `${name}[${stringifyPrimitive(k)}]` : `${k}`)).join(sep);
+        obj = Object.keys(obj).map(k => querystring.encode(obj[k], !!name ? `${name}[${stringifyPrimitive(k)}]` : `${k}`, sep, eq)).join(sep);
       }
       else {
         obj = obj || ''
@@ -255,6 +235,26 @@
       }
     
       return obj;
+    }
+  }
+
+  root.debounce = function(func, timeout){
+    var last
+    return function(){
+      var ctx = this, args = arguments
+      if(last) clearTimeout(last)
+      last = setTimeout(function() { func.apply(ctx, args) }, timeout)
+    }
+  }
+
+  root.throttle = function(func, delay){
+    var last = 0
+    return function(){
+      var curr = Date.now()
+      if (curr - last > delay){
+        func.apply(this, arguments)
+        last = curr 
+      }
     }
   }
 })
