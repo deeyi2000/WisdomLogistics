@@ -390,15 +390,41 @@ $.fn.bindSelect = function (options) {
         });
     }
 }
-$.fn.authorizeButton = function () {
+$.fn.authorizeButton = function (ctx) {
     var moduleId = top.$(".NFine_iframe:visible").attr("id").substr(6);
     var dataJson = top.clients.authorizeButton[moduleId];
     var $element = $(this);
     $element.find('a[authorize=yes]').attr('authorize', 'no');
     if (dataJson != undefined) {
-        $.each(dataJson, function (i) {
-            $element.find("#" + dataJson[i].F_EnCode).attr('authorize', 'yes');
-        });
+        if (!ctx) {
+            $.each(dataJson,
+                function(k, v) {
+                    $element.find("#" + dataJson[k].F_EnCode).attr('authorize', 'yes');
+                });
+        } else {
+            $.each(dataJson,
+                function (k, v) {
+                    var func = (v.F_JsEvent && ctx[v.F_JsEvent]) ? ctx[v.F_JsEvent].bind(this) :
+                        function () {
+                            var url = v.F_UrlAddress;
+                            if (url && !url.startsWith("/")) {
+                                url = location.href + url;
+                            }
+                            $.modalOpen({
+                                id: v.F_Encode,
+                                title: v.F_FullName,
+                                url: url,
+                                width: "700px",
+                                height: "550px",
+                                btn: null,
+                            });
+                        };
+                    var $el = $element.find("#" + v.F_EnCode)
+                        .attr('authorize', 'yes')
+                        .html(v.F_Icon ? `<i class="fa fa-${v.F_Icon}"></i>${v.F_FullName}` : v.F_FullName)
+                        .unbind("click").click(func);
+                });
+        }
     }
     $element.find("[authorize=no]").parents('li').prev('.split').remove();
     $element.find("[authorize=no]").parents('li').remove();
