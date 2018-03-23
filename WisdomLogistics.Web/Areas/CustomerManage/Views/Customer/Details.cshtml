@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<form id="form1">
+    <div>
+        <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#">客户信息</a></li>
+            </ul>
+            <div style="padding-top: 20px; margin-right: 30px;">
+                <table class="form">
+                    <tr>
+                        <th class="formTitle">姓名：</th>
+                        <td class="formValue">
+                            <input id="F_Name" name="F_Name" type="text" class="form-control required" placeholder="车 牌 号" />
+                        </td>
+                        <th class="formTitle">手机：</th>
+                        <td class="formValue">
+                            <input id="F_Phone" name="F_Phone" type="text" class="form-control required" placeholder="行驶证号" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">地址：</th>
+                        <td class="formValue">
+                            <input id="F_Address" name="F_Address" type="text" class="form-control required" placeholder="司机姓名" />
+                        </td>
+                        <th class="formTitle">座机：</th>
+                        <td class="formValue">
+                            <input id="F_Landline" name="F_Landline" type="text" class="form-control required" placeholder="联系方式" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">客户类型：</th>
+                        <td class="formValue">
+                            <input id="F_CustomerType" name="F_CustomerType" type="text" class="form-control required" placeholder="司机姓名" />
+                        </td>
+                        <th class="formTitle">座机：</th>
+                        <td class="formValue">
+                            <input id="F_Landline" name="F_Landline" type="text" class="form-control required" placeholder="联系方式" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">开户人：</th>
+                        <td class="formValue">
+                            <input id="F_AccountOpening" name="F_AccountOpening" type="text" class="form-control required" placeholder="司机姓名" />
+                        </td>
+                        <th class="formTitle">开户行：</th>
+                        <td class="formValue">
+                            <input id="F_OpeningBank" name="F_OpeningBank" type="text" class="form-control required" placeholder="联系方式" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">银行卡号：</th>
+                        <td class="formValue" colspan="2">
+                            <input id="F_BankCardNumber" name="F_BankCardNumber" type="text" class="form-control required" placeholder="司机姓名" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">备注：</th>
+                        <td class="formValue" colspan="2">
+                            <input id="F_Description" name="F_Description" type="text" class="form-control required" placeholder="司机姓名" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <style>
+        </style>
+    </div>
+    <script type="text/javascript">
+
+        var keyValue = $.request("keyValue");
+        $(function () {
+            $.ajax({
+                url: "/CustomerManage/Customer/GetFormJson",
+                data: { keyValue: keyValue },
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    $("#form1").formSerialize(data);
+                    $("#form1").find('.form-control,select,input').attr('readonly', 'readonly');
+                    $("#form1").find('div.ckbox label').attr('for', '');
+                }
+            });
+        });
+    </script>
+</form>

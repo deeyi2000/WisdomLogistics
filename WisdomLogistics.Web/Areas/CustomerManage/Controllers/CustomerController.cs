@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using WisdomLogistics.Application.SystemManage;
 using WisdomLogistics.Code;
 using WisdomLogistics.Domain.Entity.SystemManage;
 
-namespace WisdomLogistics.Web.Areas.VehicleManage.Controllers
+namespace WisdomLogistics.Web.Areas.CustomerManage.Controllers
 {
-    public class VehicleController : ControllerBase
+    public class CustomerController : ControllerBase
     {
-        private VehicleApp vehicleApp = new VehicleApp();
+        private CustomerApp vehicleApp = new CustomerApp();
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetGridJson(Pagination pagination, string keyword)
@@ -50,10 +51,10 @@ namespace WisdomLogistics.Web.Areas.VehicleManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(VehicleEntity deviceEntity, string keyValue)
+        public ActionResult SubmitForm(CustomerEntity customerEntity, string keyValue)
         {
-            deviceEntity.F_EnabledMark = true;
-            vehicleApp.SubmitForm(deviceEntity, keyValue);
+            customerEntity.F_EnabledMark = true;
+            vehicleApp.SubmitForm(customerEntity, keyValue);
             return Success("操作成功。");
         }
 
@@ -71,25 +72,25 @@ namespace WisdomLogistics.Web.Areas.VehicleManage.Controllers
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult DisabledVehicle(string keyValue)
+        public ActionResult DisabledCustomer(string keyValue)
         {
-            VehicleEntity deviceEntity = new VehicleEntity();
-            deviceEntity.F_Id = keyValue;
-            deviceEntity.F_EnabledMark = false;
-            vehicleApp.UpdateForm(deviceEntity);
-            return Success("车辆禁用成功。");
+            CustomerEntity customerEntity = new CustomerEntity();
+            customerEntity.F_Id = keyValue;
+            customerEntity.F_EnabledMark = false;
+            vehicleApp.UpdateForm(customerEntity);
+            return Success("客户禁用成功。");
         }
         [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult EnabledVehicle(string keyValue)
+        public ActionResult EnabledCustomer(string keyValue)
         {
-            VehicleEntity vehicleEntity = new VehicleEntity();
-            vehicleEntity.F_Id = keyValue;
-            vehicleEntity.F_EnabledMark = true;
-            vehicleApp.UpdateForm(vehicleEntity);
-            return Success("车辆启用成功。");
+            CustomerEntity customerEntity = new CustomerEntity();
+            customerEntity.F_Id = keyValue;
+            customerEntity.F_EnabledMark = true;
+            vehicleApp.UpdateForm(customerEntity);
+            return Success("客户启用成功。");
         }
     }
 }

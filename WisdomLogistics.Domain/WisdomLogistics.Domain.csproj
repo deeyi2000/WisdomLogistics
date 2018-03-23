@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entity\SystemManage\AreaEntity.cs" />
+    <Compile Include="Entity\SystemManage\CustomerEntity.cs" />
     <Compile Include="Entity\SystemManage\ItemsDetailEntity.cs" />
     <Compile Include="Entity\SystemManage\ItemsEntity.cs" />
     <Compile Include="Entity\SystemManage\ModuleButtonEntity.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Infrastructure\IEntity.cs" />
     <Compile Include="Infrastructure\IModificationAudited.cs" />
     <Compile Include="IRepository\SystemManage\IAreaRepository.cs" />
+    <Compile Include="IRepository\SystemManage\ICustomerRepository.cs" />
     <Compile Include="IRepository\SystemManage\IOrderProductRepository.cs" />
     <Compile Include="IRepository\SystemManage\IOrderRepository.cs" />
     <Compile Include="IRepository\SystemManage\IItemsDetailRepository.cs" />

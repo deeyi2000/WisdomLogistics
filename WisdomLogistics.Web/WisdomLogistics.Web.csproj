@@ -360,6 +360,14 @@
     <Content Include="Areas\FinanceManage\Views\Web.config" />
     <Content Include="Areas\FinanceManage\Views\_ViewStart.cshtml" />
     <Content Include="Areas\VehicleManage\Views\Vehicle\Index.cshtml" />
+    <Content Include="Areas\VehicleManage\Views\Vehicle\Form.cshtml" />
+    <Content Include="Areas\VehicleManage\Views\Vehicle\Details.cshtml" />
+    <Content Include="Areas\CustomerManage\Views\Customer\Details.cshtml" />
+    <Content Include="Areas\CustomerManage\Views\Customer\Form.cshtml" />
+    <Content Include="Areas\CustomerManage\Views\Customer\Index.cshtml" />
+    <Content Include="Areas\CustomerManage\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\CustomerManage\Views\Web.config" />
+    <Content Include="Areas\CustomerManage\Views\_ViewStart.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\config.js" />
@@ -386,6 +394,8 @@
     <Compile Include="App_Start\Handler\HandlerErrorAttribute.cs" />
     <Compile Include="App_Start\Handler\HandlerLoginAttribute.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\CustomerManage\Controllers\CustomerController.cs" />
+    <Compile Include="Areas\CustomerManage\CustomerManageAreaRegistration.cs" />
     <Compile Include="Areas\ExampleManage\Controllers\BarCodeController.cs" />
     <Compile Include="Areas\ExampleManage\Controllers\PrintController.cs" />
     <Compile Include="Areas\ExampleManage\Controllers\SendMailController.cs" />

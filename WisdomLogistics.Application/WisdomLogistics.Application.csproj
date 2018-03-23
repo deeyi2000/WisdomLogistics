@@ -46,6 +46,7 @@
     <Compile Include="Infrastructure\DbLogType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemManage\AreaApp.cs" />
+    <Compile Include="SystemManage\CustomerApp.cs" />
     <Compile Include="SystemManage\DutyApp.cs" />
     <Compile Include="SystemManage\ItemsApp.cs" />
     <Compile Include="SystemManage\ItemsDetailApp.cs" />

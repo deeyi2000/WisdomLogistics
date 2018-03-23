@@ -40,28 +40,28 @@ namespace WisdomLogistics.Application.SystemManage
             service.Delete(t => t.F_Id == keyValue);
         }
 
-        public void UpdateForm(OrderEntity deviceEntity)
+        public void UpdateForm(OrderEntity orderEntity)
         {
-            service.Update(deviceEntity);
+            service.Update(orderEntity);
         }
 
-        public void SubmitForm(OrderEntity areaEntity, string keyValue)
+        public void SubmitForm(OrderEntity orderEntity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
-                areaEntity.Modify(keyValue);
-                service.Update(areaEntity);
+                orderEntity.Modify(keyValue);
+                service.Update(orderEntity);
             }
             else
             {
-                areaEntity.Create();
-                for (int i = areaEntity.OrderProduct.Count - 1; i >= 0; --i)
+                orderEntity.Create();
+                for (int i = orderEntity.OrderProduct.Count - 1; i >= 0; --i)
                 {
-                    OrderProductEntity orderProducts = areaEntity.OrderProduct[i];
+                    OrderProductEntity orderProducts = orderEntity.OrderProduct[i];
                     orderProducts.Create();
-                    areaEntity.OrderProduct[i] = orderProducts;
+                    orderEntity.OrderProduct[i] = orderProducts;
                 }
-                service.Insert(areaEntity);
+                service.Insert(orderEntity);
             }
         }
     }

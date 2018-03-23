@@ -27,10 +27,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WisdomLogistics.Web", "Wisd
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WisdomLogistics.API", "WisdomLogistics.API\WisdomLogistics.API.csproj", "{34D9602B-49FD-484A-A713-BCDAADDE7CC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WisdomLogistics.WxClient", "WisdomLogistics.WxClient\WisdomLogistics.WxClient.csproj", "{CD5E7554-6994-4F55-B7CD-AECBDCE8F333}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WisdomLogistics.WxOperations", "WisdomLogistics.WxOperations\WisdomLogistics.WxOperations.csproj", "{5C28BEDB-165F-4A7F-BB97-9D889F0083BE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,14 +65,6 @@ Global
 		{34D9602B-49FD-484A-A713-BCDAADDE7CC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34D9602B-49FD-484A-A713-BCDAADDE7CC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34D9602B-49FD-484A-A713-BCDAADDE7CC8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CD5E7554-6994-4F55-B7CD-AECBDCE8F333}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD5E7554-6994-4F55-B7CD-AECBDCE8F333}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CD5E7554-6994-4F55-B7CD-AECBDCE8F333}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CD5E7554-6994-4F55-B7CD-AECBDCE8F333}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5C28BEDB-165F-4A7F-BB97-9D889F0083BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5C28BEDB-165F-4A7F-BB97-9D889F0083BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5C28BEDB-165F-4A7F-BB97-9D889F0083BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5C28BEDB-165F-4A7F-BB97-9D889F0083BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,8 +78,6 @@ Global
 		{CB17C695-1AF4-48A0-9453-4715D3BEC329} = {D7AC6436-736A-4682-8B64-AC4CA6818A92}
 		{A2175130-E632-42D4-8442-3C9A5E83F132} = {97D71353-A5A4-42DC-9557-C41AA15DCC80}
 		{34D9602B-49FD-484A-A713-BCDAADDE7CC8} = {14DF2D57-99CD-4C1F-9805-6071A98B95B2}
-		{CD5E7554-6994-4F55-B7CD-AECBDCE8F333} = {97D71353-A5A4-42DC-9557-C41AA15DCC80}
-		{5C28BEDB-165F-4A7F-BB97-9D889F0083BE} = {97D71353-A5A4-42DC-9557-C41AA15DCC80}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A0D2B332-E15E-4B18-848E-B1D80CA04556}
