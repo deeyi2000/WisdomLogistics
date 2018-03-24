@@ -100,5 +100,14 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
         {
             return View();
         }
+        public ViewResult JumpReceive()
+        {
+            return View();
+        }
+
+        public ViewResult Receive()
+        {
+            return View();
+        }
     }
 }

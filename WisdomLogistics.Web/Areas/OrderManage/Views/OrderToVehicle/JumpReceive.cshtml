@@ -7,20 +7,12 @@
         <div class="btn-group">
             <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
         </div>
-        <div class="btn-group">
-            <a id="NF-load" authorize="yes" class="btn btn-primary dropdown-text"></a>
-        </div>
-        <div class="btn-group">
-            <a id="NF-jumpReceive" authorize="yes" class="btn btn-primary dropdown-text"></a>
-        </div>
         <div class="operate">
             <ul class="nav nav-pills">
                 <li class="first">已选中<span>1</span>项</li>
-                <li><a id="NF-Details" authorize="yes"></a></li>
-                <li><a id="NF-edit" authorize="yes"></a></li>
-                <li class="split"></li>
-                <li><a id="NF-disable" authorize="yes"></a></li>
-                <li><a id="NF-jump" authorize="yes"></a></li>
+                <li><a id="NF-edit" authorize="yes">修改</a></li>
+                <li><a id="NF-receive" authorize="yes">签收</a></li>
+                <li><a id="NF-cancel" authorize="yes">取消中转</a></li>
             </ul>
             <a href="javascript:;" class="close"></a>
         </div>
@@ -45,46 +37,6 @@
     <div id="gridPager"></div>
 </div>
 <script>
-    function btn_Window() {
-        var keyValue = $("#gridList").jqGridRowValue().F_Id;
-        $.modalOpen({
-            id: this.F_EnCode,
-            title: this.F_FullName,
-            url: this.F_UrlAddress.startsWith("/") ? this.F_UrlAddress + "?keyValue=" + keyValue : location.href + this.F_UrlAddress + "?keyValue=" + keyValue,
-            width: "90%",
-            height: "90%",
-            btn: null
-        });
-    }
-    function btn_Dialog() {
-        var keyValue = $("#gridList").jqGridRowValue().F_Id;
-        $.modalOpen({
-            id: this.F_EnCode,
-            title: this.F_FullName,
-            url: this.F_UrlAddress.startsWith("/") ? this.F_UrlAddress + "?keyValue=" + keyValue : location.href + this.F_UrlAddress + "?keyValue=" + keyValue,
-            width: "700px",
-            height: "550px",
-            callBack: function (iframeId) {
-                top.frames[iframeId].submitForm(function() {
-                    $("#gridList").trigger("reloadGrid");
-                });
-            }
-        });
-    }
-    function btn_disable() {
-        var keyValue = $("#gridList").jqGridRowValue().F_Id;
-        $.modalConfirm("注：您确定要【作废】该订单吗？", function (r) {
-            if (r) {
-                $.submitForm({
-                    url: "/OrderManage/OrderList /DisabledAccount",
-                    param: { keyValue: keyValue },
-                    success: function () {
-                        $("#gridList").trigger("reloadGrid");
-                    }
-                });
-            }
-        });
-    }
     function initGrid(opt) {
         opt = Object.assign({
             el: "",
@@ -141,7 +93,50 @@
     }
 
     $(function () {
-        $('.toolbar').authorizeButton(window);
-        initGrid({ el: "#gridList", pager: "#gridPager", search: "#txt_keyword", url: "/OrderManage/OrderList/GetGridJson" });
+        var $grid = initGrid({ el: "#gridList", pager: "#gridPager", search: "#txt_keyword", url: "/OrderManage/OrderList/GetGridJson" });
+        var $btnEdit = $("#NF-edit").unbind("click").click(function() {
+            var keyValue = $("#gridList").jqGridRowValue().F_Id;
+            $.modalOpen({
+                id: "NF-edit",
+                title: "修改订单",
+                url: "/OrderManage/OrderToVehicle/Jump?keyValue=" + keyValue,
+                width: "700px",
+                height: "550px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm(function() {
+                        $("#gridList").trigger("reloadGrid");
+                    });
+                }
+            });
+        });
+        var $btnReceive = $("#NF-receive").unbind("click").click(function() {
+            var keyValue = $("#gridList").jqGridRowValue().F_Id;
+            $.modalOpen({
+                id: "NF-receive",
+                title: "中转签收",
+                url: "/OrderManage/OrderToVehicle/Receive?keyValue=" + keyValue,
+                width: "700px",
+                height: "550px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm(function () {
+                        $("#gridList").trigger("reloadGrid");
+                    });
+                }
+            });
+        });
+        var $btnCancel = $("#NF-cancel").unbind("click").click(function () {
+            var keyValue = $("#gridList").jqGridRowValue().F_Id;
+            $.modalConfirm("注：您确定要【取消中转】该订单吗？", function (r) {
+                if (r) {
+                    $.submitForm({
+                        url: "/OrderManage/OrderList /DisabledAccount",
+                        param: { keyValue: keyValue },
+                        success: function () {
+                            $("#gridList").trigger("reloadGrid");
+                        }
+                    });
+                }
+            });
+        });
     });
 </script>
