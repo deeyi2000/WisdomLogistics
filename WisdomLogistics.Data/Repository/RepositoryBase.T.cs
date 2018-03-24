@@ -46,7 +46,7 @@ namespace WisdomLogistics.Data
                 {
                     if (prop.GetValue(entity, null).ToString() == "&nbsp;")
                         dbcontext.Entry(entity).Property(prop.Name).CurrentValue = null;
-                    dbcontext.Entry(entity).Property(prop.Name).IsModified = true;
+                        dbcontext.Entry(entity).Property(prop.Name).IsModified = true;
                 }
             }
             return dbcontext.SaveChanges();

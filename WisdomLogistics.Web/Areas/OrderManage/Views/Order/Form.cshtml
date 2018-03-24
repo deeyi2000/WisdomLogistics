@@ -249,7 +249,7 @@
                             <input id="F_Description" name="F_Description" type="text" class="form-control required" placeholder="备注" />
                         </td>
                         <td class="formValue" rowspan="3" style="text-align:center;width:100px;height:80px">
-                            <input id="F_Submit" name="F_Submit" type="button" value="提交" onclick="submitForm()" class="layui-layer-btn0 btn btn-primary" />
+                            <!--<input id="F_Submit" name="F_Submit" type="button" value="提交" onclick="submitForm()" class="layui-layer-btn0 btn btn-primary" />-->
                         </td>
 
                     </tr>
@@ -307,7 +307,99 @@
     <script type="text/javascript">
             $(function () {
                 initControl();
-            })
+        })
+
+        var vmYF = new Vue({
+            el: "#vueYunFei",
+            data: {
+                list: [{ F_Name: "", F_Number: "", F_Weight: "", F_Volume: "", F_UnitPricee: "", F_Freight: "", F_DeliveryFee: "", F_PickDeliveryFee: "", F_InsuredForehead: "", F_InsuredFee: "" }]
+            },
+            computed: {
+                //合计价格
+                Total_F_Number: function () {
+                    var total = 0;
+                    for (i in this.list) {
+                        total += parseFloat(this.list[i].F_Number) || 0
+                    }
+                    return total
+                },
+                //合计重量
+                Total_F_Weight: function () {
+                    var total = 0;
+                    for (i in this.list) {
+                        total += parseFloat(this.list[i].F_Weight) || 0
+                    }
+                    return total
+                },
+                //合计重量
+                Total_F_Volume: function () {
+                    var total = 0;
+                    for (i in this.list) {
+                        total += parseFloat(this.list[i].F_Volume) || 0
+                    }
+                    return total
+                },
+
+                //合计单价
+                Total_F_UnitPricee: function () {
+                    var total = 0;
+                    for (i in this.list) {
+                        total += parseFloat(this.list[i].F_UnitPricee) || 0
+                    }
+                    return total
+                },
+                //合计运费
+                Total_F_Freight: function () {
+                    var total = 0;
+                    for (i in this.list) {
+                        total += parseFloat(this.list[i].F_Freight) || 0
+                    }
+                    return total
+                },
+                //合计送货费
+                Total_F_DeliveryFee: function () {
+                    var total = 0;
+                    for (i in this.list) {
+                        total += parseFloat(this.list[i].F_DeliveryFee) || 0
+                    }
+                    return total
+                },
+
+                //合计提货费
+                Total_F_PickDeliveryFee: function () {
+                    var total = 0;
+                    for (i in this.list) {
+                        total += parseFloat(this.list[i].F_PickDeliveryFee) || 0
+                    }
+                    return total
+                },
+
+                //合计保价额
+                Total_F_InsuredForehead: function () {
+                    var total = 0;
+                    for (i in this.list) {
+                        total += parseFloat(this.list[i].F_InsuredForehead) || 0
+                    }
+                    return total
+                },
+                //合计保价费
+                Total_F_InsuredFee: function () {
+                    var total = 0;
+                    for (i in this.list) {
+                        total += parseFloat(this.list[i].F_InsuredFee) || 0
+                    }
+                    return total
+                },
+            },
+            methods: {
+                add_onClick: function (k) {
+                    this.list.push({ F_Name: "", F_Number: "", F_Weight: "", F_Volume: "", F_UnitPricee: "", F_Freight: "", F_DeliveryFee: "", F_PickDeliveryFee: "", F_InsuredForehead: "", F_InsuredFee: "" })
+                },
+                del_onClick: function (k) {
+                    if (0 < k) this.list.splice(k, 1)
+                }
+            }
+        })
             var keyValue = $.request("keyValue");
             var ListData = null;
             $(function () {
@@ -318,101 +410,7 @@
                     async: false,
                     success: function (data) {
                         $("#form1").formSerialize(data);
-                        ListData = data['OrderProduct']
-                        $("#form1").find('.form-control,select,input').attr('readonly', 'readonly');
-                        $("#form1").find('div.ckbox label').attr('for', '');
-                        $("#F_UserPassword").val("******");
-                        var vmYF = new Vue({
-                            el: "#vueYunFei",
-                            data: {
-                                list: ListData  //[{ F_Name: "", F_Number: "", F_Weight: "", F_Volume: "", F_UnitPricee: "", F_Freight: "", F_DeliveryFee: "", F_PickDeliveryFee: "", F_InsuredForehead: "", F_InsuredFee: "" }]
-                            },
-                            computed: {
-                                //合计价格
-                                Total_F_Number: function () {
-                                    var total = 0;
-                                    for (i in this.list) {
-                                        total += parseFloat(this.list[i].F_Number) || 0
-                                    }
-                                    return total
-                                },
-                                //合计重量
-                                Total_F_Weight: function () {
-                                    var total = 0;
-                                    for (i in this.list) {
-                                        total += parseFloat(this.list[i].F_Weight) || 0
-                                    }
-                                    return total
-                                },
-                                //合计重量
-                                Total_F_Volume: function () {
-                                    var total = 0;
-                                    for (i in this.list) {
-                                        total += parseFloat(this.list[i].F_Volume) || 0
-                                    }
-                                    return total
-                                },
-
-                                //合计单价
-                                Total_F_UnitPricee: function () {
-                                    var total = 0;
-                                    for (i in this.list) {
-                                        total += parseFloat(this.list[i].F_UnitPricee) || 0
-                                    }
-                                    return total
-                                },
-                                //合计运费
-                                Total_F_Freight: function () {
-                                    var total = 0;
-                                    for (i in this.list) {
-                                        total += parseFloat(this.list[i].F_Freight) || 0
-                                    }
-                                    return total
-                                },
-                                //合计送货费
-                                Total_F_DeliveryFee: function () {
-                                    var total = 0;
-                                    for (i in this.list) {
-                                        total += parseFloat(this.list[i].F_DeliveryFee) || 0
-                                    }
-                                    return total
-                                },
-
-                                //合计提货费
-                                Total_F_PickDeliveryFee: function () {
-                                    var total = 0;
-                                    for (i in this.list) {
-                                        total += parseFloat(this.list[i].F_PickDeliveryFee) || 0
-                                    }
-                                    return total
-                                },
-
-                                //合计保价额
-                                Total_F_InsuredForehead: function () {
-                                    var total = 0;
-                                    for (i in this.list) {
-                                        total += parseFloat(this.list[i].F_InsuredForehead) || 0
-                                    }
-                                    return total
-                                },
-                                //合计保价费
-                                Total_F_InsuredFee: function () {
-                                    var total = 0;
-                                    for (i in this.list) {
-                                        total += parseFloat(this.list[i].F_InsuredFee) || 0
-                                    }
-                                    return total
-                                },
-                            },
-                            methods: {
-                                add_onClick: function (k) {
-                                    this.list.push({ F_Name: "", F_Number: "", F_Weight: "", F_Volume: "", F_UnitPricee: "", F_Freight: "", F_DeliveryFee: "", F_PickDeliveryFee: "", F_InsuredForehead: "", F_InsuredFee: "" })
-                                },
-                                del_onClick: function (k) {
-                                    if (0 < k) this.list.splice(k, 1)
-                                }
-                            }
-                        })
+                            vmYF.list = data['OrderProduct']
                     }
                 });
             });
@@ -442,6 +440,19 @@
                 $("#F_FormalityRate").bindSelect({
                     url: "/SystemManage/ItemsData/GetSelectJson",
                     param: { enCode: "FormalityRate" }
+                });
+            }
+            function submitForm() {
+                var keyValue = $.request("keyValue");
+                var postData = $("#form1").formSerialize()
+                postData['OrderProduct'] = vmYF.list
+
+                $.submitForm({
+                    url: "/OrderManage/Order/SubmitForm?keyValue=" + keyValue,
+                    param: postData,
+                    success: function () {
+                        $.currentWindow().$("#gridList").trigger("reloadGrid");
+                    }
                 });
             }
     </script>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WisdomLogistics.Domain.Entity.SystemManage
 {
-    public class OrderProductEntity : IEntity<RoleEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
+    public class OrderProductEntity : IEntity<OrderProductEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         public virtual string F_Id { get; set; }
         //货物名称
@@ -31,6 +31,7 @@ namespace WisdomLogistics.Domain.Entity.SystemManage
         public virtual string F_InsuredFee { get; set; }
         public virtual string F_OrderId { get; set; }
         public virtual OrderEntity Order { get; set; }
+
         public virtual int? F_SortCode { get; set; }
         public virtual bool? F_DeleteMark { get; set; }
         public virtual bool? F_EnabledMark { get; set; }
