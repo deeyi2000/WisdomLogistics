@@ -54,9 +54,6 @@
     </div>
 </div>
 
-
-<link href="~/Content/js/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
-<script src="~/Content/js/jquery-ui/jquery-ui.min.js"></script>
 <script>
     $(function () {
         var $gridGoods = initGrid({ el: "#gridGoods", pager: "#pagerGoods", search: "#kwGoods", url: "/OrderManage/OrderList/GetGridJson"});
@@ -105,7 +102,6 @@
             search: "",
             url: ""
         }, opt);
-
 
         var $el = $(opt.el);
         $el.dataGrid({

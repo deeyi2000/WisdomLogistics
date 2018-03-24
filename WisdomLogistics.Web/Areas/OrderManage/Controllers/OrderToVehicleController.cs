@@ -91,7 +91,12 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
             return Success("账户启用成功。");
         }
 
-        public ViewResult load()
+        public ViewResult Load()
+        {
+            return View();
+        }
+
+        public ViewResult Jump()
         {
             return View();
         }

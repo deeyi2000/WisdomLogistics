@@ -102,11 +102,8 @@ $.modalOpen = function (options) {
         content: options.url,
         btn: options.btn,
         btnclass: options.btnclass,
-        yes: function () {
-            options.callBack(options.id)
-        }, cancel: function () {
-            return true;
-        }
+        yes: function() { options.callBack(options.id) },
+        cancel: function() { return true; }
     });
 }
 $.modalConfirm = function (content, callBack) {

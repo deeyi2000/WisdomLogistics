@@ -362,6 +362,8 @@
     <Content Include="Areas\CustomerManage\Views\Web.config" />
     <Content Include="Areas\CustomerManage\Views\_ViewStart.cshtml" />
     <Content Include="Areas\OrderManage\Views\OrderToVehicle\index.cshtml" />
+    <Content Include="Areas\OrderManage\Views\OrderToVehicle\Load.cshtml" />
+    <Content Include="Areas\OrderManage\Views\OrderToVehicle\Jump.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\config.js" />

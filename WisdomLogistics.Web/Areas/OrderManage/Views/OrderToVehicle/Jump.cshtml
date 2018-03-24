@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<style type="text/css">
+[v-cloak] { display: none; }
+</style>
+<form id="form1" v-cloak>
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#">运单信息</a></li>
+    </ul>
+    <div style="padding-top: 20px; margin-right: 30px;">
+        <table class="form">
+            <tr>
+                <th class="formTitle">运单号: </th>
+                <td class="formValue">{{F_Station}}</td>
+                <th class="formTitle">货号: </th>
+                <td class="formValue">{{F_ArtNo}}</td>
+            </tr>
+            <tr>
+                <th class="formTitle">发站: </th>
+                <td class="formValue">{{F_Station}}</td>
+                <th class="formTitle">到站: </th>
+                <td class="formValue">{{F_sdf}}</td>
+            </tr>
+            <tr>
+                <th class="formTitle">发货方: </th>
+                <td class="formValue">{{F_Station}}</td>
+                <th class="formTitle">收货方: </th>
+                <td class="formValue">{{sdf}}</td>
+            </tr>
+            <tr>
+                <th class="formTitle">货物名称: </th>
+                <td class="formValue">{{F_Station}}</td>
+                <th class="formTitle">货物件数: </th>
+                <td class="formValue">{{F_ArtNo01}}-{{F_ArtNo02}}-{{F_ArtNo03}}</td>
+            </tr>
+            <tr>
+                <th class="formTitle">附加服务: </th>
+                <td class="formValue" colspan="3">{{F_Station}}</td>
+            </tr>
+            <tr>
+                <th class="formTitle">备注: </th>
+                <td class="formValue" colspan="3">{{F_Station}}</td>
+            </tr>
+            <tr>
+                <th class="formTitle" rowspan="2">费用信息: </th>
+                <td class="formValue">{{F_Station}}</td>
+            </tr>
+            <tr>
+                <th class="formTitle">中转公司名称: </th>
+                <td class="formValue" colspan="2">
+                    <input id="F_Area" name="F_Area" type="text" class="form-control required" placeholder="地区" />
+                </td>
+                <th class="formTitle">中转公司电话: </th>
+                <td class="formValue" colspan="2">
+                    <input id="F_Area" name="F_Area" type="text" class="form-control required" placeholder="地区" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">中转信息: </th>
+                <td class="formValue" colspan="2">
+                    <input id="F_Area" name="F_Area" type="text" class="form-control required" placeholder="地区" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<script type="text/javascript">
+    function Submit(success) {
+        var keyValue = $.request("keyValue");
+        var postData = $("#form1").formSerialize();
+        $.submitForm({
+            url: "SubmitForm?keyValue=" + keyValue,
+            param: postData,
+            success: success
+        });
+    }
+
+    $(function() {
+        var vm = new Vue({
+            el: "#form1",
+            data: {},
+            mounted: function () {
+                $.ajax({
+                    url: "/OrderManage/Order/GetOrderQuantity",
+                    dataType: "json",
+                    async: false,
+                    success: d => {
+                        this.data = d;
+                    }
+                });
+            }
+        });
+    });
+</script>

@@ -46,10 +46,11 @@
 </div>
 <script>
     function btn_Window() {
+        var keyValue = $("#gridList").jqGridRowValue().F_Id;
         $.modalOpen({
             id: this.F_EnCode,
             title: this.F_FullName,
-            url: location.href + this.F_UrlAddress,
+            url: this.F_UrlAddress.startsWith("/") ? this.F_UrlAddress + "?keyValue=" + keyValue : location.href + this.F_UrlAddress + "?keyValue=" + keyValue,
             width: "90%",
             height: "90%",
             btn: null
@@ -60,11 +61,13 @@
         $.modalOpen({
             id: this.F_EnCode,
             title: this.F_FullName,
-            url: this.F_UrlAddress + "?keyValue=" + keyValue,
+            url: this.F_UrlAddress.startsWith("/") ? this.F_UrlAddress + "?keyValue=" + keyValue : location.href + this.F_UrlAddress + "?keyValue=" + keyValue,
             width: "700px",
             height: "550px",
             callBack: function (iframeId) {
-                top.frames[iframeId].submitForm();
+                top.frames[iframeId].Submit(function() {
+                    //$("#gridList").trigger("reloadGrid");
+                });
             }
         });
     }
