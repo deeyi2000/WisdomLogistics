@@ -238,12 +238,12 @@
     }
   }
 
-  root.debounce = function(func, timeout){
-    var last
-    return function(){
-      var ctx = this, args = arguments
-      if(last) clearTimeout(last)
-      last = setTimeout(function() { func.apply(ctx, args) }, timeout)
+  root.debounce = function(func, timeout) {
+      var last;
+    return function() {
+        var ctx = this, args = arguments;
+        if (last) clearTimeout(last);
+        last = setTimeout(function() { func.apply(ctx, args) }, timeout);
     }
   }
 

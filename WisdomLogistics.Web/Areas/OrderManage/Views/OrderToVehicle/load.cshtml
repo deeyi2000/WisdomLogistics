@@ -1,0 +1,158 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<style type="text/css">
+    html, body {width: 100%;height: 100%;margin: 0px;padding: 0px;}
+</style>
+<div style="width: 100%; height: 100%;display:flex;flex-direction: row; justify-content: stretch; align-items: stretch;">
+    <div id="divGoods" style="flex: 1;display: flex; flex-direction: column;">
+        <div class="topPanel">
+            <div class="search">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="input-group">
+                                <input id="kwGoods" type="text" class="form-control" placeholder="账户/姓名/手机" style="width: 200px;">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <table id="gridGoods"></table>
+        <div id="pagerGoods"></div>
+    </div>
+    <div style="display:flex;flex: 0; width: 40px; flex-direction: column; justify-content: center; align-items: center;">
+        <a id="btnLoad" class="btn btn-primary" style="margin: 0.3rem;">装<br />车<br /><i class="glyphicon glyphicon-forward"></i></a>
+        <a id="btnUnload" class="btn btn-danger" style="margin: 0.3rem;">卸<br />车<br /><i class="glyphicon glyphicon-backward"></i></a>
+    </div>
+    <div id="divVehicles" style="flex: 1;display: flex; flex-direction: column;">
+        <div class="topPanel">
+            <div class="toolbar">
+                <div class="btn-group">
+                    <a id="btnSubmit" class="btn btn-primary"><span class="glyphicon glyphicon-refresh"></span>提交</a>
+                </div>
+            </div>
+            <div class="search">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="input-group">
+                                <input id="kwVehicles" type="text" class="form-control" placeholder="账户/姓名/手机" style="width: 200px;">
+                                <span class="input-group-btn">
+                                    <button id="btnNew" type="button" class="btn btn-primary">首次装车</button>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <table id="gridVehicles"></table>
+        <div id="pagerVehicles"></div>
+    </div>
+</div>
+
+
+<link href="~/Content/js/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-ui/jquery-ui.min.js"></script>
+<script>
+    $(function () {
+        var $gridGoods = initGrid({ el: "#gridGoods", pager: "#pagerGoods", search: "#kwGoods", url: "/OrderManage/OrderList/GetGridJson"});
+        var $gridVehicles = initGrid({ el: "#gridVehicles", pager: "#pagerVehicles", search: "#kwVehicles", url: "/OrderManage/OrderList/GetGridJson" });
+        var $btnLoad = $("#btnLoad").unbind("click").on("click", function () {
+            var row = $gridGoods.jqGridRowValue();
+            if (Array.isArray(row)) {
+                $gridVehicles.addRowData(row);
+                row.map(v => { $gridGoods.delRowData(v.F_Id); });
+            }
+            else if (row) {
+                $gridVehicles.addRowData(row.F_Id+1, row);
+                $gridGoods.delRowData(row.F_Id);
+            }
+        });
+        var $btnUnload = $("#btnUnload").unbind("click").on("click", function () {
+            var row = $gridVehicles.jqGridRowValue();
+            if (Array.isArray(row)) {
+                $gridGoods.addRowData(row);
+                row.map(v => { $gridVehicles.delRowData(v.F_Id); });
+            }
+            else if (row) {
+                $gridGoods.addRowData(row.F_Id + 1, row);
+                $gridVehicles.delRowData(row.F_Id);
+            }
+        });
+        var $btnSubmit = $("#btnSubmit").unbind("click").on("click", function () {
+            $.modalConfirm("您确定要【装车】吗？", function (e) {
+                if (e) {
+                    $.submitForm({
+                        url: "/OrderManage/OrderList /DisabledAccount",
+                        param: { keyValue: keyValue },
+                        success: function() {
+                            $.currentWindow().$("#gridList").trigger("reloadGrid");
+                        }
+                    });
+                }
+            });
+        });
+    });
+
+    function initGrid(opt) {
+        opt = Object.assign({
+            el: "",
+            pager: "",
+            search: "",
+            url: ""
+        }, opt);
+
+
+        var $el = $(opt.el);
+        $el.dataGrid({
+            url: opt.url,
+            autowidth: false,
+            width: ($(window).width() - 40) / 2,
+            height: $(window).height() - 150,
+            colModel: [
+                { label: '订单日期', name: 'F_CreatorTime', frozen: true },
+                { label: '运单号', name: 'F_Id', align: 'left', frozen: true, key: true },
+                { label: '货号', name: 'ArtNo01', align: 'left' },
+                { label: '到站', name: 'F_Station', align: 'left' },
+                { label: '地区', name: 'F_Area', align: 'left' },
+                { label: '车辆备注', name: 'F_Latitude', align: 'left' },
+                { label: '发货人', name: 'F_Consignor', align: 'left' },
+                { label: '发货电话', name: 'F_ConsignorPhone', align: 'left' },
+                { label: '发货人身份证', name: 'F_ConsignorPhone', align: 'left' },
+                { label: '收货人', name: 'F_Consignee', align: 'left' },
+                { label: '收货电话', name: 'F_ConsigneePhone', align: 'left' },
+                { label: '货物名称', name: 'F_Name', align: 'left' },
+                { label: '件数', name: 'F_Number', align: 'left' },
+                { label: '重量', name: 'F_Weight', align: 'left' },
+                { label: '体积', name: 'F_Volume', align: 'left' },
+                { label: '运费合计', name: 'F_FreightCombined', align: 'left', formatter: 'number' },
+                { label: '提付', name: 'F_PutPay', align: 'left' },
+                { label: '现付', name: 'F_PresentPay', align: 'left' },
+                { label: '回付', name: 'F_BackPay', align: 'left' },
+                { label: '代收款', name: 'F_CollectionPayment', align: 'left' },
+                { label: '放款方式', name: 'F_SettlementMode', align: 'left' },
+                { label: '手续费率', name: 'F_FormalityRate', align: 'left' },
+                { label: '手续费', name: 'F_FormalityRate', align: 'left' },
+                { label: '提货方式', name: 'F_FormalityRate', align: 'left' },
+                { label: '开单类型', name: 'F_FormalityRate', align: 'left' },
+                { label: '开单人', name: 'F_RecordSingle', align: 'left' }
+            ],
+            // direction: "rtl", 固定列会挪到左边
+            footerrow: true,
+            userDataOnFooter: true,
+            pager: opt.pager,
+            sortname: 'F_CreatorTime desc',
+            viewrecords: true
+        });
+        var $elSearch = $(opt.search).unbind("keypress").on("keypress",
+            debounce(function () {
+                $el.jqGrid('setGridParam', { postData: { keyword: $elSearch.val() } })
+                    .trigger('reloadGrid');
+            }, 1000));
+        return $el;
+    }
+</script>

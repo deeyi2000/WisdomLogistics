@@ -416,12 +416,11 @@ $.fn.authorizeButton = function (ctx) {
                                 url: url,
                                 width: "700px",
                                 height: "550px",
-                                btn: null,
                             });
                         };
                     var $el = $element.find("#" + v.F_EnCode)
                         .attr('authorize', 'yes')
-                        .html(v.F_Icon ? `<i class="fa fa-${v.F_Icon}"></i>${v.F_FullName}` : v.F_FullName)
+                        .html(v.F_Icon ? `<i class="${v.F_Icon}"></i>${v.F_FullName}` : v.F_FullName)
                         .unbind("click").click(func);
                 });
         }
