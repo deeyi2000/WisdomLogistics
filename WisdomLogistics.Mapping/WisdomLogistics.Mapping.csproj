@@ -55,6 +55,7 @@
     <Compile Include="SystemManage\ModuleMap.cs" />
     <Compile Include="SystemManage\OrderMap.cs" />
     <Compile Include="SystemManage\OrderProductMap.cs" />
+    <Compile Include="SystemManage\OrderQuantityMap.cs" />
     <Compile Include="SystemManage\OrganizeMap.cs" />
     <Compile Include="SystemManage\RoleAuthorizeMap.cs" />
     <Compile Include="SystemManage\RoleMap.cs" />

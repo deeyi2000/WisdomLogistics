@@ -10,14 +10,16 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
 {
     public class OrderController : ControllerBase
     {
-        private OrderApp deviceApp = new OrderApp();
+        private OrderApp orderApp = new OrderApp();
+        private OrderQuantityApp orderQuantityApp = new OrderQuantityApp();
+        private UserApp userApp = new UserApp();
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetGridJson(Pagination pagination, string keyword)
         {
             var data = new
             {
-                rows = deviceApp.GetList(),
+                rows = orderApp.GetList(),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records
@@ -31,7 +33,7 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
         {
             var data = new
             {
-                rows = deviceApp.GetList().Where(c => c.F_Id == keyValue),
+                rows = orderApp.GetList().Where(c => c.F_Id == keyValue),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records
@@ -41,9 +43,21 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
 
         [HttpGet]
         [HandlerAjaxOnly]
+        public ActionResult GetOrderQuantity()
+        {
+           return Content(orderQuantityApp.GetOrderQuantity().ToJson());
+        }
+
+        public ActionResult GetUserNumber()
+        {
+            return Content(userApp.GetUserNumber().ToJson());
+        }
+
+        [HttpGet]
+        [HandlerAjaxOnly]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = deviceApp.GetForm(keyValue);
+            var data = orderApp.GetForm(keyValue);
             return Content(data.ToJson());
         }
 
@@ -52,7 +66,7 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubmitForm(OrderEntity deviceEntity, string keyValue)
         {
-            deviceApp.SubmitForm(deviceEntity, keyValue);
+            orderApp.SubmitForm(deviceEntity, keyValue);
             return Success("操作成功。");
         }
 
@@ -62,7 +76,7 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
         {
-            deviceApp.DeleteForm(keyValue);
+            orderApp.DeleteForm(keyValue);
             return Success("删除成功。");
         }
 
@@ -75,7 +89,7 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
             OrderEntity deviceEntity = new OrderEntity();
             deviceEntity.F_Id = keyValue;
             deviceEntity.F_EnabledMark = false;
-            deviceApp.UpdateForm(deviceEntity);
+            orderApp.UpdateForm(deviceEntity);
             return Success("账户禁用成功。");
         }
         [HttpPost]
@@ -87,7 +101,7 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
             OrderEntity deviceEntity = new OrderEntity();
             deviceEntity.F_Id = keyValue;
             deviceEntity.F_EnabledMark = true;
-            deviceApp.UpdateForm(deviceEntity);
+            orderApp.UpdateForm(deviceEntity);
             return Success("账户启用成功。");
         }
     }

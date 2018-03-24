@@ -48,6 +48,7 @@
     <Compile Include="SystemManage\ModuleButtonRepository.cs" />
     <Compile Include="SystemManage\ModuleRepository.cs" />
     <Compile Include="SystemManage\OrderProductRepository.cs" />
+    <Compile Include="SystemManage\OrderQuantityRepository.cs" />
     <Compile Include="SystemManage\OrderRepository.cs" />
     <Compile Include="SystemManage\OrganizeRepository.cs" />
     <Compile Include="SystemManage\RoleAuthorizeRepository.cs" />

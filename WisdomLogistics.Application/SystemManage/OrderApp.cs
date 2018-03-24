@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WisdomLogistics.Code;
 using WisdomLogistics.Domain.Entity.SystemManage;
 using WisdomLogistics.Domain.IRepository.SystemManage;
 using WisdomLogistics.Repository.SystemManage;
@@ -19,6 +20,8 @@ namespace WisdomLogistics.Application.SystemManage
     {
         private IOrderRepository service = new OrderRepository();
         private IOrderProductRepository serviceOederProduct = new OrderProductRepository();
+        private OrderQuantityApp orderQuantityApp = new OrderQuantityApp();
+
         public List<OrderEntity> GetList()
         {
             List<OrderEntity> lists = service.IQueryable().ToList();
@@ -55,6 +58,8 @@ namespace WisdomLogistics.Application.SystemManage
             else
             {
                 orderEntity.Create();
+                orderEntity.F_WaybillNumber = DateTime.Now.ToString("yyyyMMddHHmmssfff ");    //+ Common.RndNum(4);
+                orderEntity.F_ArtNo = orderEntity.F_ArtNo01 + "-" + orderEntity.F_ArtNo02 + "-" + orderEntity.F_ArtNo03;
                 for (int i = orderEntity.OrderProduct.Count - 1; i >= 0; --i)
                 {
                     OrderProductEntity orderProducts = orderEntity.OrderProduct[i];
@@ -62,6 +67,7 @@ namespace WisdomLogistics.Application.SystemManage
                     orderEntity.OrderProduct[i] = orderProducts;
                 }
                 service.Insert(orderEntity);
+                orderQuantityApp.UpdateOrderQuantity();
             }
         }
     }

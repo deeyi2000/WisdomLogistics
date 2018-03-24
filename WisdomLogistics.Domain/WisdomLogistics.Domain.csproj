@@ -32,6 +32,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +50,7 @@
     <Compile Include="Entity\SystemManage\ModuleEntity.cs" />
     <Compile Include="Entity\SystemManage\OrderEntity.cs" />
     <Compile Include="Entity\SystemManage\OrderProductEntity.cs" />
+    <Compile Include="Entity\SystemManage\OrderQuantityEntity.cs" />
     <Compile Include="Entity\SystemManage\OrganizeEntity.cs" />
     <Compile Include="Entity\SystemManage\RoleAuthorizeEntity.cs" />
     <Compile Include="Entity\SystemManage\RoleEntity.cs" />
@@ -64,6 +67,7 @@
     <Compile Include="IRepository\SystemManage\IAreaRepository.cs" />
     <Compile Include="IRepository\SystemManage\ICustomerRepository.cs" />
     <Compile Include="IRepository\SystemManage\IOrderProductRepository.cs" />
+    <Compile Include="IRepository\SystemManage\IOrderQuantityRepository.cs" />
     <Compile Include="IRepository\SystemManage\IOrderRepository.cs" />
     <Compile Include="IRepository\SystemManage\IItemsDetailRepository.cs" />
     <Compile Include="IRepository\SystemManage\IItemsRepository.cs" />

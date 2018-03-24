@@ -15,6 +15,7 @@ namespace WisdomLogistics.Domain.Entity.SystemManage
         public string F_RealName { get; set; }
         public string F_NickName { get; set; }
         public string F_HeadIcon { get; set; }
+        public int F_Number { get; set; }
         public bool? F_Gender { get; set; }
         public DateTime? F_Birthday { get; set; }
         public string F_MobilePhone { get; set; }

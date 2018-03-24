@@ -53,6 +53,7 @@
     <Compile Include="SystemManage\ModuleApp.cs" />
     <Compile Include="SystemManage\ModuleButtonApp.cs" />
     <Compile Include="SystemManage\OrderApp.cs" />
+    <Compile Include="SystemManage\OrderQuantityApp.cs" />
     <Compile Include="SystemManage\OrganizeApp.cs" />
     <Compile Include="SystemManage\RoleApp.cs" />
     <Compile Include="SystemManage\RoleAuthorizeApp.cs" />

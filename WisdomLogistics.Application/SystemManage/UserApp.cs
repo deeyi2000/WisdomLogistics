@@ -34,6 +34,13 @@ namespace WisdomLogistics.Application.SystemManage
         {
             return service.FindEntity(keyValue);
         }
+
+        public UserEntity GetUserNumber()
+        {
+            var LoginInfo = OperatorProvider.Provider.GetCurrent();
+            UserEntity userEntity = service.FindEntity(t => t.F_Id == LoginInfo.UserId);
+            return userEntity;
+        }
         public void DeleteForm(string keyValue)
         {
             service.DeleteForm(keyValue);

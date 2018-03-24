@@ -2,11 +2,13 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Index.cshtml";
 }
+<script src="~/Content/js/jquery/jquery.autocompleter.js"></script>
+<link href="~/Content/js/jquery/jquery.autocompleter.css" rel="stylesheet" />
 
 <script type="text/javascript">
     $(function () {
         initControl();
-    })
+    });
 </script>
 
 <form id="form1">
@@ -33,11 +35,11 @@
                         <th class="formTitle" rowspan="2">货号</th>
                         <td class="formValue" rowspan=" 2">
                             <label>
-                                <input id="ArtNo01" name="ArtNo01" type="text" class="form-control required" style="float:left;width:20px" value="00" placeholder="0" />
+                                <input id="F_ArtNo01" name="F_ArtNo01" type="text" class="form-control required" style="float:left;width:20px" value="00" placeholder="0" />
                                 <span style="float:left;width:10px;height:32px; margin-left:5px; line-height:32px">-</span>
-                                <input id="ArtNo02" name="ArtNo02" type="text" class="form-control required" style="float:left;width:40px" value="0000" placeholder="0" />
+                                <input id="F_ArtNo02" name="F_ArtNo02" type="text" class="form-control required" style="float:left;width:40px" value="0000" placeholder="0" />
                                 <span style="float:left;width:10px;height:32px; margin-left:5px; line-height:32px">-</span>
-                                <input id="ArtNo03" name="ArtNo03" type="text" class="form-control required" style="float:left;width:20px" value="00" placeholder="0" />
+                                <input id="F_ArtNo03" name="F_ArtNo03" type="text" class="form-control required" style="float:left;width:20px" value="00" placeholder="0" />
                             </label>
                         </td>
                     </tr>
@@ -175,140 +177,7 @@
                 </table>
             </div>
         </div>
-        <script type="text/javascript">
-            var vmYF = new Vue({
-                el: "#vueYunFei",
-                data: {
-                    list: [{ F_Name: "", F_Number: "", F_Weight: "", F_Volume: "", F_UnitPricee: "", F_Freight: "", F_DeliveryFee: "", F_PickDeliveryFee: "", F_InsuredForehead: "", F_InsuredFee: "" }]
-                },
-                computed: {
-                    //合计价格
-                    Total_F_Number: function () {
-                        var total = 0;
-                        for (i in this.list) {
-                            total += parseFloat(this.list[i].F_Number) || 0
-                        }
-                        return total
-                    },
-                    //合计重量
-                    Total_F_Weight: function () {
-                        var total = 0;
-                        for (i in this.list) {
-                            total += parseFloat(this.list[i].F_Weight) || 0
-                        }
-                        return total
-                    },
-                    //合计重量
-                    Total_F_Volume: function () {
-                        var total = 0;
-                        for (i in this.list) {
-                            total += parseFloat(this.list[i].F_Volume) || 0
-                        }
-                        return total
-                    },
-
-                    //合计单价
-                    Total_F_UnitPricee: function () {
-                        var total = 0;
-                        for (i in this.list) {
-                            total += parseFloat(this.list[i].F_UnitPricee) || 0
-                        }
-                        return total
-                    },
-                    //合计运费
-                    Total_F_Freight: function () {
-                        var total = 0;
-                        for (i in this.list) {
-                            total += parseFloat(this.list[i].F_Freight) || 0
-                        }
-                        return total
-                    },
-                    //合计送货费
-                    Total_F_DeliveryFee: function () {
-                        var total = 0;
-                        for (i in this.list) {
-                            total += parseFloat(this.list[i].F_DeliveryFee) || 0
-                        }
-                        return total
-                    },
-
-                    //合计提货费
-                    Total_F_PickDeliveryFee: function () {
-                        var total = 0;
-                        for (i in this.list) {
-                            total += parseFloat(this.list[i].F_PickDeliveryFee) || 0
-                        }
-                        return total
-                    },
-
-                    //合计保价额
-                    Total_F_InsuredForehead: function () {
-                        var total = 0;
-                        for (i in this.list) {
-                            total += parseFloat(this.list[i].F_InsuredForehead) || 0
-                        }
-                        return total
-                    },
-                    //合计保价费
-                    Total_F_InsuredFee: function () {
-                        var total = 0;
-                        for (i in this.list) {
-                            total += parseFloat(this.list[i].F_InsuredFee) || 0
-                        }
-                        return total
-                    },
-                },
-                methods: {
-                    add_onClick: function (k) {
-                        this.list.push({ F_Name: "", F_Number: "", F_Weight: "", F_Volume: "", F_UnitPricee: "", F_Freight: "", F_DeliveryFee: "", F_PickDeliveryFee: "", F_InsuredForehead: "", F_InsuredFee: "" })
-                    },
-                    del_onClick: function (k) {
-                        if (0 < k) this.list.splice(k, 1)
-                    }
-                }
-            })
-            function initControl() {
-                $("#F_PayType").bindSelect({
-                    url: "/SystemManage/ItemsData/GetSelectJson",
-                    param: { enCode: "PayType" }
-                });
-
-                $("#F_PaymentMethod").bindSelect({
-                    url: "/SystemManage/ItemsData/GetSelectJson",
-                    param: { enCode: "PaymentMethod" }
-                });
-
-                $("#F_DarkMatPaymentState").bindSelect({
-                    url: "/SystemManage/ItemsData/GetSelectJson",
-                    param: { enCode: "PaymentState" }
-                });
-
-                $("#F_BrightPadPaymentState").bindSelect({
-                    url: "/SystemManage/ItemsData/GetSelectJson",
-                    param: { enCode: "PaymentState" }
-                });
-
-                $("#F_FormalityRate").bindSelect({
-                    url: "/SystemManage/ItemsData/GetSelectJson",
-                    param: { enCode: "FormalityRate" }
-                });
-            }
-
-            function submitForm() {
-                var keyValue = $.request("keyValue");
-                var postData = $("#form1").formSerialize()
-                postData['OrderProduct'] = vmYF.list
-
-                $.submitForm({
-                    url: "/OrderManage/Order/SubmitForm?keyValue=" + keyValue,
-                    param: postData,
-                    success: function () {
-                        $.currentWindow().$("#gridList").trigger("reloadGrid");
-                    }
-                });
-            }
-        </script>
-
+   
         <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#">代收货款（单位:元）</a></li>
@@ -386,7 +255,7 @@
                         </td>
                         <th class="formTitle">备注:</th>
                         <td class="formValue" colspan="3" style="border-right:2px dotted #CFE1F9">
-                            <input id="F_Remarks" name="F_Remarks" type="text" class="form-control required" placeholder="备注" />
+                            <input id="F_Description" name="F_Description" type="text" class="form-control required" placeholder="备注" />
                         </td>
                         <td class="formValue" rowspan="3" style="text-align:center;width:100px;height:80px">
                             <input id="F_Submit" name="F_Submit" type="button" value="提交" onclick="submitForm()" class="layui-layer-btn0 btn btn-primary" />
@@ -444,4 +313,200 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        var colors = "[";
+        $(function (response) {
+            $.ajax(
+                {
+                    dataType : "json",
+                    url: "/SystemManage/ItemsData/GetSelectJson",
+                    data: { enCode: "quyu" },
+                    type: "GET",
+                    success: function (data) {
+                        $.each(data, function (index, domEle) {
+                            colors += "{" + "value:" + '"' + domEle.id + '"' +"," + "label:" + '"' + domEle.text + '"' + "},";
+                        });
+                        colors = colors.substr(0, colors.length - 1);
+                        colors += "]";
+                    }
+            });
+        });
+
+            $('#F_Station').autocompleter({
+                highlightMatches: true,     // marker for autocomplete matches
+                source: colors,    // object to local or url to remote search
+                template: '{{ value }} <span>[{{ label }}]</span>',   // custom template
+                hint: true,     // show hint
+                empty: false,   // abort source if empty field
+                limit: 5,   // max results
+                callback: function (value, index, selected) {
+                    if (selected) {
+                        $("#F_Station").val(value);
+                    }
+                }
+            });
+
+            var vmYF = new Vue({
+                el: "#vueYunFei",
+                data: {
+                    list: [{ F_Name: "", F_Number: "", F_Weight: "", F_Volume: "", F_UnitPricee: "", F_Freight: "", F_DeliveryFee: "", F_PickDeliveryFee: "", F_InsuredForehead: "", F_InsuredFee: "" }]
+                },
+                computed: {
+                    //合计件数
+                    Total_F_Number: function () {
+                        var total = 0;
+                        for (i in this.list) {
+                            total += parseFloat(this.list[i].F_Number) || 0
+                        }
+                        if (total < 10) { $("#F_ArtNo03").val("0" + total); }
+                        else { $("#F_ArtNo03").val(total); }
+                        return total
+                    },
+                    //合计重量
+                    Total_F_Weight: function () {
+                        var total = 0;
+                        for (i in this.list) {
+                            total += parseFloat(this.list[i].F_Weight) || 0
+                        }
+                        return total
+                    },
+                    //合计体积
+                    Total_F_Volume: function () {
+                        var total = 0;
+                        for (i in this.list) {
+                            total += parseFloat(this.list[i].F_Volume) || 0
+                        }
+                        return total
+                    },
+
+                    //合计单价
+                    Total_F_UnitPricee: function () {
+                        var total = 0;
+                        for (i in this.list) {
+                            total += parseFloat(this.list[i].F_UnitPricee) || 0
+                        }
+                        return total
+                    },
+                    //合计运费
+                    Total_F_Freight: function () {
+                        var total = 0;
+                        for (i in this.list) {
+                            total += parseFloat(this.list[i].F_Freight) || 0
+                        }
+                        return total
+                    },
+                    //合计送货费
+                    Total_F_DeliveryFee: function () {
+                        var total = 0;
+                        for (i in this.list) {
+                            total += parseFloat(this.list[i].F_DeliveryFee) || 0
+                        }
+                        return total
+                    },
+
+                    //合计提货费
+                    Total_F_PickDeliveryFee: function () {
+                        var total = 0;
+                        for (i in this.list) {
+                            total += parseFloat(this.list[i].F_PickDeliveryFee) || 0
+                        }
+                        return total
+                    },
+
+                    //合计保价额
+                    Total_F_InsuredForehead: function () {
+                        var total = 0;
+                        for (i in this.list) {
+                            total += parseFloat(this.list[i].F_InsuredForehead) || 0
+                        }
+                        return total
+                    },
+                    //合计保价费
+                    Total_F_InsuredFee: function () {
+                        var total = 0;
+                        for (i in this.list) {
+                            total += parseFloat(this.list[i].F_InsuredFee) || 0
+                        }
+                        return total
+                    },
+                },
+                methods: {
+                    add_onClick: function (k) {
+                        this.list.push({ F_Name: "", F_Number: "", F_Weight: "", F_Volume: "", F_UnitPricee: "", F_Freight: "", F_DeliveryFee: "", F_PickDeliveryFee: "", F_InsuredForehead: "", F_InsuredFee: "" })
+                    },
+                    del_onClick: function (k) {
+                        if (0 < k) this.list.splice(k, 1)
+                    }
+                }
+            })
+
+            function initControl() {
+                $("#F_PayType").bindSelect({
+                    url: "/SystemManage/ItemsData/GetSelectJson",
+                    param: { enCode: "PayType" }
+                });
+
+                $("#F_PaymentMethod").bindSelect({
+                    url: "/SystemManage/ItemsData/GetSelectJson",
+                    param: { enCode: "PaymentMethod" }
+                });
+
+                $("#F_DarkMatPaymentState").bindSelect({
+                    url: "/SystemManage/ItemsData/GetSelectJson",
+                    param: { enCode: "PaymentState" }
+                });
+
+                $("#F_BrightPadPaymentState").bindSelect({
+                    url: "/SystemManage/ItemsData/GetSelectJson",
+                    param: { enCode: "PaymentState" }
+                });
+
+                $("#F_FormalityRate").bindSelect({
+                    url: "/SystemManage/ItemsData/GetSelectJson",
+                    param: { enCode: "FormalityRate" }
+                });
+            }
+
+            $(function () {
+                $.ajax({
+                    url: "/OrderManage/Order/GetOrderQuantity",
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        var number = data.F_OrderQuantity;
+                        if (number < 10) { $("#F_ArtNo02").val("000" + data.F_OrderQuantity); }
+                        else if (number < 100) { $("#F_ArtNo02").val("00" + data.F_OrderQuantity); }
+                        else if (number < 1000) { $("#F_ArtNo02").val("0" + data.F_OrderQuantity); }
+                        else if (number < 10000) { $("#F_ArtNo02").val(data.F_OrderQuantity); }
+                    }
+                });
+                $.ajax({
+                    url: "/OrderManage/Order/GetUserNumber",
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        var number = data.F_Number;
+                        if (number < 10) { $("#F_ArtNo01").val("0" + data.F_Number); }
+                        else if (number < 100) { $("#F_ArtNo01").val(data.F_Number); }
+                    }
+                });
+
+            });
+
+            function submitForm() {
+                var keyValue = $.request("keyValue");
+                var postData = $("#form1").formSerialize()
+                postData['OrderProduct'] = vmYF.list
+
+                $.submitForm({
+                    url: "/OrderManage/Order/SubmitForm?keyValue=" + keyValue,
+                    param: postData,
+                    success: function () {
+                        $.currentWindow().$("#gridList").trigger("reloadGrid");
+                    }
+                });
+            }
+    </script>
+
 </form>

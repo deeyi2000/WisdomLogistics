@@ -16,11 +16,15 @@ namespace WisdomLogistics.Domain.Entity.SystemManage
         //收货人电话
         public string F_ConsigneePhone { get; set; }
         //货号--001
-        public string ArtNo01 { get; set; }
+        public string F_ArtNo01 { get; set; }
         //货号-002
-        public string ArtNo02 { get; set; }
+        public string F_ArtNo02 { get; set; }
         //货号--003
-        public string ArtNo03 { get; set; }
+        public string F_ArtNo03 { get; set; }
+        //货号
+        public string F_ArtNo { get; set; }
+        //运单号
+        public string F_WaybillNumber { get; set ; }
         //地区
         public string F_Area { get; set; }
         //发货人
@@ -44,7 +48,7 @@ namespace WisdomLogistics.Domain.Entity.SystemManage
         //明垫付款状态
         public string F_BrightPadPaymentState { get; set; }
         //暗垫
-        public string G_DarkPad { get; set; }
+        public string F_DarkPad { get; set; }
         //暗垫付款状态
         public string F_DarkMatPaymentState { get; set; }
         //代收货款
@@ -65,8 +69,6 @@ namespace WisdomLogistics.Domain.Entity.SystemManage
         public string F_Receipt { get; set; }
         //上门送货
         public string F_DeliveryHome { get; set; }
-        //备注
-        public string F_Remarks { get; set; }
         //针式打印
         public string F_DirectThermal { get; set; }
         //针式打印 数量
