@@ -66,7 +66,7 @@
             height: "550px",
             callBack: function (iframeId) {
                 top.frames[iframeId].Submit(function() {
-                    //$("#gridList").trigger("reloadGrid");
+                    $("#gridList").trigger("reloadGrid");
                 });
             }
         });
@@ -79,20 +79,6 @@
                     url: "/OrderManage/OrderList /DisabledAccount",
                     param: { keyValue: keyValue },
                     success: function () {
-                        $.currentWindow().$("#gridList").trigger("reloadGrid");
-                    }
-                });
-            }
-        });
-    }
-    function btn_jump() {
-        var keyValue = $("#gridList").jqGridRowValue().F_Id;
-        $.modalConfirm("注：您确定要【作废】该订单吗？", function (r) {
-            if (r) {
-                $.submitForm({
-                    url: "/OrderManage/OrderList /DisabledAccount",
-                    param: { keyValue: keyValue },
-                    success: function() {
                         $.currentWindow().$("#gridList").trigger("reloadGrid");
                     }
                 });
