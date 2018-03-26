@@ -18,7 +18,7 @@ namespace WisdomLogistics.Web
             }
             if (OperatorProvider.Provider.GetCurrent() == null)
             {
-                WebHelper.WriteCookie("nfine_login_error", "overdue");
+                WebHelper.WriteCookie("WisdomLogistics_login_error", "overdue");
                 filterContext.HttpContext.Response.Write("<script>top.location.href = '/Login/Index';</script>");
                 return;
             }

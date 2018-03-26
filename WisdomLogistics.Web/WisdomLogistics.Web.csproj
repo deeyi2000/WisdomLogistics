@@ -402,6 +402,7 @@
     <Compile Include="Areas\FinanceManage\FinanceManageAreaRegistration.cs" />
     <Compile Include="Areas\MaintainManage\MaintainManageAreaRegistration.cs" />
     <Compile Include="Areas\OrderManage\Controllers\OrderController.cs" />
+    <Compile Include="Areas\OrderManage\Controllers\OrderToTransferController.cs" />
     <Compile Include="Areas\OrderManage\Controllers\OrderToVehicleController.cs" />
     <Compile Include="Areas\OrderManage\Controllers\OrderListController.cs" />
     <Compile Include="Areas\OrderManage\OrderManageAreaRegistration.cs" />

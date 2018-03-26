@@ -503,7 +503,8 @@
                     url: "/OrderManage/Order/SubmitForm?keyValue=" + keyValue,
                     param: postData,
                     success: function () {
-                        $.currentWindow().$("#gridList").trigger("reloadGrid");
+                        //$.currentWindow().$("#gridList").trigger("reloadGrid");
+                        location.reload();
                     }
                 });
             }

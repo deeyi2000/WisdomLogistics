@@ -66,15 +66,15 @@ namespace WisdomLogistics.Domain.Entity.SystemManage
         //银行卡号
         public string F_BankCardNumber { get; set; }
         //需要回单
-        public string F_Receipt { get; set; }
+        public bool F_Receipt { get; set; }
         //上门送货
-        public string F_DeliveryHome { get; set; }
+        public bool F_DeliveryHome { get; set; }
         //针式打印
-        public string F_DirectThermal { get; set; }
+        public bool F_DirectThermal { get; set; }
         //针式打印 数量
         public string F_NeedlePrinterNumber { get; set; }
         //打印标签
-        public string F_PrintLabel { get; set; }
+        public bool F_PrintLabel { get; set; }
         //打印标签 数量
         public string F_PrintLabelNumber { get; set; }
         //运单套打
@@ -85,6 +85,12 @@ namespace WisdomLogistics.Domain.Entity.SystemManage
         public string F_Salesman { get; set; }
         //车辆备注
         public string F_VehicleRemarks { get; set; }
+        //是否装车
+        public bool F_IsLoading { get; set; }
+        //是否卸车
+        public bool F_IsUnLoading { get; set; }
+        //是否转运
+        public  bool F_IsTransfer { get; set; }
         public List<OrderProductEntity> OrderProduct { get; set; }
         public int? F_SortCode { get; set; }
         public bool? F_DeleteMark { get; set; }

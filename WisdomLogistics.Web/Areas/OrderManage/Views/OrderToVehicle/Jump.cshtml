@@ -12,42 +12,42 @@
         <table class="form" style="border: #BECAD4 1px solid;margin-left:20px">
             <tr style="border: #BECAD4 1px solid">
                 <th class="formTitle" colspan="2" style="border: #BECAD4 1px solid">运单号: </th>
-                <td class="formValue" colspan="2" style="border: #BECAD4 1px solid">{{F_WaybillNumber}}</td>
+                <td class="formValue" colspan="2" style="border: #BECAD4 1px solid">{{data.F_WaybillNumber}}</td>
                 <th class="formTitle" colspan="1" style="border: #BECAD4 1px solid">货号: </th>
-                <td class="formValue" colspan="2" style="border: #BECAD4 1px solid">{{F_ArtNo}}</td>
+                <td class="formValue" colspan="2" style="border: #BECAD4 1px solid">{{data.F_ArtNo}}</td>
             </tr>
             <tr>
                 <th class="formTitle" colspan="2" style="border: #BECAD4 1px solid">发站: </th>
-                <td class="formValue" colspan="2" style="border: #BECAD4 1px solid">制单人{{F_Station}}</td>
+                <td class="formValue" colspan="2" style="border: #BECAD4 1px solid">制单人{{data.F_Station}}</td>
                 <th class="formTitle" colspan="1" style="border: #BECAD4 1px solid">到站: </th>
-                <td class="formValue" colspan="2" style="border: #BECAD4 1px solid">{{F_Station}}</td>
+                <td class="formValue" colspan="2" style="border: #BECAD4 1px solid">{{data.F_Station}}</td>
             </tr>
             <tr>
                 <th class="formTitle" colspan="2" style="border: #BECAD4 1px solid">发货方: </th>
-                <td class="formValue" colspan="2" style="border: #BECAD4 1px solid">{{F_Consignor}} {{F_ConsignorPhone}} </td>
+                <td class="formValue" colspan="2" style="border: #BECAD4 1px solid">{{data.F_Consignor}} {{data.F_ConsignorPhone}} </td>
                 <th class="formTitle" colspan="1" style="border: #BECAD4 1px solid">收货方: </th>
-                <td class="formValue" colspan="2" style="border: #BECAD4 1px solid">{{F_Consignee}} {{F_ConsigneePhone}}</td>
+                <td class="formValue" colspan="2" style="border: #BECAD4 1px solid">{{data.F_Consignee}} {{data.F_ConsigneePhone}}</td>
             </tr>
             <tr>
                 <th class="formTitle" colspan="2" style="border: #BECAD4 1px solid">货物名称: </th>
-                <td class="formValue" colspan="2" style="border: #BECAD4 1px solid">{{F_Name}}</td>
+                <td class="formValue" colspan="2" style="border: #BECAD4 1px solid">{{data.F_Name}}</td>
                 <th class="formTitle" colspan="1" style="border: #BECAD4 1px solid">货物件数: </th>
-                <td class="formValue" colspan="2" style="border: #BECAD4 1px solid">{{F_ArtNo03}}</td>
+                <td class="formValue" colspan="2" style="border: #BECAD4 1px solid">{{data.F_ArtNo03}}</td>
             </tr>
             <tr>
                 <th class="formTitle" colspan="2" style="border: #BECAD4 1px solid">附加服务: </th>
-                <td class="formValue" colspan="5" style="border: #BECAD4 1px solid">{{F_Description}}</td>
+                <td class="formValue" colspan="5" style="border: #BECAD4 1px solid">{{data.F_Description}}</td>
             </tr>
             <tr>
                 <th class="formTitle" colspan="2" style="border: #BECAD4 1px solid">备注: </th>
-                <td class="formValue" colspan="5"style="border: #BECAD4 1px solid">{{F_Description}}</td>
+                <td class="formValue" colspan="5" style="border: #BECAD4 1px solid">{{data.F_Description}}</td>
             </tr>
             <tr>
                 <th class="formTitle" rowspan="2" colspan="2" style="border: #BECAD4 1px solid">费用信息: </th>
-                <td class="formValue" colspan="5" style="border: #BECAD4 1px solid"><span style="line-height:44px">现付:{{F_PresentPay}}</span> <span style="margin-left:40px;line-height:44px">回付:{{F_BackPay}}</span>  <span style="margin-left:40px;line-height:44px">扣付:{{F_FreightCombined}}</span></td>
+                <td class="formValue" colspan="5" style="border: #BECAD4 1px solid"><span style="line-height:44px">现付:{{data.F_PresentPay}}</span> <span style="margin-left:40px;line-height:44px">回付:{{data.F_BackPay}}</span>  <span style="margin-left:40px;line-height:44px">扣付:{{data.F_FreightCombined}}</span></td>
             </tr>
             <tr>
-                <td class="formValue" colspan="2" style="border: #BECAD4 1px solid"><span>提付:{{F_PutPay}}</span>  <span style="margin-left:40px;line-height:44px">代收货款:{{F_CollectionPayment}}</td>
+                <td class="formValue" colspan="2" style="border: #BECAD4 1px solid"><span>提付:{{data.F_PutPay}}</span>  <span style="margin-left:40px;line-height:44px">代收货款:</span>{{data.F_CollectionPayment}}</td>
                 <th class="formTitle" style="border: #BECAD4 1px solid">中转费:</th>
                 <td class="formValue" colspan="2" style="border: #BECAD4 1px solid"><input id="F_TransferFee" name="F_TransferFee" type="text" class="form-control required" placeholder="￥" /></td>
             </tr>
@@ -71,11 +71,13 @@
                 <td class="formValue" colspan="7" style="border: #BECAD4 1px solid">
                     <label class="demo--label" style="margin-left:40%">
                         <input class="demo--radio" type="checkbox" name="F_NeedlePrinter">
-                        <span class="demo--checkbox demo--radioInput"></span>针式打印 数量
+                        <span class="demo--checkbox demo--radioInput"></span>针式打印
                         <label class="demo--label">
                             <input class="demo--radio" type="checkbox" name="F_PrintLabel">
                             <span class="demo--checkbox demo--radioInput"></span>打印标签 数量
                             <input id="F_PrintLabelNumber" name="F_PrintLabelNumber" type="text" class="form-control required" style="width:120px;float:right;padding:0;height: 22px;margin-left: 5px;" />
+                            
+                            <input id="F_OrderId" name="F_OrderId" type="hidden"  hidden="hidden" class="form-control required" style="width:120px;float:right;padding:0;height: 22px;margin-left: 5px;" />
                         </label>
                     </label>
                 </td>
@@ -85,10 +87,10 @@
 </form>
 <script type="text/javascript">
       function submitForm(success) {
-          var keyValue = $.request("keyValue");
+          var keyValue = ""
           var postData = $("#form1").formSerialize();
           $.submitForm({
-              url: "SubmitForm?keyValue=" + keyValue,
+              url: "/OrderManage/OrderToTransfer/SubmitForm?keyValue=" + keyValue,
               param: postData,
               success: success
           });
@@ -97,7 +99,11 @@
     var keyValue = $.request("keyValue");
     var vm = new Vue({
         el: "#form1",
-        data: [{ F_WaybillNumber: "", F_ArtNo: "", F_Station: "", F_Consignor: "", F_ConsignorPhone: "", F_Consignee: "", F_ConsigneePhone: "", F_Name: "", F_ArtNo03: "", F_Description: "", F_PresentPay: "", F_BackPay: "", F_FreightCombined: "", F_PutPay: "", F_CollectionPayment: "", F_TransferCompany: "", F_TransferCompanyTelephone: "", F_TransferDescribe: "", F_NeedlePrinter: "", F_PrintLabel: "", F_PrintLabelNumber:""}],
+        data: {
+            data: {
+                F_WaybillNumber: "", F_ArtNo: "", F_Station: "", F_Consignor: "", F_ConsignorPhone: "", F_Consignee: "", F_ConsigneePhone: "", F_Name: "", F_ArtNo03: "", F_Description: "", F_PresentPay: "", F_BackPay: "", F_FreightCombined: "", F_PutPay: "", F_CollectionPayment: "", F_TransferCompany: "", F_TransferCompanyTelephone: "", F_TransferDescribe: "", F_NeedlePrinter: "", F_PrintLabel: "", F_PrintLabelNumber: "", F_OrderId:""
+            }
+        },
         mounted: function () {
             $.ajax({
                 url: "/OrderManage/Order/GetFormJson" + "?keyValue=" + keyValue,
@@ -105,9 +111,12 @@
                 async: false,
                 success: d => {
                     this.data = d;
+                    $("#F_OrderId").val(d.F_Id);
                 }
             });
         }
     });
 </script>
+
+
 
