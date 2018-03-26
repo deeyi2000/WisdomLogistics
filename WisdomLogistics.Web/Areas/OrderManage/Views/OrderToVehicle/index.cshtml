@@ -51,7 +51,7 @@
             id: this.F_EnCode,
             title: this.F_FullName,
             url: this.F_UrlAddress.startsWith("/") ? this.F_UrlAddress + "?keyValue=" + keyValue : location.href + this.F_UrlAddress + "?keyValue=" + keyValue,
-            width: "90%",
+            width: "80%",
             height: "90%",
             btn: null
         });
@@ -62,8 +62,8 @@
             id: this.F_EnCode,
             title: this.F_FullName,
             url: this.F_UrlAddress.startsWith("/") ? this.F_UrlAddress + "?keyValue=" + keyValue : location.href + this.F_UrlAddress + "?keyValue=" + keyValue,
-            width: "700px",
-            height: "550px",
+            width: "80%",
+            height: "90%",
             callBack: function (iframeId) {
                 top.frames[iframeId].submitForm(function() {
                     $("#gridList").trigger("reloadGrid");
@@ -98,12 +98,13 @@
             url: opt.url,
             height: $(window).height() - 190,
             colModel: [
-                { label: '订单日期', name: 'F_CreatorTime', frozen: true },
-                { label: '运单号', name: 'F_Id', align: 'left', frozen: true, key: true },
-                { label: '货号', name: 'ArtNo01', align: 'left' },
+                { label: '订单日期', name: 'F_CreatorTime', align: 'left', width: '100px', frozen: true },
+                { label: '运单号', name: 'F_WaybillNumber', align: 'left', width: '120px', frozen: true },
+                { label: '货号', name: 'F_ArtNo', align: 'left    ', width: '80px', frozen: true },
+                { label: '主键', name: 'F_Id', hidden: true, key: true },
                 { label: '到站', name: 'F_Station', align: 'left' },
                 { label: '地区', name: 'F_Area', align: 'left' },
-                { label: '车辆备注', name: 'F_Latitude', align: 'left' },
+                { label: '车辆备注', name: 'F_VehicleRemarks', align: 'left' },
                 { label: '发货人', name: 'F_Consignor', align: 'left' },
                 { label: '发货电话', name: 'F_ConsignorPhone', align: 'left' },
                 { label: '发货人身份证', name: 'F_ConsignorPhone', align: 'left' },
@@ -113,7 +114,7 @@
                 { label: '件数', name: 'F_Number', align: 'left' },
                 { label: '重量', name: 'F_Weight', align: 'left' },
                 { label: '体积', name: 'F_Volume', align: 'left' },
-                { label: '运费合计', name: 'F_FreightCombined', align: 'left', formatter: 'number' },
+                { label: '运费合计', name: 'F_FreightCombined', align: 'left', formatter: 'number', },
                 { label: '提付', name: 'F_PutPay', align: 'left' },
                 { label: '现付', name: 'F_PresentPay', align: 'left' },
                 { label: '回付', name: 'F_BackPay', align: 'left' },
@@ -123,7 +124,7 @@
                 { label: '手续费', name: 'F_FormalityRate', align: 'left' },
                 { label: '提货方式', name: 'F_FormalityRate', align: 'left' },
                 { label: '开单类型', name: 'F_FormalityRate', align: 'left' },
-                { label: '开单人', name: 'F_RecordSingle', align: 'left' }
+                { label: '开单人', name: 'F_RecordSingle', align: 'left' },
             ],
             // direction: "rtl", 固定列会挪到左边
             footerrow: true,

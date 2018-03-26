@@ -12,7 +12,7 @@ namespace WisdomLogistics.Domain.Entity.SystemManage
 
         public string F_OrderId { get; set; }  //订单ID
 
-        public string F_VehicleEntity { get; set; }  //车辆
+        public string F_VehicleId { get; set; }  //车辆ID
 
         public string F_TargetUserId { get; set; }   //站点用户ID
 

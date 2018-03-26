@@ -12,7 +12,7 @@ namespace WisdomLogistics.Mapping.SystemManage
     {
         public VehicleBindOrderMap()
         {
-            this.ToTable("SysVehicleBindOrder");
+            this.ToTable("Sys_VehicleBindOrder");
             this.HasKey(t => t.F_Id);
         }
     }
