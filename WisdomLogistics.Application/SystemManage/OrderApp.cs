@@ -48,6 +48,13 @@ namespace WisdomLogistics.Application.SystemManage
             service.Update(orderEntity);
         }
 
+        public List<OrderProductEntity> GetOrderProductList(string keyValue)
+        {
+            List<OrderProductEntity> lists = serviceOederProduct.IQueryable().Where(c => c.F_OrderId == keyValue)
+                .ToList();
+            return lists;
+        }
+
         public void SubmitForm(OrderEntity orderEntity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))

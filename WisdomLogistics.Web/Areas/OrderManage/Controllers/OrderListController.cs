@@ -47,6 +47,11 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
             return Content(data.ToJson());
         }
 
+        public ActionResult GetOrderProductJson(string keyValue)
+        {
+           return Content(deviceApp.GetOrderProductList(keyValue).ToJson());
+        }
+
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
@@ -70,25 +75,25 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult DisabledAccount(string keyValue)
+        public ActionResult DisabledOrder(string keyValue)
         {
             OrderEntity deviceEntity = new OrderEntity();
             deviceEntity.F_Id = keyValue;
             deviceEntity.F_EnabledMark = false;
             deviceApp.UpdateForm(deviceEntity);
-            return Success("账户禁用成功。");
+            return Success("订单作废成功。");
         }
         [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult EnabledAccount(string keyValue)
+        public ActionResult EnabledOrder(string keyValue)
         {
             OrderEntity deviceEntity = new OrderEntity();
             deviceEntity.F_Id = keyValue;
             deviceEntity.F_EnabledMark = true;
             deviceApp.UpdateForm(deviceEntity);
-            return Success("账户启用成功。");
+            return Success("订单恢复成功。");
         }
     }
 }

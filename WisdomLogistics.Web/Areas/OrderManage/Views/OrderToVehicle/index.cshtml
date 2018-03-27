@@ -20,6 +20,7 @@
                 <li><a id="NF-edit" authorize="yes"></a></li>
                 <li class="split"></li>
                 <li><a id="NF-disable" authorize="yes"></a></li>
+                <li><a id="NF-enable" authorize="yes"></a></li>
                 <li><a id="NF-jump" authorize="yes"></a></li>
             </ul>
             <a href="javascript:;" class="close"></a>
@@ -71,12 +72,13 @@
             }
         });
     }
+
     function btn_disable() {
         var keyValue = $("#gridList").jqGridRowValue().F_Id;
         $.modalConfirm("注：您确定要【作废】该订单吗？", function (r) {
             if (r) {
                 $.submitForm({
-                    url: "/OrderManage/OrderList /DisabledAccount",
+                    url: "/OrderManage/OrderList/DisabledOrder",
                     param: { keyValue: keyValue },
                     success: function () {
                         $("#gridList").trigger("reloadGrid");
@@ -85,6 +87,22 @@
             }
         });
     }
+
+    function btn_enable() {
+        var keyValue = $("#gridList").jqGridRowValue().F_Id;
+        $.modalConfirm("注：您确定要【恢复】该订单吗？", function (r) {
+            if (r) {
+                $.submitForm({
+                    url: "/OrderManage/OrderList/EnabledOrder",
+                    param: { keyValue: keyValue },
+                    success: function () {
+                        $("#gridList").trigger("reloadGrid");
+                    }
+                });
+            }
+        });
+    }
+
     function initGrid(opt) {
         opt = Object.assign({
             el: "",
@@ -110,10 +128,6 @@
                 { label: '发货人身份证', name: 'F_ConsignorPhone', align: 'left' },
                 { label: '收货人', name: 'F_Consignee', align: 'left' },
                 { label: '收货电话', name: 'F_ConsigneePhone', align: 'left' },
-                { label: '货物名称', name: 'F_Name', align: 'left' },
-                { label: '件数', name: 'F_Number', align: 'left' },
-                { label: '重量', name: 'F_Weight', align: 'left' },
-                { label: '体积', name: 'F_Volume', align: 'left' },
                 { label: '运费合计', name: 'F_FreightCombined', align: 'left', formatter: 'number', },
                 { label: '提付', name: 'F_PutPay', align: 'left' },
                 { label: '现付', name: 'F_PresentPay', align: 'left' },
@@ -131,14 +145,51 @@
             userDataOnFooter: true,
             pager: opt.pager,
             sortname: 'F_CreatorTime desc',
-            viewrecords: true
+            viewrecords: true,
+            subGrid: true,
+            subGridRowExpanded: showChildGrid,
+            subGridOptions : {
+                plusicon: "glyphicon-hand-right",
+                minusicon: "glyphicon-hand-down"
+            }
         });
+        $("#gridList").jqGrid("setFrozenColumns");
+
         var $elSearch = $(opt.search).unbind("keypress").on("keypress",
             debounce(function () {
                 $el.jqGrid('setGridParam', { postData: { keyword: $elSearch.val() } })
                     .trigger('reloadGrid');
             }, 1000));
         return $el;
+    }
+    function showChildGrid(parentRowID, parentRowKey) {
+        var childGridID = parentRowID + "_table";
+        var childGridPagerID = parentRowID + "_pager";
+        var childGridURL = "/OrderManage/OrderList/GetOrderProductJson?keyValue=" + encodeURIComponent(parentRowKey);
+        $('#' + parentRowID).append('<table id=' + childGridID + '></table><div id=' + childGridPagerID + ' class=scroll></div>');
+        $("#" + childGridID).jqGrid({
+            url: childGridURL,
+            mtype: "GET",
+            datatype: "json",
+            page: 1,
+            colModel: [
+                { label: '标识', name: 'F_Id', hidden: true, key: true},
+                { label: '名称', name: 'F_Name', width: '40px' },
+                { label: '数量', name: 'F_Number', width: '40px' },
+                { label: '重量', name: 'F_Weight', width: '40px' },
+                { label: '体积', name: 'F_Volume', width: '40px' },
+                { label: '单价', name: 'F_UnitPricee', width: '40px' },
+                { label: '运费', name: 'F_Freight', width: '40px' },
+                { label: '送货费', name: 'F_DeliveryFee', width: '40px' }  ,
+                { label: '提货费', name: 'F_PickDeliveryFee', width: '40px '},
+                { label: '保价费', name: 'F_InsuredFee', width: '40px' }
+            ],
+            loadonce: true,
+            userDataOnFooter: true,
+            width: '1200',
+            height: '100%',
+            pager: "#" + childGridPagerID
+        });
     }
 
     $(function () {

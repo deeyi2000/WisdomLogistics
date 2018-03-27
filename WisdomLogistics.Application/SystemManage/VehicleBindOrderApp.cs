@@ -46,6 +46,7 @@ namespace WisdomLogistics.Application.SystemManage
             }
             else
             {
+                itemsEntity.F_OrderId = itemsEntity.F_Id;
                 itemsEntity.Create();
                 service.Insert(itemsEntity);
             }

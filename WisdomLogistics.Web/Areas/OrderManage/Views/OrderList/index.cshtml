@@ -47,14 +47,55 @@
             userDataOnFooter: true,
             pager: "#gridPager",
             sortname: 'F_CreatorTime desc',
+            multiselect: true,
             viewrecords: true,
+            subGrid: true,
+            subGridRowExpanded: showChildGrid,
+            subGridOptions : {
+                plusicon: "glyphicon-hand-right",
+                minusicon: "glyphicon-hand-down"
+            }
         });
         $("#gridList").jqGrid("setFrozenColumns");
+
         $("#btn_search").click(function () {
             $gridList.jqGrid('setGridParam', {
-                postData: { keyword: $("#txt_keyword").val() },
+                postData: { keyword: $("#txt_keyword").val() }
             }).trigger('reloadGrid');
         });
+    }
+
+    function showChildGrid(parentRowID, parentRowKey) {
+            var childGridID = parentRowID + "_table";
+            var childGridPagerID = parentRowID + "_pager";
+
+            var childGridURL = "/OrderManage/OrderList/GetOrderProductJson?keyValue=" + encodeURIComponent(parentRowKey);
+
+            $('#' + parentRowID).append('<table id=' + childGridID + '></table><div id=' + childGridPagerID + ' class=scroll></div>');
+
+            $("#" + childGridID).jqGrid({
+                url: childGridURL,
+                mtype: "GET",
+                datatype: "json",
+                page: 1,
+                colModel: [
+                    { label: '标识', name: 'F_Id', hidden: true, key: true},
+                    { label: '名称', name: 'F_Name', width: '75px' },
+                    { label: '数量', name: 'F_Number', width: '75px' },
+                    { label: '重量', name: 'F_Weight', width: '70px' },
+                    { label: '体积', name: 'F_Volume', width: '75px' },
+                    { label: '单价', name: 'F_UnitPricee', width: '75px' },
+                    { label: '运费', name: 'F_Freight', width: '75px' },
+                    { label: '送货费', name: 'F_DeliveryFee', width: '75px' }  ,
+                    { label: '提货费', name: 'F_PickDeliveryFee', width: '75px '},
+                    { label: '保价费', name: 'F_InsuredFee', width: '75px' }
+                ],
+                userDataOnFooter: true,
+                loadonce: true,
+                width: '1200',
+                height: '100%',
+                pager: "#" + childGridPagerID
+            });
     }
 
     function btn_add() {
@@ -86,10 +127,10 @@
         $.deleteForm({
             url: "/OrderManage/OrderList/DeleteForm",
             param: { keyValue: $("#gridList").jqGridRowValue().F_Id },
-            success: function () {
+            success: function() {
                 $.currentWindow().$("#gridList").trigger("reloadGrid");
             }
-        })
+        });
     }
     function btn_details() {
         var keyValue = $("#gridList").jqGridRowValue().F_Id;
@@ -109,10 +150,10 @@
                 $.submitForm({
                     url: "/OrderManage/OrderList /DisabledAccount",
                     param: { keyValue: keyValue },
-                    success: function () {
+                    success: function() {
                         $.currentWindow().$("#gridList").trigger("reloadGrid");
                     }
-                })
+                });
             }
         });
     }
@@ -123,10 +164,10 @@
                 $.submitForm({
                     url: "/OrderManage/OrderList /EnabledAccount",
                     param: { keyValue: keyValue },
-                    success: function () {
+                    success: function() {
                         $.currentWindow().$("#gridList").trigger("reloadGrid");
                     }
-                })
+                });
             }
         });
     }

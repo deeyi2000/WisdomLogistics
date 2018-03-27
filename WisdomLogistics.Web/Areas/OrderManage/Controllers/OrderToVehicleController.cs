@@ -10,14 +10,14 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
 {
     public class OrderToVehicleController : ControllerBase
     {
-        private OrderApp deviceApp = new OrderApp();
+        private readonly VehicleBindOrderApp _vehicleBindOrderApp = new  VehicleBindOrderApp();
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetGridJson(Pagination pagination, string keyword)
         {
             var data = new
             {
-                rows = deviceApp.GetList(),
+                rows = _vehicleBindOrderApp.GetList(),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records
@@ -31,7 +31,7 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
         {
             var data = new
             {
-                rows = deviceApp.GetList().Where(c => c.F_Id == keyValue),
+                rows = _vehicleBindOrderApp.GetList().Where(c => c.F_Id == keyValue),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records
@@ -43,16 +43,28 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = deviceApp.GetForm(keyValue);
+            var data = _vehicleBindOrderApp.GetForm(keyValue);
             return Content(data.ToJson());
         }
 
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(OrderEntity deviceEntity, string keyValue)
+        public ActionResult SubmitForm(VehicleBindOrderEntity deviceEntity, string keyValue)
         {
-            deviceApp.SubmitForm(deviceEntity, keyValue);
+            _vehicleBindOrderApp.SubmitForm(deviceEntity, keyValue);
+            return Success("操作成功。");
+        }
+
+        [HttpPost]
+        [HandlerAjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitData(List<VehicleBindOrderEntity> deviceLists, string keyValue)
+        {
+            foreach (VehicleBindOrderEntity vehicleBindOrderEntity in deviceLists)
+            {
+                _vehicleBindOrderApp.SubmitForm(vehicleBindOrderEntity, keyValue);
+            }
             return Success("操作成功。");
         }
 
@@ -62,7 +74,7 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
         {
-            deviceApp.DeleteForm(keyValue);
+            _vehicleBindOrderApp.DeleteForm(keyValue);
             return Success("删除成功。");
         }
 
@@ -72,10 +84,10 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DisabledAccount(string keyValue)
         {
-            OrderEntity deviceEntity = new OrderEntity();
+            VehicleBindOrderEntity deviceEntity = new VehicleBindOrderEntity();
             deviceEntity.F_Id = keyValue;
             deviceEntity.F_EnabledMark = false;
-            deviceApp.UpdateForm(deviceEntity);
+            _vehicleBindOrderApp.UpdateForm(deviceEntity);
             return Success("账户禁用成功。");
         }
         [HttpPost]
@@ -84,10 +96,10 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EnabledAccount(string keyValue)
         {
-            OrderEntity deviceEntity = new OrderEntity();
+            VehicleBindOrderEntity deviceEntity = new VehicleBindOrderEntity();
             deviceEntity.F_Id = keyValue;
             deviceEntity.F_EnabledMark = true;
-            deviceApp.UpdateForm(deviceEntity);
+            _vehicleBindOrderApp.UpdateForm(deviceEntity);
             return Success("账户启用成功。");
         }
 
