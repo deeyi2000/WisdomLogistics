@@ -9,6 +9,7 @@ namespace WisdomLogistics.Domain.Entity.SystemManage
     public class VehicleEntity : IEntity<VehicleEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         public string F_Id { get; set; }
+
         public string F_LicensePlate { get; set; }  //车牌号码
 
         public string F_DLNumber { get; set; }  //行驶证号
@@ -17,6 +18,7 @@ namespace WisdomLogistics.Domain.Entity.SystemManage
 
         public string F_Phone { get; set; }  //   司机电话
 
+        public List<VehicleBindOrderEntity> VehicleBindOrder { get; set; }
 
         //必备字段
         public int? F_SortCode { get; set; }

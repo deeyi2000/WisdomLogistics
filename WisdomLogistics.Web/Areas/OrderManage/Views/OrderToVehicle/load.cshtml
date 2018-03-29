@@ -81,39 +81,39 @@
             }
         });
 
-        //var $btnSubmit = $("#btnSubmit").unbind("click").on("click", function () {
-        //    $.modalConfirm("您确定要【装车】吗？", function (e) {
-        //        if (e) {
-        //            alert("45544");
-        //            //$.submitForm({
-        //            //    url: "/OrderManage/OrderList /DisabledAccount",
-        //            //    param: { keyValue: keyValue },
-        //            //    success: function() {
-        //            //        $.currentWindow().$("#gridList").trigger("reloadGrid");
-        //            //    }
-        //            //});
-        //        }
-        //    });
-        //});
+        var $btnSubmit = $("#btnSubmit").unbind("click").on("click", function () {
+           $.modalConfirm("您确定要【装车】吗？", function (e) {
+               if (e) {
+                   alert("45544");
+                   $.submitForm({
+                       url: "/OrderManage/OrderList /DisabledAccount",
+                       param: { keyValue: keyValue },
+                       success: function () {
+                           $.currentWindow().$("#gridList").trigger("reloadGrid");
+                       }
+                   });
+               }
+            });
     });
-
+    /*
     function btnSubmit() {
-        var keyValue = $("#gridVehicles").jqGrid('getRowData').F_Id;  
         $.modalConfirm("注：您确定要【装车】吗？", function (r) {
             if (r) {
                 $.submitForm({
                     url: "/OrderManage/OrderToVehicle/SubmitData",
                     param: {
                         deviceLists: $("#gridVehicles").jqGrid('getRowData'),
-                        keyValue: keyValue
+                        keyValue: null
                     },
                     success: function () {
-                        $("#gridVehicles").trigger("reloadGrid");
+                        alert("1151");
+                        $("#gridList").trigger("reloadGrid");
                     }
                 });
             }
         });
     }
+    */
 
     function initGrid(opt) {
         opt = Object.assign({
