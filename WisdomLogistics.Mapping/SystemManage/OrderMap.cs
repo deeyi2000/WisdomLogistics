@@ -20,7 +20,7 @@ namespace WisdomLogistics.Mapping.SystemManage
         {
             this.ToTable("Sys_Order");
             this.HasKey(t => t.F_Id);
-            this.HasMany(t => t.OrderProduct).WithRequired(t => t.Order).HasForeignKey(t => t.F_OrderId);
+            //this.HasMany(t => t.OrderProduct).WithRequired(t => t.Order).HasForeignKey(t => t.F_OrderId);
         }
     }
 }

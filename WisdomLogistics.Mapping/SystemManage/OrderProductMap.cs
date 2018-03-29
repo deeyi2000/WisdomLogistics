@@ -14,7 +14,7 @@ namespace WisdomLogistics.Mapping.SystemManage
         {
             this.ToTable("Sys_OrderProduct");
             this.HasKey(t => t.F_Id);
-            this.HasRequired(t => t.Order);
+            this.HasRequired(t => t.Order).WithMany(t => t.OrderProduct).HasForeignKey(t => t.F_OrderId);
         }
     }
 }

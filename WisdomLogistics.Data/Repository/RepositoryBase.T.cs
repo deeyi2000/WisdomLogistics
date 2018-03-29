@@ -6,6 +6,7 @@
 *********************************************************************************/
 using WisdomLogistics.Code;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity;
@@ -46,7 +47,20 @@ namespace WisdomLogistics.Data
                 {
                     if (prop.GetValue(entity, null).ToString() == "&nbsp;")
                         dbcontext.Entry(entity).Property(prop.Name).CurrentValue = null;
+                    if (!prop.PropertyType.Name.StartsWith("List`1"))
                         dbcontext.Entry(entity).Property(prop.Name).IsModified = true;
+                    else
+                    {
+                        var list = prop.GetValue(entity, null) as IEnumerable;
+                        if (null != list)
+                        {
+                            foreach (var item in list)
+                            {
+                                dbcontext.Entry(item).State = EntityState.Modified;
+                            }
+                            dbcontext.Entry(entity).Collection(prop.Name).EntityEntry.State = EntityState.Modified;
+                        }
+                    }
                 }
             }
             return dbcontext.SaveChanges();
