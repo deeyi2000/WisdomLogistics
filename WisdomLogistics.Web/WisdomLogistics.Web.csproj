@@ -47,6 +47,10 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>C:\Users\zyj13\Desktop\454515\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -109,6 +113,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\OrderManage\Views\OrderToVehicle\Receive.cshtml" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\framework-about.css" />
@@ -364,6 +369,15 @@
     <Content Include="Areas\OrderManage\Views\OrderToVehicle\index.cshtml" />
     <Content Include="Areas\OrderManage\Views\OrderToVehicle\Load.cshtml" />
     <Content Include="Areas\OrderManage\Views\OrderToVehicle\Jump.cshtml" />
+    <Content Include="Areas\OrderManage\Views\OrderToVehicle\JumpReceive.cshtml" />
+    <Content Include="Areas\StatisticsManage\Views\Web.config" />
+    <Content Include="Areas\StatisticsManage\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\StatisticsManage\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\StatisticsManage\Views\Arrival\index.cshtml" />
+    <Content Include="Areas\StatisticsManage\Views\Operation\index.cshtml" />
+    <Content Include="Areas\StatisticsManage\Views\Shipments\index.cshtml" />
+    <Content Include="Areas\VehicleManage\Views\ArrivalVehicle\index.cshtml" />
+    <Content Include="Areas\VehicleManage\Views\DepartureVehicle\index.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -409,6 +423,10 @@
     <Compile Include="Areas\ReportManage\Controllers\EchartsController.cs" />
     <Compile Include="Areas\ReportManage\Controllers\HighchartsController.cs" />
     <Compile Include="Areas\ReportManage\ReportManageAreaRegistration.cs" />
+    <Compile Include="Areas\StatisticsManage\Controllers\ArrivalController.cs" />
+    <Compile Include="Areas\StatisticsManage\Controllers\OperationController.cs" />
+    <Compile Include="Areas\StatisticsManage\Controllers\ShipmentsController.cs" />
+    <Compile Include="Areas\StatisticsManage\StatisticsManageAreaRegistration.cs" />
     <Compile Include="Areas\SystemManage\Controllers\AreaController.cs" />
     <Compile Include="Areas\SystemManage\Controllers\DutyController.cs" />
     <Compile Include="Areas\SystemManage\Controllers\ItemsDataController.cs" />
@@ -425,6 +443,8 @@
     <Compile Include="Areas\SystemSecurity\Controllers\LogController.cs" />
     <Compile Include="Areas\SystemSecurity\Controllers\ServerMonitoringController.cs" />
     <Compile Include="Areas\SystemSecurity\SystemSecurityAreaRegistration.cs" />
+    <Compile Include="Areas\VehicleManage\Controllers\ArrivalVehicleController.cs" />
+    <Compile Include="Areas\VehicleManage\Controllers\DepartureVehicleController.cs" />
     <Compile Include="Areas\VehicleManage\Controllers\VehicleController.cs" />
     <Compile Include="Areas\VehicleManage\VehicleManageAreaRegistration.cs" />
     <Compile Include="Controllers\ClientsDataController.cs" />
@@ -525,7 +545,9 @@
     <Content Include="Areas\SystemSecurity\Views\Web.config" />
     <Content Include="Configs\database.config" />
     <Content Include="Configs\log4net.config" />
-    <Content Include="Configs\system.config" />
+    <Content Include="Configs\system.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />

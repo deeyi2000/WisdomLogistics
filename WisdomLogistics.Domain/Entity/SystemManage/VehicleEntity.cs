@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*******************************************************************************
+ * Copyright © 2018 德州蓝湖网络科技有限公司 版权所有
+ * Author: 张艳军
+ * Description: 智慧物流管理平台
+ * Website：http://www.wxopens.com
+*********************************************************************************/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +24,7 @@ namespace WisdomLogistics.Domain.Entity.SystemManage
 
         public string F_Phone { get; set; }  //   司机电话
 
-        public List<VehicleBindOrderEntity> VehicleBindOrder { get; set; }
+        //public List<VehicleBindOrderEntity> VehicleBindOrder { get; set; }
 
         //必备字段
         public int? F_SortCode { get; set; }

@@ -22,5 +22,7 @@ namespace WisdomLogistics.Code
         public string LoginToken { get; set; }
         public DateTime LoginTime { get; set; }
         public bool IsSystem { get; set; }
+        public int AuthorizationQuantity { get; set; }
+        public int CreateQuantity { get; set; }
     }
 }

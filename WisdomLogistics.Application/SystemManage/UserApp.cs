@@ -21,13 +21,99 @@ namespace WisdomLogistics.Application.SystemManage
         public List<UserEntity> GetList(Pagination pagination, string keyword)
         {
             var expression = ExtLinq.True<UserEntity>();
-            if (!string.IsNullOrEmpty(keyword))
+            var LoginInfo = OperatorProvider.Provider.GetCurrent();
+            if (LoginInfo != null)
             {
-                expression = expression.And(t => t.F_Account.Contains(keyword));
-                expression = expression.Or(t => t.F_RealName.Contains(keyword));
-                expression = expression.Or(t => t.F_MobilePhone.Contains(keyword));
+                //超级管理员
+                if (LoginInfo.RoleId == "F0A2B36F-35A7-4660-B46C-D4AB796591EB")
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        expression = expression.And(t => t.F_Account.Contains(keyword));
+                        expression = expression.Or(t => t.F_RealName.Contains(keyword));
+                        expression = expression.Or(t => t.F_MobilePhone.Contains(keyword));
+                    }
+                    expression = expression.And(t => t.F_CreatorUserId == LoginInfo.UserId);
+                }
+                //系统管理员
+               else if (LoginInfo.RoleId == "4B2140D3-E61D-488E-ADF6-FF0EBCBC5D2C")
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        expression = expression.And(t => t.F_Account.Contains(keyword));
+                        expression = expression.Or(t => t.F_RealName.Contains(keyword));
+                        expression = expression.Or(t => t.F_MobilePhone.Contains(keyword));
+                    }
+                    expression = expression.And(t => t.F_CreatorUserId == LoginInfo.UserId);
+                }
+                //物流服总公司
+                else if (LoginInfo.RoleId == "6107fbb6-2a22-428d-a03a-b7b2e829d1a1")
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        expression = expression.And(t => t.F_Account.Contains(keyword));
+                        expression = expression.Or(t => t.F_RealName.Contains(keyword));
+                        expression = expression.Or(t => t.F_MobilePhone.Contains(keyword));
+                    }
+                    expression = expression.And(t => t.F_CreatorUserId == LoginInfo.UserId);
+                }
+                //物流网点
+                else if (LoginInfo.RoleId == "cf75118d-2a67-4fa7-ae71-4bf47a0fd6e2")
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        expression = expression.And(t => t.F_Account.Contains(keyword));
+                        expression = expression.Or(t => t.F_RealName.Contains(keyword));
+                        expression = expression.Or(t => t.F_MobilePhone.Contains(keyword));
+                    }
+                    expression = expression.And(t => t.F_CreatorUserId == LoginInfo.UserId);
+                }
+                //录单员
+                else if (LoginInfo.RoleId == "cf75118d-2a67-4fa7-ae71-4bf47a0fd6e2")
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        expression = expression.And(t => t.F_Account.Contains(keyword));
+                        expression = expression.Or(t => t.F_RealName.Contains(keyword));
+                        expression = expression.Or(t => t.F_MobilePhone.Contains(keyword));
+                    }
+                    expression = expression.And(t => t.F_CreatorUserId == LoginInfo.UserId);
+                }
+                //业务员
+                else if (LoginInfo.RoleId == "71eb9b4b-def5-4cd2-935b-b28b259247ff")
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        expression = expression.And(t => t.F_Account.Contains(keyword));
+                        expression = expression.Or(t => t.F_RealName.Contains(keyword));
+                        expression = expression.Or(t => t.F_MobilePhone.Contains(keyword));
+                    }
+                    expression = expression.And(t => t.F_CreatorUserId == LoginInfo.UserId);
+                }
+                //物流公司总财务
+                else if (LoginInfo.RoleId == "278f8fc0-ac02-494f-990e-6acddf8cb643")
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        expression = expression.And(t => t.F_Account.Contains(keyword));
+                        expression = expression.Or(t => t.F_RealName.Contains(keyword));
+                        expression = expression.Or(t => t.F_MobilePhone.Contains(keyword));
+                    }
+                    expression = expression.And(t => t.F_CreatorUserId == LoginInfo.UserId);
+                }
+                //网点财务
+                else if (LoginInfo.RoleId == "40eaf22d-3489-4f5c-86a7-cdf94a7bdb85")
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        expression = expression.And(t => t.F_Account.Contains(keyword));
+                        expression = expression.Or(t => t.F_RealName.Contains(keyword));
+                        expression = expression.Or(t => t.F_MobilePhone.Contains(keyword));
+                    }
+                    expression = expression.And(t => t.F_CreatorUserId == LoginInfo.UserId);
+                }
             }
-            expression = expression.And(t => t.F_Account != "admin");
+
             return service.FindList(expression, pagination);
         }
         public UserEntity GetForm(string keyValue)
@@ -47,13 +133,58 @@ namespace WisdomLogistics.Application.SystemManage
         }
         public void SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
         {
-            if (!string.IsNullOrEmpty(keyValue))
+            var LoginInfo = OperatorProvider.Provider.GetCurrent();
+            if (LoginInfo != null)
             {
-                userEntity.Modify(keyValue);
-            }
-            else
-            {
-                userEntity.Create();
+                if (LoginInfo.RoleId == "6107fbb6-2a22-428d-a03a-b7b2e829d1a1")
+                {
+                    UserEntity data = service.FindEntity(LoginInfo.UserId);
+                   
+                     var queryable  = service.IQueryable(c=>c.F_CreatorUserId ==LoginInfo.UserId) ;
+                    if (data.F_AuthorizationQuantity >=0)
+                    {
+                        if (!string.IsNullOrEmpty(keyValue))
+                        {
+                            userEntity.Modify(keyValue);
+                            UserEntity user = service.FindEntity(c => c.F_Id == keyValue);
+                            userEntity.F_CreatorTime = user.F_CreatorTime;
+                        }
+                        else
+                        {
+                            userEntity.Create();
+                            userEntity.F_ExpireTime = DateTime.Now;
+                        }
+                    
+
+                        //超级管理员 || 系统管理员
+                        if (LoginInfo.RoleId == "F0A2B36F-35A7-4660-B46C-D4AB796591EB" || LoginInfo.RoleId == "F0A2B36F-35A7-4660-B46C-D4AB796591EB")
+                        {
+                            userEntity.F_ExpireTime = ((DateTime)userEntity.F_CreatorTime).AddDays(int.Parse(userEntity.F_AuthorizationDays));
+                            userEntity.F_DaysRemaining = int.Parse(userEntity.F_AuthorizationDays);
+                        }
+                    }
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(keyValue))
+                    {
+                        userEntity.Modify(keyValue);
+                        UserEntity user = service.FindEntity(c => c.F_Id == keyValue);
+                        userEntity.F_CreatorTime = user.F_CreatorTime;
+                    }
+                    else
+                    {
+                        userEntity.Create();
+                        userEntity.F_ExpireTime = DateTime.Now;
+                    }
+
+                    //超级管理员 || 系统管理员
+                    if (LoginInfo.RoleId == "F0A2B36F-35A7-4660-B46C-D4AB796591EB" || LoginInfo.RoleId == "F0A2B36F-35A7-4660-B46C-D4AB796591EB")
+                    {
+                        userEntity.F_ExpireTime = ((DateTime)userEntity.F_CreatorTime).AddDays(int.Parse(userEntity.F_AuthorizationDays));
+                        userEntity.F_DaysRemaining = int.Parse(userEntity.F_AuthorizationDays);
+                    }
+                }
             }
             service.SubmitForm(userEntity, userLogOnEntity, keyValue);
         }
@@ -61,6 +192,7 @@ namespace WisdomLogistics.Application.SystemManage
         {
             service.Update(userEntity);
         }
+
         public UserEntity CheckLogin(string username, string password)
         {
             UserEntity userEntity = service.FindEntity(t => t.F_Account == username);

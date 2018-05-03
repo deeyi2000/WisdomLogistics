@@ -71,7 +71,7 @@
   * @param lat
   * @returns {*[]}
   */
-  root.gcj02towgs84 = function(lng, lat, ) { 
+  root.gcj02towgs84 = function(lng, lat) { 
     if (out_of_china(lng, lat)) {
       return [lng, lat]
     }

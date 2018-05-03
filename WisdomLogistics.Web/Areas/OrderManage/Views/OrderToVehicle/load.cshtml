@@ -27,25 +27,75 @@
         <a id="btnUnload" class="btn btn-danger" style="margin: 0.3rem;">卸<br />车<br /><i class="glyphicon glyphicon-backward"></i></a>
     </div>
     <div id="divVehicles" style="flex: 1;display: flex; flex-direction: column;">
-        <div class="topPanel">
-            <div class="toolbar">
+        <div class="topPanel" style="height:120px">
+               <!--
+                   <div class="toolbar">
                 <div class="btn-group">
                     <a id="btnSubmit" onclick="btnSubmit()" class="btn btn-primary"><span class="glyphicon glyphicon-refresh"></span>提交</a>
                 </div>
             </div>
+       
             <div class="search">
                 <table>
                     <tr>
                         <td>
                             <div class="input-group">
-                                <input id="kwVehicles" type="text" class="form-control" placeholder="账户/姓名/手机" style="width: 200px;">
-                                <span class="input-group-btn">
-                                    <button id="btnNew" type="button" class="btn btn-primary">首次装车</button>
-                                </span>
+                                <input id="kwVehicles" type="text" class="form-control" placeholder="账户/姓名/手机"  style="width: 200px;">
                             </div>
                         </td>
                     </tr>
                 </table>
+            </div>
+             -->
+            <div>
+                <form id="form1">
+                    <table id="" class="form">
+                        <tr style="line-height:40px">
+                            <th class="formTitle" style="width:50px; padding:0px 10px 0px 10px;">装车类型:</th>
+                            <td class="formValue" style="padding:0px" colspan="2">
+                                <label class="demo--label">
+                                    <input class="demo--radio" type="radio" checked="checked" value="frist" id="LoadingType" name="LoadingType">
+                                    <span class="demo--radioInput"></span>首次装车
+                                </label>
+                                <label class="demo--label">
+                                    <input class="demo--radio" type="radio" id="LoadingType" value="next" name="LoadingType">
+                                    <span class="demo--radioInput"></span>继续装车
+                                </label>
+                            </td>
+                            <th class="formTitle" style="width:50px; padding:0px 10px 0px 10px; display:none" id="selctVehicleText">选择车辆:</th>
+                            <td class="formValue" style="padding:0px;display:none" id="selctVehicleButton" colspan="2">
+                                <input type="text" id="search" class="form-control required" placeholder="车牌号/手机号" style="width: 100px;">
+                            </td>
+                        </tr>
+                        <tr style="line-height:40px">
+                            <th class="formTitle" style="width:30px; padding:0px 10px 0px 10px;">到站:</th>
+                            <td class="formValue" style="padding:0px">
+                                <input id="F_Station" name="F_Station" type="text" class="form-control required" placeholder="到站" style="width: 80px;" />
+                            <th class="formTitle" style="width:30px; padding:0px 10px 0px 10px;">车牌号:</th>
+                            <td class="formValue" style="padding:0px">
+                                <input id="F_LicensePlate" type="text" class="form-control required" placeholder="车牌号" style="width:80px;">
+                            </td>
+                            <th class="formTitle" style="width:30px; padding:0px 10px 0px 10px;">司机电话:</th>
+                            <td class="formValue" style="padding:0px">
+                                <input id="F_DriverPhone" type="text" class="form-control" placeholder="司机电话" required style=" width: 80px;">
+                            </td>
+                        </tr>
+                        <tr style="line-height:40px">
+                            <th class="formTitle" style="width:30px; padding:0px 10px 0px 10px;">车费:</th>
+                            <td class="formValue" style="padding:0px">
+                                <input id="F_CarFreight" type="text" class="form-control" placeholder="￥" required style="width: 80px;">
+                            </td>
+                            <th class="formTitle" style="width:30px; padding:0px 10px 0px 10px;">备注:</th>
+                            <td class="formValue" style="padding:0px">
+                                <input id="F_Description" type="text" class="form-control" placeholder="备注" required style=" width: 80px;">
+                            </td>
+                            <th class="formTitle" style="width:30px; padding:0px 10px 0px 10px;"></th>
+                            <td class="formValue" style="padding:0px">
+                                <a id="btnSubmit" onclick="btnSubmit()" class="btn btn-primary"><span class="glyphicon glyphicon-refresh"></span>提交</a>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
             </div>
         </div>
         <table id="gridVehicles"></table>
@@ -54,66 +104,67 @@
 </div>
 
 <script>
+    var loadItems = {};
     $(function () {
-        var $gridGoods = initGrid({ el: "#gridGoods", pager: "#pagerGoods", search: "#kwGoods",  url: "/OrderManage/OrderList/GetGridJson"});
-        var $gridVehicles = initGrid({ el: "#gridVehicles", pager: "#pagerVehicles", search: "#kwVehicles", url: "" });
+        var $gridGoods = initGrid({ el: "#gridGoods", pager: "#pagerGoods", search: "#kwGoods", url: "/OrderManage/OrderList/GetGridJson?dataType=0" });
+        var $gridVehicles = initGrid({ el: "#gridVehicles", pager: "#pagerVehicles", search: "#kwVehicles" });
         var $btnLoad = $("#btnLoad").unbind("click").on("click", function () {
             var row = $gridGoods.jqGridRowValue();
-            if (Array.isArray(row)) {
-             
-                row.map(v => { $gridVehicles.addRowData(v.F_Id); });
-                row.map(v => { $gridGoods.delRowData(v.F_Id); });
-            }
-            else if (row) {
-                $gridVehicles.addRowData(row.F_Id, row);
-                $gridGoods.delRowData(row.F_Id);
+            if (row && !Array.isArray(row) && !loadItems[row.F_Id]) {
+                loadItems[row.F_Id] = row;
+                $gridVehicles.jqGrid('addRowData', row.F_Id, row);
+                $gridGoods.jqGrid("delRowData", row.F_Id);
+                $gridVehicles.trigger("reloadGrid");
             }
         });
         var $btnUnload = $("#btnUnload").unbind("click").on("click", function () {
             var row = $gridVehicles.jqGridRowValue();
-            if (Array.isArray(row)) {
-                $gridGoods.addRowData(row);
-                row.map(v => { $gridVehicles.delRowData(v.F_Id); });
+            if (row && !Array.isArray(row) && loadItems[row.F_Id]) {
+                delete loadItems[row.F_Id];
+                $gridGoods.jqGrid('addRowData', row.F_Id, row);
+                $gridVehicles.jqGrid("delRowData", row.F_Id);
+                $gridVehicles.trigger("reloadGrid");
             }
-            else if (row) {
-                $gridGoods.addRowData(row.F_Id, row);
-                $gridVehicles.delRowData(row.F_Id);
-            }
+        });
+        
+        var $btnSubmit = $("#btnSubmit").unbind("click").on("click", function () {
+            $.modalConfirm("您确定要【装车】吗？", function (e) {
+                if (e) {
+                    var LoadOrderArrey = [];
+                    $.each(loadItems, (k, v) => LoadOrderArrey.push(v))
+                    var data = $("#form1").formSerialize()
+                    $.submitForm({
+                        url: "/OrderManage/OrderToVehicle/SubmitData",
+                        param: {
+                            vehicleBindOrder: data ,
+                            LoadOrderItems: LoadOrderArrey,
+                            keyValue: null
+                        },
+                        success: function () {
+                            $.currentWindow().$("#gridList").trigger("reloadGrid");
+                        }
+                    });
+                }
+            });
         });
 
-        var $btnSubmit = $("#btnSubmit").unbind("click").on("click", function () {
-           $.modalConfirm("您确定要【装车】吗？", function (e) {
-               if (e) {
-                   alert("45544");
-                   $.submitForm({
-                       url: "/OrderManage/OrderList /DisabledAccount",
-                       param: { keyValue: keyValue },
-                       success: function () {
-                           $.currentWindow().$("#gridList").trigger("reloadGrid");
-                       }
-                   });
-               }
-            });
     });
-    /*
-    function btnSubmit() {
-        $.modalConfirm("注：您确定要【装车】吗？", function (r) {
-            if (r) {
-                $.submitForm({
-                    url: "/OrderManage/OrderToVehicle/SubmitData",
-                    param: {
-                        deviceLists: $("#gridVehicles").jqGrid('getRowData'),
-                        keyValue: null
-                    },
-                    success: function () {
-                        alert("1151");
-                        $("#gridList").trigger("reloadGrid");
-                    }
-                });
-            }
+
+    $(document).ready(function () {
+        $("input[name=LoadingType]").each(function () {
+            $(this).click(function () {
+                var discount = $(this).val();
+                if (discount == "frist") {
+                    $("#selctVehicleButton").css("display", "none");
+                    $("#selctVehicleText").css("display", "none");
+                }
+                if (discount == "next") {
+                    $("#selctVehicleButton").css("display", "");
+                    $("#selctVehicleText").css("display", "");
+                }
+            });
         });
-    }
-    */
+    });
 
     function initGrid(opt) {
         opt = Object.assign({
@@ -155,7 +206,7 @@
         });
         var $elSearch = $(opt.search).unbind("keypress").on("keypress",
             debounce(function () {
-                $el.jqGrid('setGridParam', { postData: { keyword: $elSearch.val() } })
+                $el.jqGrid('setGridParam', { postData: { keyword: $elSearch.val(),dataType:0 } })
                     .trigger('reloadGrid');
             }, 1000));
         return $el;

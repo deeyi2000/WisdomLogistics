@@ -10,7 +10,7 @@
         <div class="operate">
             <ul class="nav nav-pills">
                 <li class="first">已选中<span>1</span>项</li>
-                <li><a id="NF-edit" authorize="yes">修改</a></li>
+                <li><a id="NF-edit" authorize="yes">中转</a></li>
                 <li><a id="NF-receive" authorize="yes">签收</a></li>
                 <li><a id="NF-cancel" authorize="yes">取消中转</a></li>
             </ul>
@@ -82,7 +82,13 @@
             userDataOnFooter: true,
             pager: opt.pager,
             sortname: 'F_CreatorTime desc',
-            viewrecords: true
+            viewrecords: true,
+             subGrid: true,
+            subGridRowExpanded: showChildGrid,
+            subGridOptions: {
+                plusicon: "glyphicon-hand-right",
+                minusicon: "glyphicon-hand-down"
+            }
         });
         var $elSearch = $(opt.search).unbind("keypress").on("keypress",
             debounce(function () {
@@ -92,13 +98,43 @@
         return $el;
     }
 
+    function showChildGrid(parentRowID, parentRowKey) {
+        var childGridID = parentRowID + "_table";
+        var childGridPagerID = parentRowID + "_pager";
+        var childGridURL = "/OrderManage/OrderList/GetOrderProductJson?keyValue=" + encodeURIComponent(parentRowKey);
+        $('#' + parentRowID).append('<table id=' + childGridID + '></table><div id=' + childGridPagerID + ' class=scroll></div>');
+        $("#" + childGridID).jqGrid({
+            url: childGridURL,
+            mtype: "GET",
+            datatype: "json",
+            page: 1,
+            colModel: [
+                { label: '标识', name: 'F_Id', hidden: true, key: true },
+                { label: '名称', name: 'F_Name', width: '40px' },
+                { label: '数量', name: 'F_Number', width: '40px' },
+                { label: '重量', name: 'F_Weight', width: '40px' },
+                { label: '体积', name: 'F_Volume', width: '40px' },
+                { label: '单价', name: 'F_UnitPricee', width: '40px' },
+                { label: '运费', name: 'F_Freight', width: '40px' },
+                { label: '送货费', name: 'F_DeliveryFee', width: '40px' },
+                { label: '提货费', name: 'F_PickDeliveryFee', width: '40px ' },
+                { label: '保价费', name: 'F_InsuredFee', width: '40px' }
+            ],
+            loadonce: true,
+            userDataOnFooter: true,
+            width: '1200',
+            height: '100%',
+            pager: "#" + childGridPagerID
+        });
+    }
+
     $(function () {
-        var $grid = initGrid({ el: "#gridList", pager: "#gridPager", search: "#txt_keyword", url: "/OrderManage/OrderList/GetGridJson" });
+        var $grid = initGrid({ el: "#gridList", pager: "#gridPager", search: "#txt_keyword", url: "/OrderManage/OrderList/GetGridJson?dataType=1" });
         var $btnEdit = $("#NF-edit").unbind("click").click(function() {
             var keyValue = $("#gridList").jqGridRowValue().F_Id;
             $.modalOpen({
                 id: "NF-edit",
-                title: "修改订单",
+                title: "中转订单",
                 url: "/OrderManage/OrderToVehicle/Jump?keyValue=" + keyValue,
                 width: "700px",
                 height: "550px",
@@ -129,7 +165,7 @@
             $.modalConfirm("注：您确定要【取消中转】该订单吗？", function (r) {
                 if (r) {
                     $.submitForm({
-                        url: "/OrderManage/OrderList /DisabledAccount",
+                        url: "/OrderManage/OrderList/DisabledAccount",
                         param: { keyValue: keyValue },
                         success: function () {
                             $("#gridList").trigger("reloadGrid");

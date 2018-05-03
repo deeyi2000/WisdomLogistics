@@ -322,6 +322,8 @@
                   for (i in this.list) {
                       total += parseFloat(this.list[i].F_Number) || 0
                   }
+                  if (total < 10) { $("#F_ArtNo03").val("0" + total); }
+                  else { $("#F_ArtNo03").val(total); }
                   return total
               },
               //合计重量

@@ -52,11 +52,12 @@
             id: this.F_EnCode,
             title: this.F_FullName,
             url: this.F_UrlAddress.startsWith("/") ? this.F_UrlAddress + "?keyValue=" + keyValue : location.href + this.F_UrlAddress + "?keyValue=" + keyValue,
-            width: "80%",
+            width: "90%",
             height: "90%",
             btn: null
         });
     }
+
     function btn_Dialog() {
         var keyValue = $("#gridList").jqGridRowValue().F_Id;
         $.modalOpen({
@@ -66,7 +67,7 @@
             width: "80%",
             height: "90%",
             callBack: function (iframeId) {
-                top.frames[iframeId].submitForm(function() {
+                top.frames[iframeId].submitForm(function () {
                     $("#gridList").trigger("reloadGrid");
                 });
             }
@@ -114,11 +115,17 @@
         var $el = $(opt.el);
         $el.dataGrid({
             url: opt.url,
-            height: $(window).height() - 190,
+            height: $(window).height() - 170,
             colModel: [
                 { label: '订单日期', name: 'F_CreatorTime', align: 'left', width: '110px', frozen: true },
                 { label: '运单号', name: 'F_WaybillNumber', align: 'left', width: '120px', frozen: true },
-                { label: '货号', name: 'F_ArtNo', align: 'left    ', width: '80px', frozen: true },
+                { label: '货号', name: 'F_ArtNo', align: 'left ', width: '80px', frozen: true },
+                {
+                    label: '订单状态', name: 'F_EnabledMark', align: 'center', width: '60px',
+                    frozen: true, formatter: function (cellvalue) {
+                        return cellvalue == 1 ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
+                    }
+                },
                 { label: '主键', name: 'F_Id', hidden: true, key: true },
                 { label: '到站', name: 'F_Station', align: 'left' },
                 { label: '地区', name: 'F_Area', align: 'left' },
@@ -128,7 +135,7 @@
                 { label: '发货人身份证', name: 'F_ConsignorPhone', align: 'left' },
                 { label: '收货人', name: 'F_Consignee', align: 'left' },
                 { label: '收货电话', name: 'F_ConsigneePhone', align: 'left' },
-                { label: '运费合计', name: 'F_FreightCombined', align: 'left', formatter: 'number', },
+                { label: '运费合计', name: 'F_FreightCombined', align: 'left' },
                 { label: '提付', name: 'F_PutPay', align: 'left' },
                 { label: '现付', name: 'F_PresentPay', align: 'left' },
                 { label: '回付', name: 'F_BackPay', align: 'left' },
@@ -138,7 +145,7 @@
                 { label: '手续费', name: 'F_FormalityRate', align: 'left' },
                 { label: '提货方式', name: 'F_FormalityRate', align: 'left' },
                 { label: '开单类型', name: 'F_FormalityRate', align: 'left' },
-                { label: '开单人', name: 'F_RecordSingle', align: 'left' },
+                { label: '开单人', name: 'F_RecordSingle', align: 'left' }
             ],
             // direction: "rtl", 固定列会挪到左边
             footerrow: true,
@@ -146,9 +153,10 @@
             pager: opt.pager,
             sortname: 'F_CreatorTime desc',
             viewrecords: true,
+            
             subGrid: true,
             subGridRowExpanded: showChildGrid,
-            subGridOptions : {
+            subGridOptions: {
                 plusicon: "glyphicon-hand-right",
                 minusicon: "glyphicon-hand-down"
             }
@@ -157,11 +165,12 @@
 
         var $elSearch = $(opt.search).unbind("keypress").on("keypress",
             debounce(function () {
-                $el.jqGrid('setGridParam', { postData: { keyword: $elSearch.val() } })
+                $el.jqGrid('setGridParam', { postData: { keyword: $elSearch.val(),dataType:0 } })
                     .trigger('reloadGrid');
             }, 1000));
         return $el;
     }
+
     function showChildGrid(parentRowID, parentRowKey) {
         var childGridID = parentRowID + "_table";
         var childGridPagerID = parentRowID + "_pager";
@@ -173,15 +182,15 @@
             datatype: "json",
             page: 1,
             colModel: [
-                { label: '标识', name: 'F_Id', hidden: true, key: true},
+                { label: '标识', name: 'F_Id', hidden: true, key: true },
                 { label: '名称', name: 'F_Name', width: '40px' },
                 { label: '数量', name: 'F_Number', width: '40px' },
                 { label: '重量', name: 'F_Weight', width: '40px' },
                 { label: '体积', name: 'F_Volume', width: '40px' },
                 { label: '单价', name: 'F_UnitPricee', width: '40px' },
                 { label: '运费', name: 'F_Freight', width: '40px' },
-                { label: '送货费', name: 'F_DeliveryFee', width: '40px' }  ,
-                { label: '提货费', name: 'F_PickDeliveryFee', width: '40px '},
+                { label: '送货费', name: 'F_DeliveryFee', width: '40px' },
+                { label: '提货费', name: 'F_PickDeliveryFee', width: '40px ' },
                 { label: '保价费', name: 'F_InsuredFee', width: '40px' }
             ],
             loadonce: true,
@@ -194,6 +203,6 @@
 
     $(function () {
         $('.toolbar').authorizeButton(window);
-        initGrid({ el: "#gridList", pager: "#gridPager", search: "#txt_keyword", url: "/OrderManage/OrderList/GetGridJson" });
+        initGrid({ el: "#gridList", pager: "#gridPager", search: "#txt_keyword", url: "/OrderManage/OrderList/GetGridJson?dataType=0" });
     });
 </script>

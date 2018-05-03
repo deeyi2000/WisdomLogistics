@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WisdomLogistics.Web\bin\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>I:\NFine\project\NFine.Data\bin\Debug\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -58,6 +62,7 @@
     <Compile Include="SystemManage\OrganizeApp.cs" />
     <Compile Include="SystemManage\RoleApp.cs" />
     <Compile Include="SystemManage\RoleAuthorizeApp.cs" />
+    <Compile Include="SystemManage\SMSlogAPP.cs" />
     <Compile Include="SystemManage\UserApp.cs" />
     <Compile Include="SystemManage\UserLogOnApp.cs" />
     <Compile Include="SystemManage\VehicleApp.cs" />

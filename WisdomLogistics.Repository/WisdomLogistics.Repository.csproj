@@ -54,6 +54,7 @@
     <Compile Include="SystemManage\OrganizeRepository.cs" />
     <Compile Include="SystemManage\RoleAuthorizeRepository.cs" />
     <Compile Include="SystemManage\RoleRepository.cs" />
+    <Compile Include="SystemManage\SMSLogRepository.cs" />
     <Compile Include="SystemManage\UserLogOnRepository.cs" />
     <Compile Include="SystemManage\UserRepository.cs" />
     <Compile Include="SystemManage\VehicleBindOrderRepository.cs" />

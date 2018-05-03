@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*******************************************************************************
+ * Copyright © 2018 德州蓝湖网络科技有限公司 版权所有
+ * Author: 张艳军
+ * Description: 智慧物流管理平台
+ * Website：http://www.wxopens.com
+*********************************************************************************/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +12,29 @@ using System.Threading.Tasks;
 
 namespace WisdomLogistics.Domain.Entity.SystemManage
 {
+    public enum eOrderDataType
+    {
+        OrderStart = 0,        //订单创建
+        Loading = 1,           //订单装车
+        Transportation = 2,    //订单运输
+        Transfer = 3,          //订单中转
+        UnLoading = 4,         //订单卸载
+        OrderEnd = 5           //订单结束
+    }
+
+    public enum eTransportState
+    {   //等待装车
+        WaitLoad =0,
+        //已经装车
+        Loading =1,
+        //等待发车
+        WaitDepartureVehicle =2,
+        //运输途中
+        Transit =3,
+        //已运抵
+        HaveArrived =4
+
+    }
     public class OrderEntity : IEntity<OrderEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         public string F_Id { get; set; }
@@ -91,6 +120,21 @@ namespace WisdomLogistics.Domain.Entity.SystemManage
         public bool F_IsUnLoading { get; set; }
         //是否转运
         public  bool F_IsTransfer { get; set; }
+        //订单类型状态
+        public eOrderDataType F_DataType { get; set; }
+        //车辆车牌号
+        public string F_LicensePlate { get; set; }
+        //车辆运费
+        public string F_CarFreight { get; set; }
+        //运输状态
+        public eTransportState transportState { get; set; }
+        //接车时间 
+        public DateTime? ArrivalTime { get; set; }
+        //装车时间
+        public DateTime? loadTime { get; set; }
+        //发车时间
+        public DateTime? DepartureTime { get; set; }
+
         public List<OrderProductEntity> OrderProduct { get; set; }
         public int? F_SortCode { get; set; }
         public bool? F_DeleteMark { get; set; }

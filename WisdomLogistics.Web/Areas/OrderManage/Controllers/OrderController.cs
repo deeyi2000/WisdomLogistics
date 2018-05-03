@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*******************************************************************************
+ * Copyright © 2018 德州蓝湖网络科技有限公司 版权所有
+ * Author: 张艳军
+ * Description: 智慧物流管理平台
+ * Website：http://www.wxopens.com
+*********************************************************************************/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -15,11 +21,11 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
         private readonly UserApp _userApp = new UserApp();
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetGridJson(Pagination pagination, string keyword)
+        public ActionResult GetGridJson(Pagination pagination, string keyword,int dataType)
         {
             var data = new
             {
-                rows = _orderApp.GetList(),
+                rows = _orderApp.GetList((eOrderDataType)System.Enum.ToObject(typeof(eOrderDataType), dataType)),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records
@@ -29,11 +35,11 @@ namespace WisdomLogistics.Web.Areas.OrderManage.Controllers
 
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetValueGridJson(Pagination pagination, string keyValue, string keyword)
+        public ActionResult GetValueGridJson(Pagination pagination, string keyValue, string keyword,int dataType)
         {
             var data = new
             {
-                rows = _orderApp.GetList().Where(c => c.F_Id == keyValue),
+                rows = _orderApp.GetList((eOrderDataType)System.Enum.ToObject(typeof(eOrderDataType), dataType)).Where(c => c.F_Id == keyValue),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records

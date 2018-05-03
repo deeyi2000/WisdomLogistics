@@ -55,6 +55,7 @@
     <Compile Include="Entity\SystemManage\OrganizeEntity.cs" />
     <Compile Include="Entity\SystemManage\RoleAuthorizeEntity.cs" />
     <Compile Include="Entity\SystemManage\RoleEntity.cs" />
+    <Compile Include="Entity\SystemManage\SMSLogEntity.cs" />
     <Compile Include="Entity\SystemManage\UserEntity.cs" />
     <Compile Include="Entity\SystemManage\UserLogOnEntity.cs" />
     <Compile Include="Entity\SystemManage\VehicleBindOrderEntity.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="IRepository\SystemManage\IOrganizeRepository.cs" />
     <Compile Include="IRepository\SystemManage\IRoleAuthorizeRepository.cs" />
     <Compile Include="IRepository\SystemManage\IRoleRepository.cs" />
+    <Compile Include="IRepository\SystemManage\ISMSLogRepository.cs" />
     <Compile Include="IRepository\SystemManage\IUserLogOnRepository.cs" />
     <Compile Include="IRepository\SystemManage\IUserRepository.cs" />
     <Compile Include="IRepository\SystemManage\IVehicleBindOrderRepository.cs" />

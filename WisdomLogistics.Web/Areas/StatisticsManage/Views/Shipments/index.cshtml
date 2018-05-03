@@ -1,0 +1,111 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<script>
+    $(function () {
+        initgridList();
+    });
+
+    function initgridList() {
+        var $gridList = $("#gridList");
+        $gridList.dataGrid({
+            url: "/OrderManage/OrderList/GetGridJson?dataType=0",
+            height: $(window).height() - 190,
+            datatype: "json",
+            colModel: [
+                { label: '主键', name: 'F_Id', hidden: true, key: true },
+                { label: '车牌号', name: '', align: 'left', width: '100px', frozen: true },
+                { label: '联系人', name: '', align: 'left', width: '120px', frozen: true },
+                { label: '发车时间', name: '', align: 'left    ',width:'80px', frozen: true },
+                { label: '接车时间', name: '', align: 'left' },
+                { label: '到站', name: '', align: 'left' },
+                { label: '车费', name: '', align: 'left' },
+                { label: '运费合计', name: '', align: 'left' },
+                { label: '订单总数', name: '', align: 'left' },
+                { label: '件数', name: '', align: 'left' },
+                { label: '运输状态', name: '', align: 'left' },
+                { label: '中转类型', name: '', align: 'left' },          
+            ],
+            // direction: "rtl", 固定列会挪到左边
+            footerrow: true,
+            userDataOnFooter: true,
+            pager: "#gridPager",
+            sortname: 'F_CreatorTime desc',
+            //multiselect: true,
+            viewrecords: true,
+            subGrid: true,
+            subGridRowExpanded: showChildGrid,
+            subGridOptions : {
+                plusicon: "glyphicon-hand-right",
+                minusicon: "glyphicon-hand-down"
+            }
+        });
+        $("#gridList").jqGrid("setFrozenColumns");
+
+        $("#btn_search").click(function () {
+            $gridList.jqGrid('setGridParam', {
+                postData: { keyword: $("#txt_keyword").val(),dataType:0}
+            }).trigger('reloadGrid');
+        });
+    }
+
+    function showChildGrid(parentRowID, parentRowKey) {
+            var childGridID = parentRowID + "_table";
+            var childGridPagerID = parentRowID + "_pager";
+
+            var childGridURL = "/OrderManage/OrderList/GetOrderProductJson?keyValue=" + encodeURIComponent(parentRowKey);
+
+            $('#' + parentRowID).append('<table id=' + childGridID + '></table><div id=' + childGridPagerID + ' class=scroll></div>');
+
+            $("#" + childGridID).jqGrid({
+                url: childGridURL,
+                mtype: "GET",
+                datatype: "json",
+                page: 1,
+                colModel: [
+                    { label: '标识', name: 'F_Id', hidden: true, key: true},
+                    { label: '名称', name: 'F_Name', width: '75px' },
+                    { label: '数量', name: 'F_Number', width: '75px' },
+                    { label: '重量', name: 'F_Weight', width: '70px' },
+                    { label: '体积', name: 'F_Volume', width: '75px' },
+                    { label: '单价', name: 'F_UnitPricee', width: '75px' },
+                    { label: '运费', name: 'F_Freight', width: '75px' },
+                    { label: '送货费', name: 'F_DeliveryFee', width: '75px' }  ,
+                    { label: '提货费', name: 'F_PickDeliveryFee', width: '75px '},
+                    { label: '保价费', name: 'F_InsuredFee', width: '75px' }
+                ],
+                userDataOnFooter: true,
+                loadonce: true,
+                width: '1200',
+                height: '100%',
+                pager: "#" + childGridPagerID
+            });
+    } 
+</script>
+<div class="topPanel">
+    <div class="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+        </div>  
+        <script>$('.toolbar').authorizeButton()</script>
+    </div>
+    <div class="search">
+        <table>
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <input id="txt_keyword" type="text" class="form-control" placeholder="车牌号/到站" style="width: 200px;">
+                        <span class="input-group-btn">
+                            <button id="btn_search" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="gridPanel" style="width:100%;float:left">
+    <table id="gridList"></table>
+    <div id="gridPager"></div>
+</div>

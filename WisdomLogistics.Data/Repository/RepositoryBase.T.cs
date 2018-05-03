@@ -14,6 +14,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Data.Entity.Core.Objects.DataClasses;
+using System.Data.Entity.Core.Objects;
 
 namespace WisdomLogistics.Data
 {
@@ -58,13 +60,14 @@ namespace WisdomLogistics.Data
                             {
                                 dbcontext.Entry(item).State = EntityState.Modified;
                             }
-                            dbcontext.Entry(entity).Collection(prop.Name).EntityEntry.State = EntityState.Modified;
+                            //dbcontext.Entry(entity).Collection(prop.Name).EntityEntry.State = EntityState.Modified;
                         }
                     }
                 }
             }
             return dbcontext.SaveChanges();
         }
+
         public int Delete(TEntity entity)
         {
             dbcontext.Set<TEntity>().Attach(entity);

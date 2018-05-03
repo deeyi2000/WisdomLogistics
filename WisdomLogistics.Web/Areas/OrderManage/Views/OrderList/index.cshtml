@@ -10,7 +10,7 @@
     function initgridList() {
         var $gridList = $("#gridList");
         $gridList.dataGrid({
-            url: "/OrderManage/OrderList/GetGridJson",
+            url: "/OrderManage/OrderList/GetGridJson?dataType=0",
             height: $(window).height() - 190,
             datatype: "json",
             colModel: [
@@ -60,7 +60,7 @@
 
         $("#btn_search").click(function () {
             $gridList.jqGrid('setGridParam', {
-                postData: { keyword: $("#txt_keyword").val() }
+                postData: { keyword: $("#txt_keyword").val(),dataType:0}
             }).trigger('reloadGrid');
         });
     }

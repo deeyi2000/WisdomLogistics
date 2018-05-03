@@ -19,6 +19,10 @@
         });
     });
     function initControl() {
+        $("#F_CategoryId").bindSelect({
+            url: "/SystemManage/ItemsData/GetSelectJson",
+            param: { enCode: "OrganizeCategory" }
+        });
         $("#F_CategoryId").select2({ minimumResultsForSearch: -1 })
         $("#F_ParentId").bindSelect({
             url: "/SystemManage/Organize/GetTreeSelectJson",

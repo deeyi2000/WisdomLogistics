@@ -22,13 +22,123 @@ namespace WisdomLogistics.Application.SystemManage
         public List<RoleEntity> GetList(string keyword = "")
         {
             var expression = ExtLinq.True<RoleEntity>();
-            if (!string.IsNullOrEmpty(keyword))
+            List<RoleEntity> list = new List<RoleEntity>();
+            var LoginInfo = OperatorProvider.Provider.GetCurrent();
+            if (LoginInfo != null)
             {
-                expression = expression.And(t => t.F_FullName.Contains(keyword));
-                expression = expression.Or(t => t.F_EnCode.Contains(keyword));
+                //超级管理员
+                if (LoginInfo.RoleId == null)
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        expression = expression.And(t => t.F_FullName.Contains(keyword));
+                        expression = expression.Or(t => t.F_EnCode.Contains(keyword));
+                    }
+                    expression = expression.And(t => t.F_Category == 1);
+                    list = service.IQueryable(expression).OrderBy(t => t.F_SortCode).ToList();
+                }
+                //超级管理员
+                if (LoginInfo.RoleId == "F0A2B36F-35A7-4660-B46C-D4AB796591EB")
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        expression = expression.And(t => t.F_FullName.Contains(keyword));
+                        expression = expression.Or(t => t.F_EnCode.Contains(keyword));
+                    }
+                    expression = expression.And(t => t.F_Category == 1);
+                    list  = service.IQueryable(expression).OrderBy(t => t.F_SortCode).ToList();
+                }
+                //系统管理员
+                else if (LoginInfo.RoleId == "4B2140D3-E61D-488E-ADF6-FF0EBCBC5D2C")
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        expression = expression.And(t => t.F_FullName.Contains(keyword));
+                        expression = expression.Or(t => t.F_EnCode.Contains(keyword));
+                    }
+                    expression = expression.And(t => t.F_Category == 1);
+                    list = service.IQueryable(expression).OrderBy(t => t.F_SortCode).ToList();
+                }
+                //物流服总公司
+                else if (LoginInfo.RoleId == "6107fbb6-2a22-428d-a03a-b7b2e829d1a1")
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        expression = expression.And(t => t.F_FullName.Contains(keyword));
+                        expression = expression.Or(t => t.F_EnCode.Contains(keyword));
+                    }
+                    expression = expression.And(t => t.F_Category == 1);
+                    list = service.IQueryable(expression).OrderBy(t => t.F_SortCode).ToList();
+                    list.Remove(list.Where(c => c.F_Id == "F0A2B36F-35A7-4660-B46C-D4AB796591EB").SingleOrDefault());
+                    list.Remove(list.Where(c => c.F_Id == "4B2140D3-E61D-488E-ADF6-FF0EBCBC5D2C").SingleOrDefault());
+                    list.Remove(list.Where(c => c.F_Id == "6107fbb6-2a22-428d-a03a-b7b2e829d1a1").SingleOrDefault());
+                }
+                //物流网点
+                else if (LoginInfo.RoleId == "cf75118d-2a67-4fa7-ae71-4bf47a0fd6e2")
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        expression = expression.And(t => t.F_FullName.Contains(keyword));
+                        expression = expression.Or(t => t.F_EnCode.Contains(keyword));
+                    }
+                    expression = expression.And(t => t.F_Category == 1);
+                    list = service.IQueryable(expression).OrderBy(t => t.F_SortCode).ToList();
+                    list.Remove(list.Where(c => c.F_Id == "F0A2B36F-35A7-4660-B46C-D4AB796591EB").SingleOrDefault());
+                    list.Remove(list.Where(c => c.F_Id == "4B2140D3-E61D-488E-ADF6-FF0EBCBC5D2C").SingleOrDefault());
+                    list.Remove(list.Where(c => c.F_Id == "6107fbb6-2a22-428d-a03a-b7b2e829d1a1").SingleOrDefault());
+                    list.Remove(list.Where(c => c.F_Id == "cf75118d-2a67-4fa7-ae71-4bf47a0fd6e2").SingleOrDefault());
+                    list.Remove(list.Where(c => c.F_Id == "278f8fc0-ac02-494f-990e-6acddf8cb643").SingleOrDefault());
+
+                }
+                //录单员
+                else if (LoginInfo.RoleId == "cf75118d-2a67-4fa7-ae71-4bf47a0fd6e2")
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        expression = expression.And(t => t.F_FullName.Contains(keyword));
+                        expression = expression.Or(t => t.F_EnCode.Contains(keyword));
+                    }
+                    expression = expression.And(t => t.F_Category == 1);
+                }
+                //业务员
+                else if (LoginInfo.RoleId == "71eb9b4b-def5-4cd2-935b-b28b259247ff")
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        expression = expression.And(t => t.F_FullName.Contains(keyword));
+                        expression = expression.Or(t => t.F_EnCode.Contains(keyword));
+                    }
+                    expression = expression.And(t => t.F_Category == 1);
+                }
+                //物流公司总财务
+                else if (LoginInfo.RoleId == "278f8fc0-ac02-494f-990e-6acddf8cb643")
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        expression = expression.And(t => t.F_FullName.Contains(keyword));
+                        expression = expression.Or(t => t.F_EnCode.Contains(keyword));
+                    }
+                    expression = expression.And(t => t.F_Category == 1);
+                }
+                //网点财务
+                else if (LoginInfo.RoleId == "40eaf22d-3489-4f5c-86a7-cdf94a7bdb85")
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        expression = expression.And(t => t.F_FullName.Contains(keyword));
+                        expression = expression.Or(t => t.F_EnCode.Contains(keyword));
+                    }
+                    expression = expression.And(t => t.F_Category == 1);
+                }
             }
-            expression = expression.And(t => t.F_Category == 1);
-            return service.IQueryable(expression).OrderBy(t => t.F_SortCode).ToList();
+            /*
+             if (!string.IsNullOrEmpty(keyword))
+             {
+                 expression = expression.And(t => t.F_FullName.Contains(keyword));
+                 expression = expression.Or(t => t.F_EnCode.Contains(keyword));
+             }
+             */
+            return list;
         }
         public RoleEntity GetForm(string keyValue)
         {
