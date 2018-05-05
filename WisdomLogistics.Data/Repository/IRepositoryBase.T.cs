@@ -32,5 +32,6 @@ namespace WisdomLogistics.Data
         List<TEntity> FindList(string strSql, DbParameter[] dbParameter);
         List<TEntity> FindList(Pagination pagination);
         List<TEntity> FindList(Expression<Func<TEntity, bool>> predicate, Pagination pagination);
+        List<TEntity> FindList(Expression<Func<TEntity, bool>> predicate);
     }
 }

@@ -104,6 +104,8 @@ namespace WisdomLogistics.Data
         {
             return dbcontext.Database.SqlQuery<TEntity>(strSql, dbParameter).ToList<TEntity>();
         }
+
+
         public List<TEntity> FindList(Pagination pagination)
         {
             bool isAsc = pagination.sord.ToLower() == "asc" ? true : false;
@@ -132,7 +134,13 @@ namespace WisdomLogistics.Data
             tempData = tempData.Skip<TEntity>(pagination.rows * (pagination.page - 1)).Take<TEntity>(pagination.rows).AsQueryable();
             return tempData.ToList();
         }
-        public List<TEntity> FindList(Expression<Func<TEntity, bool>> predicate, Pagination pagination)
+
+        public List<TEntity> FindList(Expression<Func<TEntity, bool>> predicate)
+        {
+            var tempData = dbcontext.Set<TEntity>().Where(predicate);
+            return tempData.ToList();
+        }
+            public List<TEntity> FindList(Expression<Func<TEntity, bool>> predicate, Pagination pagination)
         {
             bool isAsc = pagination.sord.ToLower() == "asc" ? true : false;
             string[] _order = pagination.sidx.Split(',');

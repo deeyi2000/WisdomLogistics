@@ -24,9 +24,14 @@ namespace WisdomLogistics.Application.SystemManage
             var LoginInfo = OperatorProvider.Provider.GetCurrent();
             if (LoginInfo != null && LoginInfo.RoleId.EndsWith("_admin"))
             {
+                if (!string.IsNullOrEmpty(keyword))
+                {
+                    expression = expression.And(t => t.F_Account.Contains(keyword));
+                    expression = expression.Or(t => t.F_RealName.Contains(keyword));
+                }
                 expression = expression.And(u => u.F_CreatorUserId.Contains(LoginInfo.UserId));
             }
-                return service.FindList(expression, pagination);
+            return service.FindList(expression, pagination);
         }
         public UserEntity GetForm(string keyValue)
         {
@@ -38,6 +43,19 @@ namespace WisdomLogistics.Application.SystemManage
             var LoginInfo = OperatorProvider.Provider.GetCurrent();
             UserEntity userEntity = service.FindEntity(t => t.F_Id == LoginInfo.UserId);
             return userEntity;
+        }
+
+        public List<UserEntity> GetCompanyStatonMember(string keyword)
+        {
+            var LoginInfo = OperatorProvider.Provider.GetCurrent();
+            var expression = ExtLinq.True<UserEntity>();
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                expression = expression.And(t => t.F_Account.Contains(keyword));
+                expression = expression.Or(t => t.F_RealName.Contains(keyword));
+            }
+            expression = expression.And(u => u.F_CompanyId.Contains(LoginInfo.CompanyId)).And(t => t.F_RoleId.StartsWith("S_"));
+            return service.FindList(expression);
         }
         public void DeleteForm(string keyValue)
         {

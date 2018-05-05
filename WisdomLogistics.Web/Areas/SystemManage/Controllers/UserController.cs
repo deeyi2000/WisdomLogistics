@@ -31,6 +31,15 @@ namespace WisdomLogistics.Web.Areas.SystemManage.Controllers
             };
             return Content(data.ToJson());
         }
+
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetCompanyStatonMember(string keyword)
+        {
+            List<UserEntity> data = userApp.GetCompanyStatonMember(keyword);
+            return Content(data.ToJson());
+        }
+
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetFormJson(string keyValue)
