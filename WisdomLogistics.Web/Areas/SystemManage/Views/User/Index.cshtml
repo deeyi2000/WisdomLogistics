@@ -49,7 +49,7 @@
                         { label: '备注', name: 'F_Description', width: 200, align: 'left' }
                     ],
                     pager: "#gridPager",
-                    sortname: 'F_DepartmentId asc,F_ExpireTime asc',
+                    sortname: 'F_ExpireTime asc',
                     viewrecords: true
                 });
             }
@@ -95,7 +95,7 @@
                     { label: '备注', name: 'F_Description', width: 200, align: 'left' }
                 ],
                 pager: "#gridPager",
-                sortname: 'F_DepartmentId asc,F_ExpireTime asc',
+                sortname: 'F_ExpireTime asc',
                 viewrecords: true
             }); }
         else {
@@ -109,24 +109,6 @@
                         { label: '客户公司', name: 'F_RealName', width: 80, align: 'left' },
                         { label: '手机', name: 'F_MobilePhone', width: 80, align: 'left' },
                         {
-                            label: '开通公司', name: 'F_OrganizeId', width: 150, align: 'left',
-                            formatter: function (cellvalue, options, rowObject) {
-                                return top.clients.organize[cellvalue] == null ? "" : top.clients.organize[cellvalue].fullname;
-                            }
-                        },
-                        {
-                            label: '部门', name: 'F_DepartmentId', width: 80, align: 'left',
-                            formatter: function (cellvalue, options, rowObject) {
-                                return top.clients.organize[cellvalue] == null ? "" : top.clients.organize[cellvalue].fullname;
-                            }
-                        },
-                        {
-                            label: '岗位', name: 'F_DutyId', width: 80, align: 'left',
-                            formatter: function (cellvalue, options, rowObject) {
-                                return top.clients.duty[cellvalue] == null ? "" : top.clients.duty[cellvalue].fullname;
-                            }
-                        },
-                        {
                             label: "允许登录", name: "F_EnabledMark", width: 60, align: "center",
                             formatter: function (cellvalue, options, rowObject) {
                                 if (cellvalue == 1) {
@@ -139,7 +121,7 @@
                         { label: '备注', name: 'F_Description', width: 200, align: 'left' }
                     ],
                     pager: "#gridPager",
-                    sortname: 'F_DepartmentId asc,F_ExpireTime asc',
+                    sortname: 'F_ExpireTime asc',
                     viewrecords: true
                 });
             }

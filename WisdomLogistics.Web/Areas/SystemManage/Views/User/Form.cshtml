@@ -45,16 +45,13 @@
 
     function initStyle()
     {
-        if ("F0A2B36F-35A7-4660-B46C-D4AB796591EB" == "@WisdomLogistics.Code.OperatorProvider.Provider.GetCurrent().RoleId" ? true : false ||
-            "4B2140D3-E61D-488E-ADF6-FF0EBCBC5D2C" == "@WisdomLogistics.Code.OperatorProvider.Provider.GetCurrent().RoleId" ? true : false ||
-            "" == "@WisdomLogistics.Code.OperatorProvider.Provider.GetCurrent().RoleId" ? true : false) {
+        if ("@WisdomLogistics.Code.OperatorProvider.Provider.GetCurrent().RoleId.StartsWith("C_")"=="True"? true : false) {
             $("#tr001").css("display", "");
-            $("#tr002").css("display", "");
         } else {
             $("#tr001").css("display", "none");
-            $("#tr002").css("display", "none");
         }
     }
+ 
 
     function submitForm() {
         if (!$('#form1').formValid()) {
@@ -101,30 +98,11 @@
                         <input id="F_Number" name="F_Number" type="text" class="form-control" />
                     </td>
                 </tr>
-                <tr id="tr001" style="">
-                    <th class="formTitle">公司</th>
-                    <td class="formValue">
-                        <select id="F_OrganizeId" name="F_OrganizeId" class="form-control required">
-                        </select>
-                    </td>
-                    <th class="formTitle">部门</th>
-                    <td class="formValue">
-                        <select id="F_DepartmentId" name="F_DepartmentId" class="form-control required">
-                            <option value="">==请选择==</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr  id="tr002" style="">
-                    <th class="formTitle">岗位</th>
-                    <td class="formValue">
-                        <select id="F_DutyId" name="F_DutyId" class="form-control required">
-                            <option value="">==请选择==</option>
-                        </select>
-                    </td>
+                <tr  id="tr001" style="">
                     <th class="formTitle" valign="top" style="padding-top: 5px;">
                         授权天数
                     </th>
-                    <td class="formValue">
+                    <td class="formValue" colspan="3">
                         <input id="F_AuthorizationDays" name="F_AuthorizationDays" type="text" class="form-control" />
                     </td>    
                 </tr>

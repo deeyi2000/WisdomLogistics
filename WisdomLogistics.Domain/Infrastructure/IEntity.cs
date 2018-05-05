@@ -18,7 +18,7 @@ namespace WisdomLogistics.Domain
             var LoginInfo = OperatorProvider.Provider.GetCurrent();
             if (LoginInfo != null)
             {
-                entity.F_CreatorUserId = LoginInfo.UserId;
+                entity.F_CreatorUserId = LoginInfo.UserId+"," +LoginInfo.StationId +"," +LoginInfo.CompanyId;
             }
             entity.F_CreatorTime = DateTime.Now;
         }

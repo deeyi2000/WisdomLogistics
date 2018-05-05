@@ -21,12 +21,21 @@ namespace WisdomLogistics.Application.SystemManage
         private IOrderTransferRepository service = new OrderTransferRepository();
         public List<OrderTransferEntity> GetList(string keyword = "")
         {
+            var LoginInfo = OperatorProvider.Provider.GetCurrent();
             var expression = ExtLinq.True<OrderTransferEntity>();
-            if (!string.IsNullOrEmpty(keyword))
+
+            if (LoginInfo != null)
             {
-                //expression = expression.And(t => t.F_Name.Contains(keyword));
-                //expression = expression.Or(t => t.F_LicensePlate.Contains(keyword));
-                //expression = expression.Or(t => t.F_Phone.Contains(keyword));
+                if (LoginInfo.RoleId.StartsWith("A_")) { }
+                else if (LoginInfo.RoleId.StartsWith("C_")) expression = expression.And(u => u.F_CreatorUserId.Contains(LoginInfo.CompanyId));
+                else if (LoginInfo.RoleId.StartsWith("S_")) expression = expression.And(u => u.F_CreatorUserId.Contains(LoginInfo.StationId));
+                else expression = expression.And(u => u.F_CreatorUserId.Contains(LoginInfo.UserId));
+                if (!string.IsNullOrEmpty(keyword))
+                {
+                    expression = expression.And(t => t.F_TransferCompanyTelephone.Contains(keyword));
+                    expression = expression.Or(t => t.F_TransferDescribe.Contains(keyword));
+                    expression = expression.Or(t => t.F_TransferCompany.Contains(keyword));
+                }
             }
             return service.IQueryable(expression).OrderBy(t => t.F_SortCode).ToList();
         }

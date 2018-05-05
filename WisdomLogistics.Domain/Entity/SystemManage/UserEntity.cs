@@ -24,10 +24,9 @@ namespace WisdomLogistics.Domain.Entity.SystemManage
         public string F_ManagerId { get; set; }
         public int? F_SecurityLevel { get; set; }
         public string F_Signature { get; set; }
-        public string F_OrganizeId { get; set; }
-        public string F_DepartmentId { get; set; }
+        public string F_CompanyId { get; set; }
+        public string F_StationId { get; set; }  //站点
         public string F_RoleId { get; set; }
-        public string F_DutyId { get; set; }
         public bool? F_IsAdministrator { get; set; }
         //授权网点数量
        public int F_AuthorizationQuantity { get; set; }

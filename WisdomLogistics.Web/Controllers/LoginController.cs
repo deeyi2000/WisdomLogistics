@@ -68,8 +68,8 @@ namespace WisdomLogistics.Web.Controllers
                     operatorModel.UserId = userEntity.F_Id;
                     operatorModel.UserCode = userEntity.F_Account;
                     operatorModel.UserName = userEntity.F_RealName;
-                    operatorModel.CompanyId = userEntity.F_OrganizeId;
-                    operatorModel.DepartmentId = userEntity.F_DepartmentId;
+                    operatorModel.CompanyId = userEntity.F_CompanyId;
+                    operatorModel.StationId = userEntity.F_StationId;
                     operatorModel.CreateQuantity = userEntity.F_CreateQuantity;
                     operatorModel.RoleId = userEntity.F_RoleId;
                     operatorModel.AuthorizationQuantity = userEntity.F_AuthorizationQuantity;

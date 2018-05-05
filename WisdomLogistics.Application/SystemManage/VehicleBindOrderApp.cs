@@ -17,12 +17,20 @@ namespace WisdomLogistics.Application.SystemManage
 
         public List<VehicleBindOrderEntity> GetList(string keyword = "")
         {
+            var LoginInfo = OperatorProvider.Provider.GetCurrent();
             var expression = ExtLinq.True<VehicleBindOrderEntity>();
-            if (!string.IsNullOrEmpty(keyword))
+            if (LoginInfo != null)
             {
-                //expression = expression.And(t => t.F_Name.Contains(keyword));
-                //expression = expression.Or(t => t.F_LicensePlate.Contains(keyword));
-                //expression = expression.Or(t => t.F_Phone.Contains(keyword));
+                if (LoginInfo.RoleId.StartsWith("A_")) { }
+                else if (LoginInfo.RoleId.StartsWith("C_")) expression = expression.And(u => u.F_CreatorUserId.Contains(LoginInfo.CompanyId));
+                else if (LoginInfo.RoleId.StartsWith("S_")) expression = expression.And(u => u.F_CreatorUserId.Contains(LoginInfo.StationId));
+                else expression = expression.And(u => u.F_CreatorUserId.Contains(LoginInfo.UserId));
+                if (!string.IsNullOrEmpty(keyword))
+                {
+                    expression = expression.And(t => t.F_DriverPhone.Contains(keyword));
+                    expression = expression.Or(t => t.F_LicensePlate.Contains(keyword));
+                    expression = expression.Or(t => t.F_Description.Contains(keyword));
+                }
             }
             return _serviceVehicleBindOrder.IQueryable(expression).OrderBy(t => t.F_SortCode).ToList();
         }

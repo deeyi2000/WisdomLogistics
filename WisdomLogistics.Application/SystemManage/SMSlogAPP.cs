@@ -21,9 +21,14 @@ namespace WisdomLogistics.Application.SystemManage
             try
             {
                 var LoginInfo = OperatorProvider.Provider.GetCurrent();
+                var expression = ExtLinq.True<SMSLogEntity>();
                 if (null != LoginInfo)
                 {
-                    list = _serviceSMSLog.IQueryable().Where(c => c.F_CreatorUserId == LoginInfo.UserId).ToList();
+                    if (LoginInfo.RoleId.StartsWith("A_")) { }
+                    else if (LoginInfo.RoleId.StartsWith("C_")) expression = expression.And(u => u.F_CreatorUserId.Contains(LoginInfo.CompanyId));
+                    else if (LoginInfo.RoleId.StartsWith("S_")) expression = expression.And(u => u.F_CreatorUserId.Contains(LoginInfo.StationId));
+                    else expression = expression.And(u => u.F_CreatorUserId.Contains(LoginInfo.UserId));
+                    list = _serviceSMSLog.IQueryable(expression).ToList();
                     return list;
                 }
                 else
