@@ -1,6 +1,9 @@
 ﻿@{
     Layout = "~/Views/Shared/_Index.cshtml";
 }
+<script src="~/Content/js/jquery/jquery.autocompleter.js"></script>
+<link href="~/Content/js/jquery/jquery.autocompleter.css" rel="stylesheet" />
+
 <style type="text/css">
     html, body {width: 100%;height: 100%;margin: 0px;padding: 0px;}
 </style>
@@ -70,14 +73,16 @@
                         <tr style="line-height:40px">
                             <th class="formTitle" style="width:30px; padding:0px 10px 0px 10px;">到站:</th>
                             <td class="formValue" style="padding:0px">
-                                <input id="F_Station" name="F_Station" type="text" class="form-control required" placeholder="到站" style="width: 80px;" />
+                                <input id="F_Station" name="F_Station" type="text" class="form-control required" placeholder="到站" style="width: 80px;" autocomplete="off"/>
+                                <input id="F_StationId" name="F_StationId" type="hidden" />
+                            </td>
                             <th class="formTitle" style="width:30px; padding:0px 10px 0px 10px;">车牌号:</th>
                             <td class="formValue" style="padding:0px">
-                                <input id="F_LicensePlate" type="text" class="form-control required" placeholder="车牌号" style="width:80px;">
+                                <input id="F_LicensePlate" type="text" class="form-control required" placeholder="车牌号" style="width:80px;" autocomplete="off">
                             </td>
                             <th class="formTitle" style="width:30px; padding:0px 10px 0px 10px;">司机电话:</th>
                             <td class="formValue" style="padding:0px">
-                                <input id="F_DriverPhone" type="text" class="form-control" placeholder="司机电话" required style=" width: 80px;">
+                                <input id="F_DriverPhone" type="text" class="form-control" placeholder="司机电话" required style=" width: 80px;" autocomplete="off">
                             </td>
                         </tr>
                         <tr style="line-height:40px">
@@ -148,6 +153,47 @@
             });
         });
 
+        $('#F_Station').autocompleter({
+            customLabel: 'F_RealName',
+            source: "/SystemManage/User/GetCompanyStationMember", // object to local or url  to remote search
+            template: '{{ F_Account }} [{{ F_RealName }}]', // custom template
+            hint: true, // show hint
+            empty: false, // abort source if empty field
+            callback: function (value, index, selected) {
+                if (selected) {
+                    $("#F_Station").val(value);
+                    $("#F_StationId").val(selected.F_Id);
+                }
+            }
+        });
+
+        $('#F_LicensePlate').autocompleter({
+            customLabel: 'F_RealName',
+            source: "/SystemManage/User/GetCompanyStationMember", // object to local or url to remote search
+            template: '{{ F_Account }} [{{ F_RealName }}]', // custom template
+            hint: true, // show hint
+            empty: false, // abort source if empty field
+            callback: function (value, index, selected) {
+                if (selected) {
+                    $("#F_LicensePlate").val(value);
+                    $("#F_DriverPhone").val(selected.F_Id);
+                }
+            }
+        });
+
+        $('#F_DriverPhone').autocompleter({
+            customLabel: 'F_RealName',
+            source: "/SystemManage/User/GetCompanyStationMember", // object to local or url to remote search
+            template: '{{ F_Account }} [{{ F_RealName }}]', // custom template
+            hint: true, // show hint
+            empty: false, // abort source if empty field
+            callback: function (value, index, selected) {
+                if (selected) {
+                    $("#F_LicensePlate").val(value);
+                    $("#F_DriverPhone").val(selected.F_Id);
+                }
+            }
+        });
     });
 
     $(document).ready(function () {

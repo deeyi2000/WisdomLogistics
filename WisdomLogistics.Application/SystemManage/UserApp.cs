@@ -97,10 +97,10 @@ namespace WisdomLogistics.Application.SystemManage
                 //超级管理员 || 系统管理员
                 if (LoginInfo.RoleId.EndsWith("_admin"))
                 {
-                    if (null != userEntity.F_AuthorizationDays)
+                    if (0 != userEntity.F_AuthorizationDays)
                     {
-                        userEntity.F_ExpireTime = ((DateTime)userEntity.F_CreatorTime).AddDays(int.Parse(userEntity.F_AuthorizationDays));
-                        userEntity.F_DaysRemaining = int.Parse(userEntity.F_AuthorizationDays);
+                        userEntity.F_ExpireTime = ((DateTime)userEntity.F_CreatorTime).AddDays(userEntity.F_AuthorizationDays);
+                        userEntity.F_DaysRemaining = userEntity.F_AuthorizationDays;
                     }
                 }
             }

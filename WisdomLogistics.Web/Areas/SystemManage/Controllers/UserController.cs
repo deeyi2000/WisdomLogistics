@@ -3,12 +3,16 @@
  * Author: 张艳军
  * Description: 智慧物流管理平台
  * Website：http://www.wxopens.com
-*********************************************************************************/using WisdomLogistics.Application.SystemManage;
+*********************************************************************************/
+
+using System;
+using WisdomLogistics.Application.SystemManage;
 using WisdomLogistics.Code;
 using WisdomLogistics.Domain.Entity.SystemManage;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
 
 namespace WisdomLogistics.Web.Areas.SystemManage.Controllers
@@ -33,10 +37,9 @@ namespace WisdomLogistics.Web.Areas.SystemManage.Controllers
         }
 
         [HttpGet]
-        [HandlerAjaxOnly]
-        public ActionResult GetCompanyStatonMember(string keyword)
+        public ActionResult GetCompanyStationMember(string query, int limit)
         {
-            List<UserEntity> data = userApp.GetCompanyStatonMember(keyword);
+            var data = userApp.GetCompanyStatonMember(query);
             return Content(data.ToJson());
         }
 

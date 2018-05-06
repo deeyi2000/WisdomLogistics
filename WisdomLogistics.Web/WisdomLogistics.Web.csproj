@@ -247,6 +247,10 @@
     <Content Include="Content\js\jquery-ui\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\js\jquery-ui\jquery-ui.min.css" />
     <Content Include="Content\js\jquery-ui\jquery-ui.min.js" />
+    <Content Include="Content\js\jquery.bs-combogrid\jquery.bs-combogrid.css" />
+    <Content Include="Content\js\jquery.bs-combogrid\jquery.bs-combogrid.js" />
+    <Content Include="Content\js\jquery.bs-combogrid\jquery.bs-combogrid.min.css" />
+    <Content Include="Content\js\jquery.bs-combogrid\jquery.bs-combogrid.min.js" />
     <Content Include="Content\js\jquery\jquery-2.1.1.min.js" />
     <Content Include="Content\js\jquery\jquery.autocompleter.css" />
     <Content Include="Content\js\jquery\jquery.autocompleter.js" />

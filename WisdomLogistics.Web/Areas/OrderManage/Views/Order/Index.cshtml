@@ -22,15 +22,16 @@
                     <tr>
                         <th class="formTitle">到站</th>
                         <td class="formValue">
-                            <input id="F_Station" name="F_Station" type="text" class="form-control required" placeholder="到站" />
+                            <input id="F_Station" name="F_Station" type="text" class="form-control required" placeholder="到站" autocomplete="off"/>
+                            <input id="F_StationId" name="F_StationId" type="hidden"/>
                         </td>
                         <th class="formTitle">收货人</th>
                         <td class="formValue">
-                            <input id="F_Consignee" name="F_Consignee" type="text" class="form-control required" placeholder="收货人" />
+                            <input id="F_Consignee" name="F_Consignee" type="text" class="form-control required" placeholder="收货人" autocomplete="off"/>
                         </td>
                         <th class="formTitle">收货人电话</th>
                         <td class="formValue">
-                            <input id="F_ConsigneePhone" name="F_ConsigneePhone" type="text" class="form-control required" placeholder="收货人电话" />
+                            <input id="F_ConsigneePhone" name="F_ConsigneePhone" type="text" class="form-control required" placeholder="收货人电话" autocomplete="off"/>
                         </td>
                         <th class="formTitle" rowspan="2">货号</th>
                         <td class="formValue" rowspan=" 2">
@@ -46,15 +47,16 @@
                     <tr>
                         <th class="formTitle">地区</th>
                         <td class="formValue">
-                            <input id="F_Area" name="F_Area" type="text" class="form-control required" placeholder="地区" />
+                            <input id="F_Area" name="F_Area" type="text" class="form-control required" placeholder="地区" autocomplete="off"/>
+                            <input id="F_AreaId" name="F_AreaId" type="hidden" />
                         </td>
                         <th class="formTitle">发货人</th>
                         <td class="formValue">
-                            <input id="F_Consignor" name="F_Consignor" type="text" class="form-control required" placeholder="发货人" />
+                            <input id="F_Consignor" name="F_Consignor" type="text" class="form-control required" placeholder="发货人" autocomplete="off"/>
                         </td>
                         <th class="formTitle">发货人电话</th>
                         <td class="formValue">
-                            <input id="F_ConsignorPhone" name="F_ConsignorPhone" type="text" class="form-control required" placeholder="发货人电话" />
+                            <input id="F_ConsignorPhone" name="F_ConsignorPhone" type="text" class="form-control required" placeholder="发货人电话" autocomplete="off"/>
                         </td>
                     </tr>
                 </table>
@@ -333,19 +335,90 @@
             });
         });
 
-            $('#F_Station').autocompleter({
-                highlightMatches: true,     // marker for autocomplete matches
-                source: colors,    // object to local or url to remote search
-                template: '{{ value }} <span>[{{ label }}]</span>',   // custom template
-                hint: true,     // show hint
-                empty: false,   // abort source if empty field
-                limit: 5,   // max results
-                callback: function (value, index, selected) {
-                    if (selected) {
-                        $("#F_Station").val(value);
-                    }
+        $('#F_Station').autocompleter({
+            customLabel: 'F_RealName',
+            source: "/SystemManage/User/GetCompanyStationMember", // object to local or url to remote search
+            template: '{{ F_Account }} [{{ F_RealName }}]', // custom template
+            hint: true, // show hint
+            empty: false, // abort source if empty field
+            callback: function(value, index, selected) {
+                if (selected) {
+                    $("#F_Station").val(value);
+                    $("#F_StationId").val(selected.F_Id);
                 }
-            });
+            }
+        });
+
+        $('#F_Consignee').autocompleter({
+            customLabel: 'F_RealName',
+            source: "/SystemManage/User/GetCompanyStationMember", // object to local or url to remote search
+            template: '{{ F_Account }} [{{ F_RealName }}]', // custom template
+            hint: true, // show hint
+            empty: false, // abort source if empty field
+            callback: function (value, index, selected) {
+                if (selected) {
+                    $("#F_Consignee").val(value);
+                    $("#F_ConsigneePhone").val(selected.F_Id);
+                }
+            }
+        });
+
+        $('#F_ConsigneePhone').autocompleter({
+            customLabel: 'F_RealName',
+            source: "/SystemManage/User/GetCompanyStationMember", // object to local or url to remote search
+            template: '{{ F_Account }} [{{ F_RealName }}]', // custom template
+            hint: true, // show hint
+            empty: false, // abort source if empty field
+            callback: function (value, index, selected) {
+                if (selected) {
+                    $("#F_ConsigneePhone").val(value);
+                    $("#F_Consignee").val(selected.F_Id);
+                }
+            }
+        });
+
+        $('#F_Area').autocompleter({
+            customLabel: 'F_Area',
+            source: "/SystemManage/User/GetCompanyStationMember", // object to local or url to remote search
+            template: '{{ F_Account }} [{{ F_RealName }}]', // custom template
+            hint: true, // show hint
+            empty: false, // abort source if empty field
+            callback: function (value, index, selected) {
+                if (selected) {
+                    $("#F_Consignee").val(value);
+                    $("#F_ConsigneePhone").val(selected.F_Id);
+                }
+            }
+        });
+
+        $('#F_Consignor').autocompleter({
+            customLabel: 'F_RealName',
+            source: "/SystemManage/User/GetCompanyStationMember", // object to local or url to remote search
+            template: '{{ F_Account }} [{{ F_RealName }}]', // custom template
+            hint: true, // show hint
+            empty: false, // abort source if empty field
+            callback: function (value, index, selected) {
+                if (selected) {
+                    $("#F_Consignor").val(value);
+                    $("#F_ConsignorPhone").val(selected.F_Id);
+                }
+            }
+        });
+
+        $('#F_ConsignorPhone').autocompleter({
+            customLabel: 'F_RealName',
+            source: "/SystemManage/User/GetCompanyStationMember", // object to local or url to remote search
+            template: '{{ F_Account }} [{{ F_RealName }}]', // custom template
+            hint: true, // show hint
+            empty: false, // abort source if empty field
+            callback: function (value, index, selected) {
+                if (selected) {
+                    $("#F_ConsignorPhone").val(value);
+                    $("#F_Consignor").val(selected.F_Id);
+                }
+            }
+        });
+
 
             var vmYF = new Vue({
                 el: "#vueYunFei",
