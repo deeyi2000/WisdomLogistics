@@ -55,8 +55,8 @@ namespace WisdomLogistics.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
         {
-            userApp.SubmitForm(userEntity, userLogOnEntity, keyValue);
-            return Success("操作成功。");
+            //userApp.SubmitForm(userEntity, userLogOnEntity, keyValue);
+            return Success(userApp.SubmitForm(userEntity, userLogOnEntity, keyValue)); //"操作成功。"
         }
         [HttpPost]
         [HandlerAuthorize]

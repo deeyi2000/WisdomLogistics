@@ -35,7 +35,7 @@ namespace WisdomLogistics.Domain.Entity.SystemManage
         //到期时间
         public DateTime? F_ExpireTime { get; set; }
         //授权天数
-        public string F_AuthorizationDays { get; set; }
+        public int F_AuthorizationDays { get; set; }
         //到期天数
         public int F_DaysRemaining { get; set; }
         //地址

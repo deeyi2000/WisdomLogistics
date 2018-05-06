@@ -11,14 +11,14 @@ namespace WisdomLogistics.Web.Areas.CustomerManage.Controllers
 {
     public class CustomerController : ControllerBase
     {
-        private CustomerApp vehicleApp = new CustomerApp();
+        private readonly CustomerApp _customerApp = new CustomerApp();
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetGridJson(Pagination pagination, string keyword)
         {
             var data = new
             {
-                rows = vehicleApp.GetList(keyword),
+                rows = _customerApp.GetList(keyword),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records
@@ -32,7 +32,7 @@ namespace WisdomLogistics.Web.Areas.CustomerManage.Controllers
         {
             var data = new
             {
-                rows = vehicleApp.GetList().Where(c => c.F_Id == keyValue),
+                rows = _customerApp.GetList().Where(c => c.F_Id == keyValue),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records
@@ -44,7 +44,7 @@ namespace WisdomLogistics.Web.Areas.CustomerManage.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = vehicleApp.GetForm(keyValue);
+            var data = _customerApp.GetForm(keyValue);
             return Content(data.ToJson());
         }
 
@@ -54,7 +54,7 @@ namespace WisdomLogistics.Web.Areas.CustomerManage.Controllers
         public ActionResult SubmitForm(CustomerEntity customerEntity, string keyValue)
         {
             customerEntity.F_EnabledMark = true;
-            vehicleApp.SubmitForm(customerEntity, keyValue);
+            _customerApp.SubmitForm(customerEntity, keyValue);
             return Success("操作成功。");
         }
 
@@ -64,7 +64,7 @@ namespace WisdomLogistics.Web.Areas.CustomerManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
         {
-            vehicleApp.DeleteForm(keyValue);
+            _customerApp.DeleteForm(keyValue);
             return Success("删除成功。");
         }
 
@@ -77,7 +77,7 @@ namespace WisdomLogistics.Web.Areas.CustomerManage.Controllers
             CustomerEntity customerEntity = new CustomerEntity();
             customerEntity.F_Id = keyValue;
             customerEntity.F_EnabledMark = false;
-            vehicleApp.UpdateForm(customerEntity);
+            _customerApp.UpdateForm(customerEntity);
             return Success("客户禁用成功。");
         }
         [HttpPost]
@@ -89,7 +89,7 @@ namespace WisdomLogistics.Web.Areas.CustomerManage.Controllers
             CustomerEntity customerEntity = new CustomerEntity();
             customerEntity.F_Id = keyValue;
             customerEntity.F_EnabledMark = true;
-            vehicleApp.UpdateForm(customerEntity);
+            _customerApp.UpdateForm(customerEntity);
             return Success("客户启用成功。");
         }
     }

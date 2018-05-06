@@ -6,6 +6,7 @@
     var keyValue = $.request("keyValue");
     $(function () {
         initControl();
+        initStyle();
         $.ajax({
             url: "/SystemManage/User/GetFormJson",
             data: { keyValue: keyValue },
@@ -40,6 +41,14 @@
             text: "F_FullName"
         });
     }
+    function initStyle() {
+        if ("@WisdomLogistics.Code.OperatorProvider.Provider.GetCurrent().RoleId.StartsWith("A_")" == "True" ? true : false) {
+            $("#tr001").css("display", "");
+        } else {
+            $("#tr001").css("display", "none");
+        }
+    }
+
 </script>
 <form id="form1">
     <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
@@ -62,30 +71,31 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="formTitle">公司</th>
-                    <td class="formValue">
-                        <select id="F_OrganizeId" name="F_OrganizeId" class="form-control">
-                        </select>
-                    </td>
-                    <th class="formTitle">部门</th>
-                    <td class="formValue">
-                        <select id="F_DepartmentId" name="F_DepartmentId" class="form-control">
-                            <option value="">==请选择==</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
                     <th class="formTitle">角色</th>
                     <td class="formValue">
-                        <select id="F_RoleId" name="F_RoleId" class="form-control">
+                        <select id="F_RoleId" name="F_RoleId" class="form-control required">
                             <option value="">==请选择==</option>
                         </select>
                     </td>
-                    <th class="formTitle">岗位</th>
+                    <th class="formTitle" valign="top" style="padding-top: 5px;">
+                        编号
+                    </th>
                     <td class="formValue">
-                        <select id="F_DutyId" name="F_DutyId" class="form-control">
-                            <option value="">==请选择==</option>
-                        </select>
+                        <input id="F_Number" name="F_Number" type="text" class="form-control" />
+                    </td>
+                </tr>
+                <tr id="tr001" style="">
+                    <th class="formTitle" valign="top" style="padding-top: 5px;">
+                        授权天数
+                    </th>
+                    <td class="formValue">
+                        <input id="F_AuthorizationDays" name="F_AuthorizationDays" type="text" class="form-control" />
+                    </td>
+                    <th class="formTitle" valign="top" style="padding-top: 5px;">
+                        授权网点数
+                    </th>
+                    <td class="formValue">
+                        <input id="F_AuthorizationQuantity" name="F_AuthorizationQuantity" type="text" class="form-control" />
                     </td>
                 </tr>
                 <tr>
@@ -143,20 +153,6 @@
                             <option value="true">是</option>
                             <option value="false">否</option>
                         </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th class="formTitle" valign="top" style="padding-top: 5px;">
-                        编号
-                    </th>
-                    <td class="formValue">
-                        <input id="F_Number" name="F_Number" type="text" class="form-control" />
-                    </td>
-                    <th class="formTitle" valign="top" style="padding-top: 5px;">
-                        授权天数
-                    </th>
-                    <td class="formValue">
-                        <input id="F_AuthorizationDays" name="F_AuthorizationDays" type="text" class="form-control" />
                     </td>
                 </tr>
                 <tr>

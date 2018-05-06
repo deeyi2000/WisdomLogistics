@@ -18,8 +18,12 @@
                 { label: '电话', name: 'F_Phone', align: 'left' },
                 { label: '地址', name: 'F_Address', align: 'left'},
                 { label: '座机', name: 'F_Landline', align: 'left' },
-
-                { label: '客户类型', name: 'F_CustomerType', align: 'left' },
+                { label: '常发货物', name: 'F_ProductName', align: 'left' },
+                {
+                    label: '客户类型', name: 'F_CustomerType', align: 'left', formatter: function (cellvalue) {
+                        if (cellvalue == "0") return "收货人";
+                        if (cellvalue == "1") return "发货人";
+                    } },
                 { label: '开户人', name: 'F_AccountOpening', align: 'left' },
                 { label: '开户行', name: 'F_OpeningBank', align: 'left' },
                 { label: '银行卡号', name: 'F_BankCardNumber', align: 'left' },

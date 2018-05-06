@@ -13,63 +13,60 @@
                     <tr>
                         <th class="formTitle">姓名：</th>
                         <td class="formValue">
-                            <input id="F_Name" name="F_Name" type="text" class="form-control required" placeholder="车 牌 号" />
+                            <input id="F_Name" name="F_Name" type="text" class="form-control required" placeholder="姓名" />
                         </td>
                         <th class="formTitle">手机：</th>
                         <td class="formValue">
-                            <input id="F_Phone" name="F_Phone" type="text" class="form-control required" placeholder="行驶证号" />
+                            <input id="F_Phone" name="F_Phone" type="text" class="form-control required" placeholder="手机" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">座机：</th>
+                        <td class="formValue">
+                            <input id="F_Landline" name="F_Landline" type="text" class="form-control required" placeholder="座机" />
+                        </td>
+                        <th class="formTitle">客户类型：</th>
+                        <td class="formValue">
+                            <select class="form-control required" id="F_CustomerType" name="F_CustomerType" style="padding:0"></select>
                         </td>
                     </tr>
                     <tr>
                         <th class="formTitle">地址：</th>
-                        <td class="formValue">
-                            <input id="F_Address" name="F_Address" type="text" class="form-control required" placeholder="司机姓名" />
-                        </td>
-                        <th class="formTitle">座机：</th>
-                        <td class="formValue">
-                            <input id="F_Landline" name="F_Landline" type="text" class="form-control required" placeholder="联系方式" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="formTitle">客户类型：</th>
-                        <td class="formValue">
-                            <input id="F_CustomerType" name="F_CustomerType" type="text" class="form-control required" placeholder="司机姓名" />
-                        </td>
-                        <th class="formTitle">座机：</th>
-                        <td class="formValue">
-                            <input id="F_Landline" name="F_Landline" type="text" class="form-control required" placeholder="联系方式" />
+                        <td class="formValue" colspan="3">
+                            <input id="F_Address" name="F_Address" type="text" class="form-control required" placeholder="地址" />
                         </td>
                     </tr>
                     <tr>
                         <th class="formTitle">开户人：</th>
                         <td class="formValue">
-                            <input id="F_AccountOpening" name="F_AccountOpening" type="text" class="form-control required" placeholder="司机姓名" />
+                            <input id="F_AccountOpening" name="F_AccountOpening" type="text" class="form-control required" placeholder="开户人" />
                         </td>
                         <th class="formTitle">开户行：</th>
                         <td class="formValue">
-                            <input id="F_OpeningBank" name="F_OpeningBank" type="text" class="form-control required" placeholder="联系方式" />
+                            <input id="F_OpeningBank" name="F_OpeningBank" type="text" class="form-control required" placeholder="开户行" />
                         </td>
                     </tr>
                     <tr>
                         <th class="formTitle">银行卡号：</th>
                         <td class="formValue" colspan="2">
-                            <input id="F_BankCardNumber" name="F_BankCardNumber" type="text" class="form-control required" placeholder="司机姓名" />
+                            <input id="F_BankCardNumber" name="F_BankCardNumber" type="text" class="form-control required" placeholder="银行卡号" />
                         </td>
                     </tr>
                     <tr>
                         <th class="formTitle">备注：</th>
                         <td class="formValue" colspan="2">
-                            <input id="F_Description" name="F_Description" type="text" class="form-control required" placeholder="司机姓名" />
+                            <input id="F_Description" name="F_Description" type="text" class="form-control required" placeholder="备注" />
                         </td>
                     </tr>
                 </table>
             </div>
         </div>
-        <style>
-        </style>
     </div>
     <script type="text/javascript">
         var keyValue = $.request("keyValue");
+        $(function () {
+            initControl();
+        })
         $(function () {
             if (!!keyValue) {
                 $.ajax({
@@ -94,6 +91,12 @@
                     $.currentWindow().$("#gridList").trigger("reloadGrid");
                 }
             })
+        }
+        function initControl() {
+            $("#F_CustomerType").bindSelect({
+                url: "/SystemManage/ItemsData/GetSelectJson",
+                param: { enCode: "CustomerType" }
+            });           
         }
     </script>
 </form>

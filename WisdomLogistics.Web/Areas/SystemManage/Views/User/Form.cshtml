@@ -45,7 +45,7 @@
 
     function initStyle()
     {
-        if ("@WisdomLogistics.Code.OperatorProvider.Provider.GetCurrent().RoleId.StartsWith("C_")"=="True"? true : false) {
+        if ("@WisdomLogistics.Code.OperatorProvider.Provider.GetCurrent().RoleId.StartsWith("A_")"=="True"? true : false) {
             $("#tr001").css("display", "");
         } else {
             $("#tr001").css("display", "none");
@@ -102,8 +102,14 @@
                     <th class="formTitle" valign="top" style="padding-top: 5px;">
                         授权天数
                     </th>
-                    <td class="formValue" colspan="3">
+                    <td class="formValue">
                         <input id="F_AuthorizationDays" name="F_AuthorizationDays" type="text" class="form-control" />
+                    </td>    
+                    <th class="formTitle" valign="top" style="padding-top: 5px;">
+                        授权网点数
+                    </th>
+                    <td class="formValue">
+                        <input id="F_AuthorizationQuantity" name="F_AuthorizationQuantity" type="text" class="form-control" />
                     </td>    
                 </tr>
                 <tr>

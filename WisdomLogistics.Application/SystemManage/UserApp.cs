@@ -61,51 +61,159 @@ namespace WisdomLogistics.Application.SystemManage
         {
             service.DeleteForm(keyValue);
         }
-        public void SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
+        public string SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
         {
             var LoginInfo = OperatorProvider.Provider.GetCurrent();
-            if (LoginInfo != null && LoginInfo.RoleId.EndsWith("_admin"))
+            //判断角色
+            if (LoginInfo.RoleId.StartsWith("C_"))
             {
+                //获取当前用户创建的站点数量
+                List<UserEntity> item = service.FindList(ExtLinq.True<UserEntity>().And(t => t.F_CreatorUserId.Contains(LoginInfo.UserId)).And(t => t.F_RoleId.StartsWith("S")));
+                if (item.Count < LoginInfo.AuthorizationQuantity)
+                {
+                    if (!string.IsNullOrEmpty(keyValue))
+                    {
+                        userEntity.Modify(keyValue);
+                        UserEntity user = service.FindEntity(c => c.F_Id == keyValue);
+                        userEntity.F_CreatorTime = user.F_CreatorTime;
 
-                if (!string.IsNullOrEmpty(keyValue))
-                {
-                    userEntity.Modify(keyValue);
-                    UserEntity user = service.FindEntity(c => c.F_Id == keyValue);
-                    userEntity.F_CreatorTime = user.F_CreatorTime;
-                }
-                else
-                {
-                    userEntity.Create();
-                    if (userEntity.F_RoleId.StartsWith("A_")) { }
-                     else if (userEntity.F_RoleId.StartsWith("C_"))
-                    {
-                        userEntity.F_CompanyId = userEntity.F_Id;
-                    }
-                    else if (userEntity.F_RoleId.StartsWith("S_"))
-                    {
-                        userEntity.F_StationId = userEntity.F_Id;
-                        userEntity.F_CompanyId = LoginInfo.CompanyId;
+                        //超级管理员 || 系统管理员
+                        if (LoginInfo.RoleId.EndsWith("_admin"))
+                        {
+                            if (!userEntity.F_AuthorizationDays.IsEmpty())
+                            {
+                                userEntity.F_ExpireTime = ((DateTime)userEntity.F_CreatorTime).AddDays(userEntity.F_AuthorizationDays);
+                                userEntity.F_DaysRemaining = userEntity.F_AuthorizationDays;
+                            }
+                        }
+                        service.SubmitForm(userEntity, userLogOnEntity, keyValue);
+                        return "修改完成";
                     }
                     else
                     {
-                        userEntity.F_StationId = userEntity.F_StationId;
-                        userEntity.F_CompanyId = LoginInfo.CompanyId;
+                        userEntity.Create();
+                        if (userEntity.F_RoleId.StartsWith("A_")) { }
+                        else if (userEntity.F_RoleId.StartsWith("C_"))
+                        {
+                            userEntity.F_CompanyId =LoginInfo.UserId;
+                        }
+                        else if (userEntity.F_RoleId.StartsWith("S_"))
+                        {
+                            userEntity.F_StationId = userEntity.F_Id;
+                            userEntity.F_CompanyId = LoginInfo.CompanyId;
+                        }
+                        else
+                        {
+                            userEntity.F_StationId = userEntity.F_StationId;
+                            userEntity.F_CompanyId = LoginInfo.CompanyId;
+                        }
+                        userEntity.F_ExpireTime = DateTime.Now;
+                        //超级管理员 || 系统管理员
+                        if (LoginInfo.RoleId.EndsWith("_admin"))
+                        {
+                            if (!userEntity.F_AuthorizationDays.IsEmpty())
+                            {
+                                userEntity.F_ExpireTime = ((DateTime)userEntity.F_CreatorTime).AddDays(userEntity.F_AuthorizationDays);
+                                userEntity.F_DaysRemaining = userEntity.F_AuthorizationDays;
+                            }
+                        }
+                        service.SubmitForm(userEntity, userLogOnEntity, keyValue);
+                        return "创建完成";
                     }
-                    userEntity.F_ExpireTime = DateTime.Now;
                 }
-
-                //超级管理员 || 系统管理员
-                if (LoginInfo.RoleId.EndsWith("_admin"))
+                else
                 {
-                    if (0 != userEntity.F_AuthorizationDays)
+                    if (!string.IsNullOrEmpty(keyValue))
                     {
+                        userEntity.Modify(keyValue);
+                        UserEntity user = service.FindEntity(c => c.F_Id == keyValue);
+                        userEntity.F_CreatorTime = user.F_CreatorTime;
+                        userEntity.F_ExpireTime = DateTime.Now;
+                        //超级管理员 || 系统管理员
+                        if (LoginInfo.RoleId.EndsWith("_admin"))
+                        {
+                            if (!userEntity.F_AuthorizationDays.IsEmpty())
+                    if (0 != userEntity.F_AuthorizationDays)
+                            {
+<<<<<<< .mine
+                                userEntity.F_ExpireTime = ((DateTime)userEntity.F_CreatorTime).AddDays(userEntity.F_AuthorizationDays);
+                                userEntity.F_DaysRemaining = userEntity.F_AuthorizationDays;
+=======
                         userEntity.F_ExpireTime = ((DateTime)userEntity.F_CreatorTime).AddDays(userEntity.F_AuthorizationDays);
                         userEntity.F_DaysRemaining = userEntity.F_AuthorizationDays;
+>>>>>>> .theirs
+                            }
+                        }
+                        service.SubmitForm(userEntity, userLogOnEntity, keyValue);
+                        return "修改完成";
+                    }
+                    else
+                    {
+                        return "站点数量超出授权，请联系管理员！";
                     }
                 }
             }
+            else
+            {
+                if (LoginInfo != null && LoginInfo.RoleId.EndsWith("_admin"))
+                {
+                    if (!string.IsNullOrEmpty(keyValue))
+                    {
+                        userEntity.Modify(keyValue);
+                        UserEntity user = service.FindEntity(c => c.F_Id == keyValue);
+                        userEntity.F_CreatorTime = user.F_CreatorTime;
+                        //超级管理员 || 系统管理员
+                        if (LoginInfo.RoleId.EndsWith("_admin"))
+                        {
+                            if (!userEntity.F_AuthorizationDays.IsEmpty())
+                            {
+                                userEntity.F_ExpireTime = ((DateTime)userEntity.F_CreatorTime).AddDays(userEntity.F_AuthorizationDays);
+                                userEntity.F_DaysRemaining = userEntity.F_AuthorizationDays;
+                            }
+                        }
+                        service.SubmitForm(userEntity, userLogOnEntity, keyValue);
+                        return "修改完成";
+                    }
+                    else
+                    {
+                        userEntity.Create();
+                        //补充角色
+                        if (userEntity.F_RoleId.StartsWith("A_")) { }
 
-            service.SubmitForm(userEntity, userLogOnEntity, keyValue);
+                        else if (userEntity.F_RoleId.StartsWith("C_"))
+                        {
+                            userEntity.F_CompanyId =LoginInfo.UserId;
+                        }
+                        else if (userEntity.F_RoleId.StartsWith("S_"))
+                        {
+                            userEntity.F_StationId = userEntity.F_Id;
+                            userEntity.F_CompanyId = LoginInfo.CompanyId;
+                        }
+                        else
+                        {
+                            userEntity.F_StationId = userEntity.F_StationId;
+                            userEntity.F_CompanyId = LoginInfo.CompanyId;
+                        }
+
+                        userEntity.F_ExpireTime = DateTime.Now;
+                        //超级管理员 || 系统管理员
+                        if (LoginInfo.RoleId.EndsWith("_admin"))
+                        {
+                            if (!userEntity.F_AuthorizationDays.IsEmpty())
+                            {
+                                userEntity.F_ExpireTime = ((DateTime)userEntity.F_CreatorTime).AddDays(userEntity.F_AuthorizationDays);
+                                userEntity.F_DaysRemaining = userEntity.F_AuthorizationDays;
+                            }
+                        }
+                        service.SubmitForm(userEntity, userLogOnEntity, keyValue);
+                        return "创建完成";
+                    }
+                }
+                else
+                {
+                    return "请联系管理员";
+                }
+            }
         }
         public void UpdateForm(UserEntity userEntity)
         {

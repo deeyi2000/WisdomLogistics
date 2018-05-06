@@ -6,14 +6,20 @@ using System.Threading.Tasks;
 
 namespace WisdomLogistics.Domain.Entity.SystemManage
 {
+    public enum eCustomerType
+    {
+        Consignee, //收货人
+        Shipments  //发货人
+    }
     public class CustomerEntity : IEntity<CustomerEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         public string F_Id { get; set; }    //标识
         public string F_Name { get; set; }   //姓名
         public string F_Phone { get; set; }   //电话
         public string F_Address { get; set; }   //地址
+        public string F_ProductName { get; set; } //产品名称
         public string F_Landline { get; set; }  //座机
-        public string F_CustomerType { get; set; }  //客户类型
+        public eCustomerType F_CustomerType { get; set; }  //客户类型
         public string F_AccountOpening { get; set; }  //开户人
         public string F_OpeningBank { get; set; }  //开户行
         public string F_BankCardNumber { get; set; }     //银行卡号

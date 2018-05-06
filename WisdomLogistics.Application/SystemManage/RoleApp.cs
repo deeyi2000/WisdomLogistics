@@ -33,12 +33,12 @@ namespace WisdomLogistics.Application.SystemManage
                else if (LoginInfo.RoleId.StartsWith("A_"))
                 {
                     list = service.IQueryable(expression).OrderBy(t => t.F_SortCode).ToList();
-                    foreach (var item in list.Where(c => c.F_Id.StartsWith("A_")).ToList()) { list.Remove(item); }
+                   // foreach (var item in list.Where(c => c.F_Id.StartsWith("A_")).ToList()) { list.Remove(item); }
                 }
                 else if (LoginInfo.RoleId.StartsWith("C_")) {
                     list = service.IQueryable(expression).OrderBy(t => t.F_SortCode).ToList();
                     foreach (var item in list.Where(c => c.F_Id.StartsWith("A_")).ToList()) { list.Remove(item); }
-                    foreach (var item in list.Where(c => c.F_Id.StartsWith("S_")).ToList()) { list.Remove(item); }
+                    foreach (var item in list.Where(c => c.F_Id.StartsWith("C_")).ToList()) { list.Remove(item); }
                 }
                 else if (LoginInfo.RoleId.StartsWith("S_")) {
                     list = service.IQueryable(expression).OrderBy(t => t.F_SortCode).ToList();
